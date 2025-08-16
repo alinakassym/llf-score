@@ -35,8 +35,8 @@
 
 ```bash
 # 1. Клонирование репозитория
-git clone <URL_ЭТОГО_РЕПОЗИТОРИЯ>.git
-cd <имя_папки_проекта>
+git clone git@github.com:alinakassym/llf-score.git
+cd llf-score
 
 # 2. Установка зависимостей
 npm install
