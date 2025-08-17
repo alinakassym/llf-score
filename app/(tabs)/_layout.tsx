@@ -9,6 +9,7 @@ import { TabBarIcon } from '@/shared/icons/TabBarIcon';
 export default function TabLayout() {
   const scheme = useColorScheme() ?? 'light';
   const isLight = scheme === 'light';
+  const tintColor = isLight ? '#FFFFFF' : '#000000';
 
   const gradientColors: [string, string] = isLight
     ? ['#5069D8', '#9464AF']                              
@@ -20,8 +21,8 @@ export default function TabLayout() {
     screenOptions={{
       headerShown: false,              
       tabBarShowLabel: false,
-      tabBarActiveTintColor: '#000000',
-      tabBarInactiveTintColor: '#000000',
+      tabBarActiveTintColor: tintColor,
+      tabBarInactiveTintColor: tintColor,
       tabBarStyle: {
         height: Platform.select({ ios: 80, android: 65, web: 65 }),
         backgroundColor: 'transparent',
