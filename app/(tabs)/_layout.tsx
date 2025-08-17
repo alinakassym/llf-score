@@ -1,10 +1,8 @@
 import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
+import { Tabs } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Platform, Pressable } from 'react-native';
+import { Platform } from 'react-native';
 
-import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { TabBarIcon } from '@/shared/icons/TabBarIcon';
 
@@ -50,20 +48,6 @@ export default function TabLayout() {
           tabBarIcon: ({ focused, size, color }) => (
             <TabBarIcon name="home" focused={focused} size={size} color={color}/>
           ),
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[scheme].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
         }}
       />
       <Tabs.Screen
@@ -80,8 +64,8 @@ export default function TabLayout() {
         options={{
           title: 'Rating',
           tabBarItemStyle: { paddingBottom: 2 },
-          tabBarIcon: ({ focused, color }) => (
-            <TabBarIcon name="rating" focused={focused} size={32} color={color} />
+          tabBarIcon: ({ focused, size, color }) => (
+            <TabBarIcon name="rating" focused={focused} size={size + 2} color={color} />
           ),
         }}
       />
@@ -89,8 +73,8 @@ export default function TabLayout() {
         name="transfers"
         options={{
           title: 'Transfers',
-          tabBarIcon: ({ focused, size }) => (
-            <TabBarIcon name="transfers" focused={focused} size={size} />
+          tabBarIcon: ({ focused, size, color }) => (
+            <TabBarIcon name="transfers" focused={focused} size={size} color={color} />
           ),
         }}
       />
