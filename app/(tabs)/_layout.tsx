@@ -55,16 +55,16 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="raiting"
+        name="rating"
         options={{
-          title: 'Raiting',
+          title: 'Rating',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="transfer"
+        name="transfers"
         options={{
-          title: 'Transfer',
+          title: 'Transfers',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
