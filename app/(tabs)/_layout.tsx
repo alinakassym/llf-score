@@ -9,15 +9,21 @@ import { useColorScheme } from '@/components/useColorScheme';
 import { TabBarIcon } from '@/shared/icons/TabBarIcon';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const scheme = useColorScheme() ?? 'light';
+  const isLight = scheme === 'light';
+
+  const gradientColors: [string, string] = isLight
+    ? ['#5069D8', '#9464AF']                              
+    : ['rgba(80,105,216,0.8)', '#9464AF'];               
+
 
   return (
     <Tabs
     screenOptions={{
       headerShown: false,              
       tabBarShowLabel: false,
-      tabBarActiveTintColor: '#FFFFFF',
-      tabBarInactiveTintColor: 'rgba(255,255,255,0.7)',
+      tabBarActiveTintColor: '#000000',
+      tabBarInactiveTintColor: '#000000',
       tabBarStyle: {
         height: Platform.select({ ios: 80, android: 65, web: 65 }),
         backgroundColor: 'transparent',
@@ -30,7 +36,7 @@ export default function TabLayout() {
       },
       tabBarBackground: () => (
         <LinearGradient
-          colors={['#5069D8', '#9464AF']}
+          colors={gradientColors}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
           style={{ flex: 1 }}
@@ -41,8 +47,8 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Main',
-          tabBarIcon: ({ focused, size }) => (
-            <TabBarIcon name="home" focused={focused} size={size} />
+          tabBarIcon: ({ focused, size, color }) => (
+            <TabBarIcon name="home" focused={focused} size={size} color={color}/>
           ),
           headerRight: () => (
             <Link href="/modal" asChild>
@@ -51,7 +57,7 @@ export default function TabLayout() {
                   <FontAwesome
                     name="info-circle"
                     size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
+                    color={Colors[scheme].text}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}
@@ -64,8 +70,8 @@ export default function TabLayout() {
         name="leagues"
         options={{
           title: 'Leagues',
-          tabBarIcon: ({ focused, size }) => (
-            <TabBarIcon name="leagues" focused={focused} size={size} />
+          tabBarIcon: ({ focused, size, color }) => (
+            <TabBarIcon name="leagues" focused={focused} size={size} color={color} />
           ),
         }}
       />
@@ -74,8 +80,8 @@ export default function TabLayout() {
         options={{
           title: 'Rating',
           tabBarItemStyle: { paddingBottom: 2 },
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon name="rating" focused={focused} size={32} />
+          tabBarIcon: ({ focused, color }) => (
+            <TabBarIcon name="rating" focused={focused} size={32} color={color} />
           ),
         }}
       />
@@ -92,8 +98,8 @@ export default function TabLayout() {
         name="help"
         options={{
           title: 'Help',
-          tabBarIcon: ({ focused, size }) => (
-            <TabBarIcon name="help" focused={focused} size={size} />
+          tabBarIcon: ({ focused, size, color }) => (
+            <TabBarIcon name="help" focused={focused} size={size} color={color} />
           ),
         }}
       />

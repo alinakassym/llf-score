@@ -9,7 +9,7 @@ import { Text } from "@/components/ui/text";
 const TabHomeScreen: FC = () => {
   return (
     <KeyboardAvoidingView
-        className="flex-1 bg-white"
+        className="flex-1"
         behavior={Platform.select({ ios: "padding", android: undefined })}
       >
         <ScrollView

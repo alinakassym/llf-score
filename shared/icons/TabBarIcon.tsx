@@ -26,5 +26,5 @@ type Props = { name: TabName; focused: boolean; size?: number; color?: string };
 
 export const TabBarIcon: React.FC<Props> = ({ name, focused, size = 22, color }) => {
   const Icon = focused ? map[name].active : map[name].inactive;
-  return <Icon width={size} height={size} color={color} />;
+  return <Icon width={size} height={size} fill={color} stroke={color} />;
 };
