@@ -1,16 +1,16 @@
 import React from 'react';
 import { SvgProps } from 'react-native-svg';
 
-import Home from '../../assets/icons/tabs/home.svg';
-import HomeActive from '../../assets/icons/tabs/home-active.svg';
-import Leagues from '../../assets/icons/tabs/leagues.svg';
-import LeaguesActive from '../../assets/icons/tabs/leagues-active.svg';
-import Rating from '../../assets/icons/tabs/rating.svg';
-import RatingActive from '../../assets/icons/tabs/rating-active.svg';
-import Transfers from '../../assets/icons/tabs/transfers.svg';
-import TransfersActive from '../../assets/icons/tabs/transfers-active.svg';
-import Help from '../../assets/icons/tabs/help.svg';
-import HelpActive from '../../assets/icons/tabs/help-active.svg';
+import Home from '@/assets/icons/tabs/home.svg';
+import HomeActive from '@/assets/icons/tabs/home-active.svg';
+import Leagues from '@/assets/icons/tabs/leagues.svg';
+import LeaguesActive from '@/assets/icons/tabs/leagues-active.svg';
+import Rating from '@/assets/icons/tabs/rating.svg';
+import RatingActive from '@/assets/icons/tabs/rating-active.svg';
+import Transfers from '@/assets/icons/tabs/transfers.svg';
+import TransfersActive from '@/assets/icons/tabs/transfers-active.svg';
+import Help from '@/assets/icons/tabs/help.svg';
+import HelpActive from '@/assets/icons/tabs/help-active.svg';
 
 type TabName = 'home' | 'leagues' | 'rating' | 'transfers' | 'help';
 
