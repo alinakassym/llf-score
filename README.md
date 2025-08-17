@@ -45,6 +45,8 @@ npm install
 npm start
 # или
 npx expo start
+# c очисткой кэша 
+npx expo start -c
 ```
 
 📱 **Expo Go**: отсканируй QR-код из терминала камерой телефона (с установленным Expo Go).  
