@@ -6,7 +6,7 @@ import { Platform, Pressable } from 'react-native';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
-import { TabBarIcon } from '@/components/icons/TabBarIcon';
+import { TabBarIcon } from '@/shared/icons/TabBarIcon';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
