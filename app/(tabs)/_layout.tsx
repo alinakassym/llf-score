@@ -27,9 +27,9 @@ export default function TabLayout() {
         headerShown: useClientOnlyValue(false, true),
       }}>
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
-          title: 'Tab One',
+          title: 'Main',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Link href="/modal" asChild>
@@ -48,9 +48,30 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="leagues"
         options={{
-          title: 'Tab Two',
+          title: 'Leagues',
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="raiting"
+        options={{
+          title: 'Raiting',
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="transfer"
+        options={{
+          title: 'Transfer',
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="help"
+        options={{
+          title: 'Help',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
