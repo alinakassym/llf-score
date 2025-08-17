@@ -19,6 +19,7 @@ export default function TabLayout() {
       tabBarActiveTintColor: '#FFFFFF',
       tabBarInactiveTintColor: 'rgba(255,255,255,0.7)',
       tabBarStyle: {
+        height: Platform.select({ ios: 80, android: 65, web: 65 }),
         backgroundColor: 'transparent',
         borderTopWidth: 0,
         paddingTop: 6,
