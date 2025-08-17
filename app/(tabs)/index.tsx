@@ -1,9 +1,6 @@
 import { FC } from "react";
 import {
-  Pressable,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
+  KeyboardAvoidingView, Platform, ScrollView
 } from "react-native";
 
 import { VStack } from "@/components/ui/vstack";
@@ -12,17 +9,21 @@ import { Text } from "@/components/ui/text";
 const TabHomeScreen: FC = () => {
   return (
     <KeyboardAvoidingView
-      className="flex-1 bg-white"
-      behavior={Platform.select({ ios: "padding", android: undefined })}
-    >
-      <Pressable className="flex-1" onPress={Keyboard.dismiss}>
-        <VStack className="flex-1 px-6 py-8 gap-6">
-          <Text className="text-2xl font-semibold">
-            Home
-          </Text>
-        </VStack>
-      </Pressable>
-    </KeyboardAvoidingView>
+        className="flex-1 bg-white"
+        behavior={Platform.select({ ios: "padding", android: undefined })}
+      >
+        <ScrollView
+          keyboardDismissMode={Platform.OS === "ios" ? "interactive" : "on-drag"}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          <VStack className="pt-6 flex-1 gap-6">
+            <Text className="text-2xl font-semibold">
+              Home
+            </Text>
+          </VStack>
+        </ScrollView>
+      </KeyboardAvoidingView>
   );
 };
 
