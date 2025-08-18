@@ -8,7 +8,11 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 import "@/global.css";
 
-import { useColorScheme } from 'react-native';
+// ⬇️ Redux
+import { Provider } from 'react-redux';
+import { store } from '@/shared/store/store';
+
+import { useThemeMode } from '@/shared/theme/useThemeMode';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -44,11 +48,15 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <Provider store={store}>
+      <RootLayoutNav />
+    </Provider>
+  );
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+  const colorScheme = useThemeMode();
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
