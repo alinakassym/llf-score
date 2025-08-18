@@ -3,9 +3,10 @@ import { Tabs } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Platform, useColorScheme } from 'react-native';
 import { TabBarIcon } from '@/shared/icons/TabBarIcon';
+import { useThemeMode } from '@/shared/theme/useThemeMode';
 
 export default function TabLayout() {
-  const scheme = useColorScheme() ?? 'light';
+  const scheme = useThemeMode();
   const isLight = scheme === 'light';
   const tintColor = isLight ? '#FFFFFF' : '#000000';
 
