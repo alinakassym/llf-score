@@ -1,0 +1,26 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+type GeneralState = {
+  cityId: string;
+  leagueId: string;
+};
+
+const initialState: GeneralState = {
+  cityId: 'astana', 
+  leagueId: 'pl',
+};
+
+const generalSlice = createSlice({
+  name: 'general',
+  initialState,
+  reducers: {
+    setCityId:   (s, a: PayloadAction<string>) => { s.cityId = a.payload; },
+    setLeagueId: (s, a: PayloadAction<string>) => { s.leagueId = a.payload; },
+  },
+});
+
+export const { setCityId, setLeagueId } = generalSlice.actions;
+export default generalSlice.reducer;
+
+export const selectCityId   = (s: { general: GeneralState }) => s.general.cityId;
+export const selectLeagueId = (s: { general: GeneralState }) => s.general.leagueId;
