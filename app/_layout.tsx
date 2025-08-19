@@ -14,6 +14,8 @@ import { store } from '@/shared/store/store';
 
 import { useThemeMode } from '@/shared/theme/useThemeMode';
 
+import { AppThemeProvider } from '@/shared/theme/AppThemeProvider';
+
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -59,13 +61,13 @@ function RootLayoutNav() {
   const colorScheme = useThemeMode();
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <AppThemeProvider>
       <GluestackUIProvider>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         </Stack>
       </GluestackUIProvider>
-    </ThemeProvider>
+    </AppThemeProvider>
   );
 }

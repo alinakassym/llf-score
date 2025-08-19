@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Platform, useColorScheme } from 'react-native';
+import { Platform } from 'react-native';
 import { TabBarIcon } from '@/shared/icons/TabBarIcon';
 import { useThemeMode } from '@/shared/theme/useThemeMode';
 
