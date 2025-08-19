@@ -3,8 +3,10 @@ import {
   KeyboardAvoidingView, Platform, ScrollView
 } from "react-native";
 import HomeTopBar from '@/features/home/HomeTopBar';
+import BannerCarousel from '@/features/home/BannerCarousel';
 import { VStack } from "@/components/ui/vstack";
 import { Text } from "@/components/ui/text";
+import { banners } from '@/shared/mocks/banners';
 
 const TabHomeScreen: FC = () => {
   return (
@@ -13,6 +15,7 @@ const TabHomeScreen: FC = () => {
         behavior={Platform.select({ ios: "padding", android: undefined })}
       >
         <HomeTopBar />
+        <BannerCarousel items={banners} />
         <ScrollView
           keyboardDismissMode={Platform.OS === "ios" ? "interactive" : "on-drag"}
           keyboardShouldPersistTaps="handled"
