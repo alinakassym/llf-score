@@ -21,4 +21,10 @@ export const banners: Banner[] = [
     title: "Мячи от А до Я",
     image: require("@/assets/images/banners/2.png")
   },
+  {
+    id: "b3",
+    title: "Преодолей границы",
+    subtitle: "Достигай новых вершин",
+    image: require("@/assets/images/banners/1.png")
+  },
 ];

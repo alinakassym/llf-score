@@ -20,7 +20,7 @@ export default function BannerCarousel({
 }: Props) {
   const screenW = Dimensions.get("window").width;
   // ширина карточки — с учётом внутренних отступов
-  const cardW = useMemo(() => screenW - paddingH * 2, [screenW, paddingH]);
+  const cardW = useMemo(() => screenW - paddingH * 6, [screenW, paddingH]);
   const ref = useRef<FlatList<Banner>>(null);
   const [index, setIndex] = useState(0);
 
@@ -44,7 +44,7 @@ export default function BannerCarousel({
   }
 
   return (
-    <View style={{ paddingHorizontal: paddingH }}>
+    <View style={{ paddingHorizontal: 0}}>
       <FlatList
         ref={ref}
         horizontal
@@ -54,9 +54,9 @@ export default function BannerCarousel({
         snapToInterval={cardW + gap}
         decelerationRate="fast"
         bounces={false}
-        contentContainerStyle={{ paddingVertical: 8 }}
+        contentContainerStyle={{ paddingVertical: 0 }}
         ItemSeparatorComponent={() => <View style={{ width: gap }} />}
-        renderItem={({ item }) => <BannerCard item={item} width={cardW} />}
+        renderItem={({ item }) => <BannerCard item={item} height={118} width={cardW} />}
         onMomentumScrollEnd={onMomentumEnd}
         getItemLayout={(_, i) => ({ length: cardW + gap, offset: (cardW + gap) * i, index: i })}
       />
@@ -67,7 +67,7 @@ export default function BannerCarousel({
           <View
             key={i}
             style={{
-              width: i === index ? 8 : 6,
+              width: i === index ? 12 : 6,
               height: 6,
               borderRadius: 6,
               backgroundColor: i === index ? "#111" : "#D0D5DD",

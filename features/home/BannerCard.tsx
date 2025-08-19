@@ -11,8 +11,8 @@ export default function BannerCard({ item, width, height = 140 }: Props) {
     <ImageBackground
       source={item.image}
       resizeMode="cover"
-      imageStyle={{ borderRadius: 16 }}
-      style={{ width, height, overflow: "hidden", borderRadius: 16 }}
+      imageStyle={{ borderRadius: 0 }}
+      style={{ width, height, overflow: "hidden", borderRadius: 0 }}
     >
       {/* затемнение снизу под текст */}
       <LinearGradient
