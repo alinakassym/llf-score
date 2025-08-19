@@ -48,7 +48,7 @@ export default function DrawerPicker({
         <DrawerContent style={{ borderBottomLeftRadius: 16, borderBottomRightRadius: 16, overflow: 'hidden' }}>
           <DrawerHeader>
             <Text style={{ fontSize: 16, fontWeight: '700' }}>{label}</Text>
-            <DrawerCloseButton onPress={() => setOpen(false)} />
+            <DrawerCloseButton onPress={() => setOpen(false)}><Ionicons name="close" size={24} /></DrawerCloseButton>
           </DrawerHeader>
           <DrawerBody>
             <View style={{ gap: 8 }}>
