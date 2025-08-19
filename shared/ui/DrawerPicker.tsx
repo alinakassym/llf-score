@@ -21,7 +21,7 @@ type Props = {
 };
 
 export default function DrawerPicker({
-  items, value, onChange, label = 'Выберите', showItemIcon = true,
+  items, value, onChange, label, showItemIcon = true,
 }: Props) {
   const [open, setOpen] = useState(false);
   const selected = useMemo(
@@ -43,13 +43,16 @@ export default function DrawerPicker({
         <Ionicons name={open ? 'chevron-up' : 'chevron-down'} size={16} />
       </Pressable>
 
-      <Drawer isOpen={open} onClose={() => setOpen(false)} size="md" anchor="top">
+      <Drawer style={{ marginTop: 101 }}  isOpen={open} onClose={() => setOpen(false)} size="auto" anchor="top">
         <DrawerBackdrop onPress={() => setOpen(false)} />
-        <DrawerContent style={{ borderBottomLeftRadius: 16, borderBottomRightRadius: 16, overflow: 'hidden' }}>
-          <DrawerHeader>
-            <Text style={{ fontSize: 16, fontWeight: '700' }}>{label}</Text>
-            <DrawerCloseButton onPress={() => setOpen(false)}><Ionicons name="close" size={24} /></DrawerCloseButton>
-          </DrawerHeader>
+        <DrawerContent style={{ paddingVertical: 0, borderBottomLeftRadius: 16, borderBottomRightRadius: 16, overflow: 'hidden' }}>
+          {
+            label && 
+            <DrawerHeader style={{ paddingTop: 16 }}>
+                <Text style={{ fontSize: 16, fontWeight: '700' }}>{label}</Text>
+                <DrawerCloseButton onPress={() => setOpen(false)}><Ionicons name="close" size={24} /></DrawerCloseButton>
+            </DrawerHeader>
+          }
           <DrawerBody>
             <View style={{ gap: 8 }}>
               {items.map((it) => {

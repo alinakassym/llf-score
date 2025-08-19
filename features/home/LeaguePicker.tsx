@@ -8,7 +8,6 @@ export default function LeaguePicker(props: { value?: string; onChange?: (id: st
       items={items}
       value={props.value}
       onChange={props.onChange}
-      label="Выберите лигу"
       showItemIcon={false}
     />
   );

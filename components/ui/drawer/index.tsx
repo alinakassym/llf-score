@@ -62,6 +62,7 @@ const drawerStyle = tva({
   base: 'w-full h-full web:pointer-events-none relative',
   variants: {
     size: {
+      auto: '',
       sm: '',
       md: '',
       lg: '',

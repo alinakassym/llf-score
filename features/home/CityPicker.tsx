@@ -8,7 +8,6 @@ export default function CityPicker(props: { value?: string; onChange?: (id: stri
       items={items}
       value={props.value}
       onChange={props.onChange}
-      label="Выберите город"
       showItemIcon
     />
   );
