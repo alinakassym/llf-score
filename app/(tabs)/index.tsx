@@ -2,7 +2,7 @@ import { FC } from "react";
 import {
   KeyboardAvoidingView, Platform, ScrollView
 } from "react-native";
-
+import HomeTopBar from '@/features/home/HomeTopBar';
 import { VStack } from "@/components/ui/vstack";
 import { Text } from "@/components/ui/text";
 
@@ -12,6 +12,7 @@ const TabHomeScreen: FC = () => {
         className="flex-1"
         behavior={Platform.select({ ios: "padding", android: undefined })}
       >
+        <HomeTopBar />
         <ScrollView
           keyboardDismissMode={Platform.OS === "ios" ? "interactive" : "on-drag"}
           keyboardShouldPersistTaps="handled"
