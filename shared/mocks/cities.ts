@@ -10,16 +10,18 @@ export const cities: City[] = [
   { 
     id: "astana",   
     name: "Астана",   
-    image: require("@/assets/images/cities/astana.png")
- },
+    image: { uri: "https://great-badgers-sing.loca.lt/api/cities/1/icon" }
+  },
   { 
     id: "almaty",   
     name: "Алматы",   
-    image: require("@/assets/images/cities/almaty.png")},
+    image: require("@/assets/images/cities/almaty.png")
+  },
   { 
     id: "shymkent",
     name: "Шымкент",
-    image: require("@/assets/images/cities/shymkent.png")},
+    image: require("@/assets/images/cities/shymkent.png")
+  },
   { 
     id: "atyrau",   
     name: "Атырау",   
@@ -35,5 +37,4 @@ export const cities: City[] = [
     name: "Павлодар",   
     image: require("@/assets/images/cities/pavlodar.png")
   }
-
 ];
