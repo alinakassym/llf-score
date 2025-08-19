@@ -14,7 +14,7 @@ export default function HomeTopBar() {
     <View
       style={{
         paddingHorizontal: 16,
-        paddingTop: 8,
+        paddingTop: 52,
         paddingBottom: 12,
         backgroundColor: '#fff',
         borderBottomColor: '#ECEDEF',
@@ -29,9 +29,9 @@ export default function HomeTopBar() {
         </View>
 
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-          <IconButton name="search" />
+          <IconButton name="search" accessibilityLabel="Поиск" />
           <IconButton name="notifications-outline" dot />
-          <IconButton name="person-circle-outline" />
+          <IconButton name="person-circle-outline" accessibilityLabel="Профиль" />
         </View>
       </View>
     </View>
