@@ -2,7 +2,7 @@ import type { ImageSourcePropType } from "react-native";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { httpGet } from "@/services/http";
 
-const API_URL = "https://neat-onions-slide.loca.lt/api/cities";
+const API_URL = "http://192.168.18.103:5253/api/cities";
 
 export type City = {
   id: string;

@@ -10,7 +10,8 @@ export const cities: City[] = [
   {
     id: "astana",
     name: "Астана",
-    icon: { uri: "https://neat-onions-slide.loca.lt/api/cities/1/icon" },
+    // icon: { uri: "https://neat-onions-slide.loca.lt/api/cities/1/icon" },
+    icon: require("@/assets/images/cities/astana.png"),
   },
   {
     id: "almaty",
