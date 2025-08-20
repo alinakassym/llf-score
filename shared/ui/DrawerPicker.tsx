@@ -7,6 +7,7 @@ import {
 } from '@/components/ui/drawer';
 
 import { useAppTheme } from '@/shared/theme/AppThemeProvider';
+const { colors } = useAppTheme();
 
 export type DrawerItem = {
   id: string;
@@ -22,40 +23,82 @@ type Props = {
   showItemIcon?: boolean;
 };
 
+// export const DrawerPickerSkeleton = () => (
+//   <View
+//     style={{
+//       flexDirection: "row",
+//       alignItems: "center",
+//       gap: 6,
+//       paddingVertical: 6,
+//     }}
+//     accessibilityRole="button"
+//   >
+//     <Text style={{ fontWeight: "700", color: colors.text }}>loading...</Text>
+//     <Ionicons name="chevron-down" size={16} />
+//   </View>
+// );
+
 export default function DrawerPicker({
-  items, value, onChange, label, showItemIcon = true,
+  items,
+  value,
+  onChange,
+  label,
+  showItemIcon = true,
 }: Props) {
   const [open, setOpen] = useState(false);
   const selected = useMemo(
-    () => items.find(i => i.id === value) ?? items[0],
-    [items, value]
+    () => items.find((i) => i.id === value) ?? items[0],
+    [items, value],
   );
-    const { colors } = useAppTheme();
 
   return (
     <>
       <Pressable
-        onPress={() => setOpen(v => !v)}
-        style={{ flexDirection: 'row', alignItems: 'center', gap: 6, paddingVertical: 6 }}
+        onPress={() => setOpen((v) => !v)}
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 6,
+          paddingVertical: 6,
+        }}
         accessibilityRole="button"
       >
         {showItemIcon && selected?.icon ? (
-          <Image source={selected.icon} style={{ width: 18, height: 18, borderRadius: 4, marginRight: 6 }} />
+          <Image
+            source={selected.icon}
+            style={{ width: 18, height: 18, borderRadius: 4, marginRight: 6 }}
+          />
         ) : null}
-        <Text style={{ fontWeight: '700', color: colors.text }}>{selected?.label}</Text>
-        <Ionicons name={open ? 'chevron-up' : 'chevron-down'} size={16} />
+        <Text style={{ fontWeight: "700", color: colors.text }}>
+          {selected?.label}
+        </Text>
+        <Ionicons name={open ? "chevron-up" : "chevron-down"} size={16} />
       </Pressable>
 
-      <Drawer style={{ marginTop: 101 }}  isOpen={open} onClose={() => setOpen(false)} size="auto" anchor="top">
+      <Drawer
+        style={{ marginTop: 101 }}
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        size="auto"
+        anchor="top"
+      >
         <DrawerBackdrop onPress={() => setOpen(false)} />
-        <DrawerContent style={{ paddingVertical: 0, borderBottomLeftRadius: 16, borderBottomRightRadius: 16, overflow: 'hidden' }}>
-          {
-            label && 
+        <DrawerContent
+          style={{
+            paddingVertical: 0,
+            borderBottomLeftRadius: 16,
+            borderBottomRightRadius: 16,
+            overflow: "hidden",
+          }}
+        >
+          {label && (
             <DrawerHeader style={{ paddingTop: 16 }}>
-                <Text style={{ fontSize: 16, fontWeight: '700' }}>{label}</Text>
-                <DrawerCloseButton onPress={() => setOpen(false)}><Ionicons name="close" size={24} /></DrawerCloseButton>
+              <Text style={{ fontSize: 16, fontWeight: "700" }}>{label}</Text>
+              <DrawerCloseButton onPress={() => setOpen(false)}>
+                <Ionicons name="close" size={24} />
+              </DrawerCloseButton>
             </DrawerHeader>
-          }
+          )}
           <DrawerBody>
             <View style={{ gap: 8 }}>
               {items.map((it) => {
@@ -63,17 +106,34 @@ export default function DrawerPicker({
                 return (
                   <Pressable
                     key={it.id}
-                    onPress={() => { onChange?.(it.id); setOpen(false); }}
+                    onPress={() => {
+                      onChange?.(it.id);
+                      setOpen(false);
+                    }}
                     style={{
-                      flexDirection: 'row', alignItems: 'center', gap: 12,
-                      paddingVertical: 10, paddingHorizontal: 6, borderRadius: 10,
-                      backgroundColor: active ? '#F2F3F5' : 'transparent',
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 12,
+                      paddingVertical: 10,
+                      paddingHorizontal: 6,
+                      borderRadius: 10,
+                      backgroundColor: active ? "#F2F3F5" : "transparent",
                     }}
                   >
                     {showItemIcon && it.icon ? (
-                      <Image source={it.icon} style={{ width: 28, height: 28, borderRadius: 6 }} />
+                      <Image
+                        source={it.icon}
+                        style={{ width: 28, height: 28, borderRadius: 6 }}
+                      />
                     ) : null}
-                    <Text style={{ fontSize: 16, fontWeight: active ? '700' : '400' }}>{it.label}</Text>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: active ? "700" : "400",
+                      }}
+                    >
+                      {it.label}
+                    </Text>
                   </Pressable>
                 );
               })}
