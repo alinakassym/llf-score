@@ -1,18 +1,22 @@
 import React, { useMemo, useState } from 'react';
-import { Image, Pressable, View } from 'react-native';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { Text } from '@/components/ui/text';
+import { Image, Pressable, View, ImageSourcePropType } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { Text } from "@/components/ui/text";
 import {
-  Drawer, DrawerBackdrop, DrawerContent, DrawerHeader, DrawerBody, DrawerCloseButton,
-} from '@/components/ui/drawer';
+  Drawer,
+  DrawerBackdrop,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+  DrawerCloseButton,
+} from "@/components/ui/drawer";
 
-import { useAppTheme } from '@/shared/theme/AppThemeProvider';
-const { colors } = useAppTheme();
+import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 export type DrawerItem = {
   id: string;
   label: string;
-  icon?: any;
+  icon?: ImageSourcePropType;
 };
 
 type Props = {
@@ -23,20 +27,23 @@ type Props = {
   showItemIcon?: boolean;
 };
 
-// export const DrawerPickerSkeleton = () => (
-//   <View
-//     style={{
-//       flexDirection: "row",
-//       alignItems: "center",
-//       gap: 6,
-//       paddingVertical: 6,
-//     }}
-//     accessibilityRole="button"
-//   >
-//     <Text style={{ fontWeight: "700", color: colors.text }}>loading...</Text>
-//     <Ionicons name="chevron-down" size={16} />
-//   </View>
-// );
+export const DrawerPickerSkeleton = ({ label }: { label: string }) => {
+  const { colors } = useAppTheme();
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 6,
+        paddingVertical: 6,
+      }}
+      accessibilityRole="button"
+    >
+      <Text style={{ fontWeight: "700", color: colors.text }}>{label}</Text>
+      <Ionicons name="chevron-down" size={16} />
+    </View>
+  );
+};
 
 export default function DrawerPicker({
   items,
@@ -50,6 +57,8 @@ export default function DrawerPicker({
     () => items.find((i) => i.id === value) ?? items[0],
     [items, value],
   );
+
+  const { colors } = useAppTheme();
 
   return (
     <>

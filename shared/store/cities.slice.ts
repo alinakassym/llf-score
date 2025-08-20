@@ -1,3 +1,4 @@
+import type { ImageSourcePropType } from "react-native";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { httpGet } from "@/services/http";
 
@@ -6,7 +7,7 @@ const API_URL = "https://neat-onions-slide.loca.lt/api/cities";
 export type City = {
   id: string;
   name: string;
-  icon?: string;
+  icon?: ImageSourcePropType;
 };
 
 type CitiesState = {

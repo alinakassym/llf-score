@@ -1,13 +1,14 @@
-import DrawerPicker from "@/shared/ui/DrawerPicker";
-import type { DrawerItem } from "@/shared/ui/DrawerPicker";
-import { useEffect } from "react";
-import { View, Text, ActivityIndicator } from "react-native";
+import DrawerPicker, {
+  DrawerItem,
+  DrawerPickerSkeleton,
+} from "@/shared/ui/DrawerPicker";
+import { useEffect, useMemo } from "react";
+import { cities as mockCities } from "@/shared/mocks/cities";
 import { useAppDispatch, useAppSelector } from "@/shared/store/hooks";
 import {
   fetchCities,
   selectCities,
   selectCitiesStatus,
-  selectCitiesError,
 } from "@/shared/store/cities.slice";
 
 export default function CityPicker(props: {
@@ -17,35 +18,27 @@ export default function CityPicker(props: {
   const dispatch = useAppDispatch();
   const cities = useAppSelector(selectCities);
   const status = useAppSelector(selectCitiesStatus);
-  const error = useAppSelector(selectCitiesError);
-  console.log("CityPicker", { cities, status, error });
+
+  console.log("CityPicker", cities);
 
   useEffect(() => {
     if (status === "idle") dispatch(fetchCities());
   }, [dispatch, status]);
 
+  const items: DrawerItem[] = useMemo(
+    () =>
+      (cities.length ? cities : mockCities).map((c) => ({
+        label: c.name,
+        id: c.id,
+        icon: c?.icon,
+      })),
+    [cities],
+  );
+
   if (status === "loading") {
-    return (
-      <View style={{ padding: 16 }}>
-        <ActivityIndicator />
-        <Text>Загружаем города…</Text>
-      </View>
-    );
+    return <DrawerPickerSkeleton label="Город" />;
   }
 
-  if (status === "failed") {
-    return (
-      <View style={{ padding: 16 }}>
-        <Text>Ошибка: {error}</Text>
-      </View>
-    );
-  }
-
-  const items: DrawerItem[] = cities.map((c) => ({
-    label: c.name,
-    id: c.id,
-    icon: c.icon,
-  }));
   return (
     <DrawerPicker
       items={items}
