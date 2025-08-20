@@ -8,14 +8,17 @@ import {
   setCityId, setLeagueId,
   selectCityId, selectLeagueId,
 } from '@/shared/store/general.slice';
+import { useAppTheme } from '@/shared/theme/AppThemeProvider';
 
 export default function HomeTopBar() {
+  const { colors } = useAppTheme();
+
   const dispatch = useAppDispatch();
   const cityId   = useAppSelector(selectCityId);
   const leagueId = useAppSelector(selectLeagueId);
 
   return (
-    <View style={{ paddingHorizontal: 16, paddingTop: 52, paddingBottom: 12, borderBottomColor: '#ECEDEF', borderBottomWidth: 1 }}>
+    <View style={{ paddingHorizontal: 16, paddingTop: 52, paddingBottom: 12, borderBottomColor: '#ECEDEF', borderBottomWidth: 1, backgroundColor: colors.secondaryBg }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
           <CityPicker value={cityId} onChange={(id) => dispatch(setCityId(id))}/>

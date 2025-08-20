@@ -6,6 +6,8 @@ import {
   Drawer, DrawerBackdrop, DrawerContent, DrawerHeader, DrawerBody, DrawerCloseButton,
 } from '@/components/ui/drawer';
 
+import { useAppTheme } from '@/shared/theme/AppThemeProvider';
+
 export type DrawerItem = {
   id: string;
   label: string;
@@ -28,6 +30,7 @@ export default function DrawerPicker({
     () => items.find(i => i.id === value) ?? items[0],
     [items, value]
   );
+    const { colors } = useAppTheme();
 
   return (
     <>
@@ -39,7 +42,7 @@ export default function DrawerPicker({
         {showItemIcon && selected?.icon ? (
           <Image source={selected.icon} style={{ width: 18, height: 18, borderRadius: 4, marginRight: 6 }} />
         ) : null}
-        <Text style={{ fontWeight: '700' }}>{selected?.label}</Text>
+        <Text style={{ fontWeight: '700', color: colors.text }}>{selected?.label}</Text>
         <Ionicons name={open ? 'chevron-up' : 'chevron-down'} size={16} />
       </Pressable>
 
