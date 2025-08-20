@@ -1,5 +1,6 @@
 export interface ThemeTokens {
     bg: string;
+    secondaryBg: string;
     text: string;
     textMuted: string;
     surface: string;
@@ -13,6 +14,7 @@ export interface ThemeTokens {
   export const tokens: Record<'light' | 'dark', ThemeTokens> = {
     light: {
       bg: '#FFFFFF',
+      secondaryBg: "#F5F5F5",
       text: '#111111',
       textMuted: '#6B7280',
       surface: '#F7F7F8',
@@ -24,6 +26,7 @@ export interface ThemeTokens {
     },
     dark: {
       bg: '#0B1220',
+      secondaryBg: '#0B1220',
       text: '#FFFFFF',
       textMuted: 'rgba(255,255,255,0.75)',
       surface: 'rgba(255,255,255,0.06)',
