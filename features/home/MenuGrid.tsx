@@ -9,7 +9,8 @@ export default function MenuGrid() {
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "space-between",
-        paddingHorizontal: 16,
+        paddingHorizontal: 24,
+        paddingVertical: 16,
       }}
     >
       <MenuButton icon="videocam-outline" label="LIVE" />
