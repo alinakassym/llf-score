@@ -7,7 +7,7 @@ type Props = {
   items: Banner[];
   autoPlay?: boolean;
   intervalMs?: number;
-  paddingH?: number;   // горизонтальные поля контейнера
+  paddingH?: number;
   gap?: number;
 };
 
@@ -19,6 +19,7 @@ export default function BannerCarousel({
   gap = 12,
 }: Props) {
   const screenW = Dimensions.get("window").width;
+
   // ширина карточки — с учётом внутренних отступов
   const cardW = useMemo(() => screenW - paddingH * 6, [screenW, paddingH]);
   const ref = useRef<FlatList<Banner>>(null);
@@ -30,7 +31,10 @@ export default function BannerCarousel({
     const id = setInterval(() => {
       setIndex((prev) => {
         const next = (prev + 1) % items.length;
-        ref.current?.scrollToOffset({ offset: next * (cardW + gap), animated: true });
+        ref.current?.scrollToOffset({
+          offset: next * (cardW + gap),
+          animated: true,
+        });
         return next;
       });
     }, intervalMs);
@@ -44,7 +48,7 @@ export default function BannerCarousel({
   }
 
   return (
-    <View style={{ paddingHorizontal: 0}}>
+    <View style={{ paddingHorizontal: 0 }}>
       <FlatList
         ref={ref}
         horizontal
@@ -56,13 +60,26 @@ export default function BannerCarousel({
         bounces={false}
         contentContainerStyle={{ paddingVertical: 0 }}
         ItemSeparatorComponent={() => <View style={{ width: gap }} />}
-        renderItem={({ item }) => <BannerCard item={item} height={118} width={cardW} />}
+        renderItem={({ item }) => (
+          <BannerCard item={item} height={118} width={cardW} />
+        )}
         onMomentumScrollEnd={onMomentumEnd}
-        getItemLayout={(_, i) => ({ length: cardW + gap, offset: (cardW + gap) * i, index: i })}
+        getItemLayout={(_, i) => ({
+          length: cardW + gap,
+          offset: (cardW + gap) * i,
+          index: i,
+        })}
       />
 
       {/* точки-пейджер */}
-      <View style={{ flexDirection: "row", justifyContent: "center", gap: 6, marginTop: 8 }}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          gap: 6,
+          marginTop: 8,
+        }}
+      >
         {items.map((_, i) => (
           <View
             key={i}
