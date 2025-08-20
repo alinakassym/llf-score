@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { Image, Pressable, View, ImageSourcePropType } from "react-native";
+import { Pressable, View, ImageSourcePropType } from "react-native";
+import { Image } from "@/components/ui/image";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Text } from "@/components/ui/text";
 import {
@@ -73,10 +74,7 @@ export default function DrawerPicker({
         accessibilityRole="button"
       >
         {showItemIcon && selected?.icon ? (
-          <Image
-            source={selected.icon}
-            style={{ width: 18, height: 18, borderRadius: 4, marginRight: 6 }}
-          />
+          <Image source={selected.icon} size="2xs" />
         ) : null}
         <Text style={{ fontWeight: "700", color: colors.text }}>
           {selected?.label}
@@ -130,10 +128,7 @@ export default function DrawerPicker({
                     }}
                   >
                     {showItemIcon && it.icon ? (
-                      <Image
-                        source={it.icon}
-                        style={{ width: 28, height: 28, borderRadius: 6 }}
-                      />
+                      <Image source={it.icon} size="sm" />
                     ) : null}
                     <Text
                       style={{
