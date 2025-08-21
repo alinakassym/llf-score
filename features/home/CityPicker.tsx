@@ -10,16 +10,16 @@ import {
   selectCities,
   selectCitiesStatus,
 } from "@/shared/store/cities.slice";
+import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 export default function CityPicker(props: {
   value?: string;
   onChange?: (id: string) => void;
 }) {
+  const { colors } = useAppTheme();
   const dispatch = useAppDispatch();
   const cities = useAppSelector(selectCities);
   const status = useAppSelector(selectCitiesStatus);
-
-  console.log("CityPicker", cities);
 
   useEffect(() => {
     if (status === "idle") dispatch(fetchCities());
@@ -36,7 +36,7 @@ export default function CityPicker(props: {
   );
 
   if (status === "loading") {
-    return <DrawerPickerSkeleton label="Город" />;
+    return <DrawerPickerSkeleton label="Город" color={colors.text} />;
   }
 
   return (
@@ -44,6 +44,8 @@ export default function CityPicker(props: {
       items={items}
       value={props.value}
       onChange={props.onChange}
+      color={colors.text}
+      backgroundColor={colors.bg}
       showItemIcon
     />
   );

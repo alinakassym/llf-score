@@ -12,8 +12,6 @@ import {
   DrawerCloseButton,
 } from "@/components/ui/drawer";
 
-import { useAppTheme } from "@/shared/theme/AppThemeProvider";
-
 export type DrawerItem = {
   id: string;
   label: string;
@@ -26,10 +24,21 @@ type Props = {
   onChange?: (id: string) => void;
   label?: string;
   showItemIcon?: boolean;
+  color?: string;
+  backgroundColor?: string;
 };
 
-export const DrawerPickerSkeleton = ({ label }: { label: string }) => {
-  const { colors } = useAppTheme();
+const getActiveBackgroundColor = (active: boolean) => {
+  return active ? "#a8a8a8" : "transparent";
+};
+
+export const DrawerPickerSkeleton = ({
+  label,
+  color,
+}: {
+  label: string;
+  color?: string;
+}) => {
   return (
     <View
       style={{
@@ -40,7 +49,7 @@ export const DrawerPickerSkeleton = ({ label }: { label: string }) => {
       }}
       accessibilityRole="button"
     >
-      <Text style={{ fontWeight: "700", color: colors.text }}>{label}</Text>
+      <Text style={{ fontWeight: "700", color }}>{label}</Text>
       <Ionicons name="chevron-down" size={16} />
     </View>
   );
@@ -52,14 +61,15 @@ export default function DrawerPicker({
   onChange,
   label,
   showItemIcon = true,
+  color,
+  backgroundColor,
 }: Props) {
   const [open, setOpen] = useState(false);
   const selected = useMemo(
     () => items.find((i) => i.id === value) ?? items[0],
     [items, value],
   );
-
-  const { colors } = useAppTheme();
+  console.log("DrawerPicker color: ", color);
 
   return (
     <>
@@ -76,9 +86,7 @@ export default function DrawerPicker({
         {showItemIcon && selected?.icon ? (
           <Image source={selected.icon} size="2xs" />
         ) : null}
-        <Text style={{ fontWeight: "700", color: colors.text }}>
-          {selected?.label}
-        </Text>
+        <Text style={{ fontWeight: "700", color }}>{selected?.label}</Text>
         <Ionicons name={open ? "chevron-up" : "chevron-down"} size={16} />
       </Pressable>
 
@@ -96,11 +104,14 @@ export default function DrawerPicker({
             borderBottomLeftRadius: 16,
             borderBottomRightRadius: 16,
             overflow: "hidden",
+            backgroundColor,
           }}
         >
           {label && (
             <DrawerHeader style={{ paddingTop: 16 }}>
-              <Text style={{ fontSize: 16, fontWeight: "700" }}>{label}</Text>
+              <Text style={{ fontSize: 16, fontWeight: "700", color }}>
+                {label}
+              </Text>
               <DrawerCloseButton onPress={() => setOpen(false)}>
                 <Ionicons name="close" size={24} />
               </DrawerCloseButton>
@@ -124,7 +135,7 @@ export default function DrawerPicker({
                       paddingVertical: 10,
                       paddingHorizontal: 6,
                       borderRadius: 10,
-                      backgroundColor: active ? "#F2F3F5" : "transparent",
+                      backgroundColor: getActiveBackgroundColor(active),
                     }}
                   >
                     {showItemIcon && it.icon ? (
@@ -134,6 +145,7 @@ export default function DrawerPicker({
                       style={{
                         fontSize: 16,
                         fontWeight: active ? "700" : "400",
+                        color,
                       }}
                     >
                       {it.label}
