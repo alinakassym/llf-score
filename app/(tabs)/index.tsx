@@ -6,8 +6,8 @@ import HomeTopBar from '@/features/home/HomeTopBar';
 import MenuGrid from "@/features/home/MenuGrid";
 import BannerCarousel from "@/features/home/BannerCarousel";
 import { VStack } from "@/components/ui/vstack";
-import { Text } from "@/components/ui/text";
 import { banners } from "@/shared/mocks/banners";
+import HomeAccordionPreview from "@/features/home/HomeAccordionPreview";
 
 const TabHomeScreen: FC = () => {
   return (
@@ -24,7 +24,7 @@ const TabHomeScreen: FC = () => {
         <VStack className="flex-1 gap-6">
           <BannerCarousel items={banners} />
           <MenuGrid />
-          <Text className="text-2xl font-semibold">Home</Text>
+          <HomeAccordionPreview />
         </VStack>
       </ScrollView>
     </KeyboardAvoidingView>
