@@ -1,8 +1,7 @@
 import type { ImageSourcePropType } from "react-native";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { httpGet } from "@/services/http";
-
-const API_URL = "http://192.168.18.103:5253/api/cities";
+import { API_BASE_URL } from "@/shared/config/env";
 
 export type City = {
   id: string;
@@ -26,9 +25,11 @@ const initialState: CitiesState = {
 export const fetchCities = createAsyncThunk<City[]>(
   "cities/fetchCities",
   async () => {
-    const data = await httpGet<City[]>(API_URL);
+    const data = await httpGet<City[]>("/api/cities");
+    console.log("fetchCities", data);
     const result = data.map(
-      (c) => ({ ...c, icon: `${API_URL}/${c.id}/icon` }) as City,
+      (c) =>
+        ({ ...c, icon: `${API_BASE_URL}/api/cities/${c.id}/icon` }) as City,
     );
     return result;
   },
