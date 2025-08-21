@@ -128,7 +128,7 @@ export default function DrawerPicker({
                     }}
                   >
                     {showItemIcon && it.icon ? (
-                      <Image source={it.icon} size="sm" />
+                      <Image source={it.icon} size="xs" />
                     ) : null}
                     <Text
                       style={{
