@@ -16,14 +16,14 @@ const TabHomeScreen: FC = () => {
       behavior={Platform.select({ ios: "padding", android: undefined })}
     >
       <HomeTopBar />
-      <BannerCarousel items={banners} />
-      <MenuGrid />
       <ScrollView
         keyboardDismissMode={Platform.OS === "ios" ? "interactive" : "on-drag"}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        <VStack className="pt-6 flex-1 gap-6">
+        <VStack className="flex-1 gap-6">
+          <BannerCarousel items={banners} />
+          <MenuGrid />
           <Text className="text-2xl font-semibold">Home</Text>
         </VStack>
       </ScrollView>
