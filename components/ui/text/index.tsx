@@ -37,6 +37,7 @@ const Text = React.forwardRef<React.ComponentRef<typeof RNText>, ITextProps>(
           class: className,
         })}
         {...props}
+        style={[{ fontFamily: "Roboto" }, props.style]}
         ref={ref}
       />
     );
