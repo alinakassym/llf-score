@@ -1,8 +1,7 @@
 // shared/ui/DrawerPicker.tsx
 import React, { useMemo, useState } from "react";
-import { Image, Pressable, View } from "react-native";
+import { Image, Pressable, View, Text } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Text } from "@/components/ui/text";
 import { Divider } from "@/components/ui/divider";
 import {
   Drawer,

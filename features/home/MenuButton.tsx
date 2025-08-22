@@ -1,5 +1,4 @@
-import { Pressable, View } from "react-native";
-import { Text } from "@/components/ui/text";
+import { Pressable, View, Text } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
@@ -17,7 +16,8 @@ export default function MenuButton({ icon, label, onPress }: Props) {
       style={{
         alignItems: "center",
         justifyContent: "center",
-        width: 100,
+        width: "30%",
+        maxWidth: "30%",
         marginVertical: 8,
       }}
     >
