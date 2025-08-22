@@ -30,7 +30,14 @@ export default function MenuButton({ icon, label, onPress }: Props) {
       >
         <Ionicons name={icon} size={28} color={colors.primary} />
       </View>
-      <Text style={{ marginTop: 4, fontSize: 14, color: colors.text }}>
+      <Text
+        style={{
+          marginTop: 4,
+          fontSize: 14,
+          fontWeight: 600,
+          color: colors.text,
+        }}
+      >
         {label}
       </Text>
     </Pressable>

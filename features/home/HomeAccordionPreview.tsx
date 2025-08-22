@@ -75,14 +75,20 @@ export default function HomeAccordionPreview() {
                             style={{ width: 24, height: 24 }}
                           />
                           <View>
-                            <Text style={{ fontSize: 14, color: colors.text }}>
+                            <Text
+                              style={{
+                                fontSize: 14,
+                                color: colors.text,
+                                fontWeight: 600,
+                              }}
+                            >
                               {it.title}
                             </Text>
                             <Text
                               style={{
                                 fontSize: 14,
                                 fontWeight: 400,
-                                color: colors.text,
+                                color: colors.textLight,
                               }}
                             >
                               🇰🇿 Казахстан
