@@ -137,7 +137,7 @@ export default function DrawerPicker({
               </DrawerCloseButton>
             </DrawerHeader>
           )}
-          <DrawerBody style={{ margin: 0 }}>
+          <DrawerBody style={{ marginTop: 0, marginBottom: 0 }}>
             <View style={{ margin: 0 }}>
               {items.map((it, index) => {
                 const active = it.id === selected?.id;

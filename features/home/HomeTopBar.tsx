@@ -25,7 +25,7 @@ export default function HomeTopBar() {
     <View
       style={{
         paddingHorizontal: 16,
-        paddingTop: 52,
+        paddingTop: 56,
         paddingBottom: 12,
         borderBottomColor: "#ECEDEF",
         borderBottomWidth: 1,
@@ -40,7 +40,13 @@ export default function HomeTopBar() {
           gap: 12,
         }}
       >
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 10,
+          }}
+        >
           <CityPicker
             value={cityId}
             onChange={(id) => dispatch(setCityId(id))}
