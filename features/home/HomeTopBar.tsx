@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import IconButton from "@/shared/ui/IconButton";
 import CityPicker from "@/features/home/CityPicker";
@@ -14,6 +14,8 @@ import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 export default function HomeTopBar() {
   const { colors } = useAppTheme();
+
+  const [open, setOpen] = useState<"city" | "league" | null>(null);
 
   const dispatch = useAppDispatch();
   const cityId = useAppSelector(selectCityId);
@@ -42,10 +44,14 @@ export default function HomeTopBar() {
           <CityPicker
             value={cityId}
             onChange={(id) => dispatch(setCityId(id))}
+            open={open === "city"}
+            onOpenChange={(o) => setOpen(o ? "city" : null)}
           />
           <LeaguePicker
             value={leagueId}
             onChange={(id) => dispatch(setLeagueId(id))}
+            open={open === "league"}
+            onOpenChange={(o) => setOpen(o ? "league" : null)}
           />
         </View>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>

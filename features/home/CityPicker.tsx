@@ -15,6 +15,8 @@ import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 export default function CityPicker(props: {
   value?: string;
   onChange?: (id: string) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }) {
   const { colors } = useAppTheme();
   const dispatch = useAppDispatch();
@@ -44,6 +46,8 @@ export default function CityPicker(props: {
       items={items}
       value={props.value}
       onChange={props.onChange}
+      open={props.open}
+      onOpenChange={props.onOpenChange}
       color={colors.text}
       backgroundColor={colors.bg}
       showItemIcon
