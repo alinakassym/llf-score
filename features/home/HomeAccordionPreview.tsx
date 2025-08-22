@@ -1,29 +1,127 @@
 // features/home/HomeAccordionPreview.tsx
-import Accordion, { AccordionEntry } from "@/shared/ui/Accordion";
-import { View } from "react-native";
+import { ReactNode } from "react";
+import { Image, View, Text, ImageSourcePropType } from "react-native";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionHeader,
+  AccordionTrigger,
+  AccordionTitleText,
+  AccordionContent,
+  AccordionContentText,
+} from "@/components/ui/accordion";
+import { Divider } from "@/components/ui/divider";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { useAppTheme } from "@/shared/theme/AppThemeProvider";
+
+export type AccordionEntry = {
+  id: string;
+  title: ReactNode;
+  content: ReactNode;
+  image?: ImageSourcePropType;
+};
 
 const items: AccordionEntry[] = [
   {
-    id: "live",
-    title: "LIVE трансляции",
+    id: "1",
+    title: "Премьер-лига",
     content: "Смотрите текущие матчи в прямом эфире.",
+    image: require("@/assets/images/cities/astana.png"),
   },
   {
-    id: "schedule",
-    title: "Расписание",
+    id: "2",
+    title: "Супер-лига",
     content: "Матчи на этой неделе и в следующие даты.",
+    image: require("@/assets/images/cities/astana.png"),
   },
   {
-    id: "results",
-    title: "Результаты",
+    id: "3",
+    title: "Мастер лига",
     content: "Итоги последних игр и турнирная таблица.",
+    image: require("@/assets/images/cities/astana.png"),
   },
 ];
 
 export default function HomeAccordionPreview() {
+  const { colors } = useAppTheme();
   return (
-    <View style={{ paddingHorizontal: 16, marginTop: 8 }}>
-      <Accordion items={items} defaultOpenIds={["live"]} />
-    </View>
+    <Accordion
+      size="sm"
+      variant="unfilled"
+      type="single"
+      isCollapsible={true}
+      isDisabled={false}
+      defaultValue={[]}
+    >
+      {items.map((it) => (
+        <>
+          <AccordionItem key={it.id} value={it.id}>
+            <AccordionHeader>
+              <AccordionTrigger>
+                {({ isExpanded }: { isExpanded: boolean }) => {
+                  return (
+                    <>
+                      <AccordionTitleText>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            gap: 10,
+                          }}
+                        >
+                          <Image
+                            source={it.image as any}
+                            style={{ width: 24, height: 24 }}
+                          />
+                          <View>
+                            <Text style={{ fontSize: 14, color: colors.text }}>
+                              {it.title}
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: 14,
+                                fontWeight: 400,
+                                color: colors.text,
+                              }}
+                            >
+                              🇰🇿 Казахстан
+                            </Text>
+                          </View>
+                        </View>
+                      </AccordionTitleText>
+                      {isExpanded ? (
+                        <Ionicons
+                          color={colors.primary}
+                          name="chevron-down"
+                          size={16}
+                        />
+                      ) : (
+                        <Ionicons
+                          color={colors.primary}
+                          name="chevron-forward"
+                          size={16}
+                        />
+                      )}
+                    </>
+                  );
+                }}
+              </AccordionTrigger>
+            </AccordionHeader>
+            <AccordionContent
+              style={{ paddingHorizontal: 16, paddingBottom: 12 }}
+            >
+              {typeof it.content === "string" ? (
+                <AccordionContentText style={{ fontSize: 14, opacity: 0.9 }}>
+                  {it.content}
+                </AccordionContentText>
+              ) : (
+                it.content
+              )}
+            </AccordionContent>
+          </AccordionItem>
+          <Divider />
+        </>
+      ))}
+    </Accordion>
   );
 }
