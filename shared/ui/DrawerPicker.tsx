@@ -69,7 +69,6 @@ export default function DrawerPicker({
     () => items.find((i) => i.id === value) ?? items[0],
     [items, value],
   );
-  console.log("DrawerPicker color: ", color);
 
   return (
     <>
