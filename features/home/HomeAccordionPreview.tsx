@@ -1,5 +1,5 @@
 // features/home/HomeAccordionPreview.tsx
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { Image, View, Text, ImageSourcePropType } from "react-native";
 import {
   Accordion,
@@ -55,8 +55,8 @@ export default function HomeAccordionPreview() {
       style={{ backgroundColor: colors.bg }}
     >
       {items.map((it, index) => (
-        <>
-          <AccordionItem key={it.id} value={it.id}>
+        <React.Fragment key={it.id}>
+          <AccordionItem value={it.id}>
             <AccordionHeader>
               <AccordionTrigger>
                 {({ isExpanded }: { isExpanded: boolean }) => {
@@ -121,7 +121,7 @@ export default function HomeAccordionPreview() {
             </AccordionContent>
           </AccordionItem>
           {index + 1 < items.length && <Divider />}
-        </>
+        </React.Fragment>
       ))}
     </Accordion>
   );

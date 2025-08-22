@@ -142,9 +142,8 @@ export default function DrawerPicker({
               {items.map((it, index) => {
                 const active = it.id === selected?.id;
                 return (
-                  <>
+                  <React.Fragment key={it.id}>
                     <Pressable
-                      key={it.id}
                       onPress={() => {
                         onChange?.(it.id);
                         setOpen(false);
@@ -174,7 +173,7 @@ export default function DrawerPicker({
                       </Text>
                     </Pressable>
                     {index + 1 < items.length && <Divider />}
-                  </>
+                  </React.Fragment>
                 );
               })}
             </View>
