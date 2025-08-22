@@ -52,8 +52,9 @@ export default function HomeAccordionPreview() {
       isCollapsible={true}
       isDisabled={false}
       defaultValue={[]}
+      style={{ backgroundColor: colors.bg }}
     >
-      {items.map((it) => (
+      {items.map((it, index) => (
         <>
           <AccordionItem key={it.id} value={it.id}>
             <AccordionHeader>
@@ -119,7 +120,7 @@ export default function HomeAccordionPreview() {
               )}
             </AccordionContent>
           </AccordionItem>
-          <Divider />
+          {index + 1 < items.length && <Divider />}
         </>
       ))}
     </Accordion>

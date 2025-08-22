@@ -26,7 +26,7 @@ export default function BannerCard({ item, width, height = 140 }: Props) {
           height: "55%",
         }}
       />
-      <View style={{ position: "absolute", left: 12, right: 12, bottom: 10 }}>
+      <View style={{ position: "absolute", left: 12, right: 12, bottom: 12 }}>
         {item.title ? (
           <Text style={{ color: "#fff", fontSize: 16, fontWeight: "700" }}>
             {item.title}
@@ -42,7 +42,11 @@ export default function BannerCard({ item, width, height = 140 }: Props) {
   );
 
   if (item.href) {
-    return <Link href={item.href as any} asChild><Pressable>{content}</Pressable></Link>;
+    return (
+      <Link href={item.href as any} asChild>
+        <Pressable>{content}</Pressable>
+      </Link>
+    );
   }
   return <Pressable onPress={() => {}}>{content}</Pressable>;
 }

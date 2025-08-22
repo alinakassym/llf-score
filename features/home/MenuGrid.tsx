@@ -1,8 +1,10 @@
 // features/home/MenuGrid.tsx
 import { View } from "react-native";
 import MenuButton from "./MenuButton";
+import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 export default function MenuGrid() {
+  const { colors } = useAppTheme();
   return (
     <View
       style={{
@@ -11,6 +13,7 @@ export default function MenuGrid() {
         justifyContent: "space-between",
         paddingHorizontal: 24,
         paddingVertical: 16,
+        backgroundColor: colors.bg,
       }}
     >
       <MenuButton icon="videocam-outline" label="LIVE" />

@@ -77,7 +77,7 @@ export default function BannerCarousel({
           flexDirection: "row",
           justifyContent: "center",
           gap: 6,
-          marginTop: 8,
+          marginTop: -10,
         }}
       >
         {items.map((_, i) => (
