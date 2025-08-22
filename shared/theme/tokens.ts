@@ -25,7 +25,7 @@ export interface ThemeTokens {
       card: "rgba(0,0,0,0.02)",
     },
     dark: {
-      bg: "#222232",
+      bg: "#181A20",
       secondaryBg: "#000000",
       text: "#FFFFFF",
       textMuted: "rgba(255,255,255,0.75)",
