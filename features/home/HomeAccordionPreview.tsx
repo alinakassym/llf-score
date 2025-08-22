@@ -25,19 +25,19 @@ const items: AccordionEntry[] = [
   {
     id: "1",
     title: "Премьер-лига",
-    content: "Смотрите текущие матчи в прямом эфире.",
+    content: "В разработке...",
     image: require("@/assets/images/cities/astana.png"),
   },
   {
     id: "2",
     title: "Супер-лига",
-    content: "Матчи на этой неделе и в следующие даты.",
+    content: "В разработке...",
     image: require("@/assets/images/cities/astana.png"),
   },
   {
     id: "3",
     title: "Мастер лига",
-    content: "Итоги последних игр и турнирная таблица.",
+    content: "В разработке...",
     image: require("@/assets/images/cities/astana.png"),
   },
 ];
