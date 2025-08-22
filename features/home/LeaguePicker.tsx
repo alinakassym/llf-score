@@ -17,6 +17,7 @@ export default function LeaguePicker(props: {
       onChange={props.onChange}
       showItemIcon={false}
       color={colors.text}
+      chevronColor={colors.text}
       backgroundColor={colors.bg}
       open={props.open}
       onOpenChange={props.onOpenChange}

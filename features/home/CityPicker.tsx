@@ -38,7 +38,13 @@ export default function CityPicker(props: {
   );
 
   if (status === "loading") {
-    return <DrawerPickerSkeleton label="Город" color={colors.text} />;
+    return (
+      <DrawerPickerSkeleton
+        label="Город"
+        color={colors.text}
+        chevronColor={colors.text}
+      />
+    );
   }
 
   return (
@@ -49,6 +55,7 @@ export default function CityPicker(props: {
       open={props.open}
       onOpenChange={props.onOpenChange}
       color={colors.text}
+      chevronColor={colors.text}
       backgroundColor={colors.bg}
       showItemIcon
     />
