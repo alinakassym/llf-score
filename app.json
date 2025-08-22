@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "LLF SCORE",
-    "slug": "LLF Score",
+    "slug": "my-app-draft",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/llf.png",
