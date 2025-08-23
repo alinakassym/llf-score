@@ -23,6 +23,7 @@ const TabHomeScreen: FC = () => {
         keyboardDismissMode={Platform.OS === "ios" ? "interactive" : "on-drag"}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
+        style={{ marginBottom: 65 }}
       >
         <VStack className="flex-1 gap-4">
           <BannerCarousel items={banners} />
