@@ -8,7 +8,6 @@ import {
   AccordionTrigger,
   AccordionTitleText,
   AccordionContent,
-  AccordionContentText,
 } from "@/components/ui/accordion";
 import LeagueTabs from "@/features/home/LeagueTabs";
 import { Divider } from "@/components/ui/divider";
@@ -115,9 +114,7 @@ export default function HomeAccordionPreview() {
                 }}
               </AccordionTrigger>
             </AccordionHeader>
-            <AccordionContent
-              style={{ paddingHorizontal: 16, paddingBottom: 12 }}
-            >
+            <AccordionContent style={{ paddingLeft: 0, paddingRight: 0 }}>
               {/* {typeof it.content === "string" ? (
                 <AccordionContentText style={{ fontSize: 14, opacity: 0.9 }}>
                   {it.content}
