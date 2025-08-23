@@ -1,0 +1,58 @@
+import { Image, Pressable, View } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { Text } from "@/components/ui/text";
+
+export type NewsItem = {
+  id: string;
+  title: string;
+  image: any; // ImageSourcePropType
+  bookmarked?: boolean;
+  onPress?: (id: string) => void;
+  onToggleBookmark?: (id: string) => void;
+};
+
+export default function NewsCard({
+  id,
+  title,
+  image,
+  bookmarked,
+  onPress,
+  onToggleBookmark,
+}: NewsItem) {
+  return (
+    <Pressable
+      onPress={() => onPress?.(id)}
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 12,
+        padding: 12,
+        backgroundColor: "#F3F7FF",
+        borderRadius: 16,
+      }}
+    >
+      <Image
+        source={image}
+        style={{ width: 88, height: 88, borderRadius: 16 }}
+      />
+
+      <View style={{ flex: 1 }}>
+        <Text numberOfLines={3} style={{ fontSize: 15, lineHeight: 20 }}>
+          {title}
+        </Text>
+      </View>
+
+      <Pressable
+        onPress={() => onToggleBookmark?.(id)}
+        hitSlop={12}
+        style={{ paddingLeft: 8 }}
+      >
+        <Ionicons
+          name={bookmarked ? "bookmark" : "bookmark-outline"}
+          size={26}
+          color="#111"
+        />
+      </Pressable>
+    </Pressable>
+  );
+}
