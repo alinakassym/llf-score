@@ -10,6 +10,7 @@ import {
   AccordionContent,
   AccordionContentText,
 } from "@/components/ui/accordion";
+import LeagueTabs from "@/features/home/LeagueTabs";
 import { Divider } from "@/components/ui/divider";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
@@ -117,13 +118,14 @@ export default function HomeAccordionPreview() {
             <AccordionContent
               style={{ paddingHorizontal: 16, paddingBottom: 12 }}
             >
-              {typeof it.content === "string" ? (
+              {/* {typeof it.content === "string" ? (
                 <AccordionContentText style={{ fontSize: 14, opacity: 0.9 }}>
                   {it.content}
                 </AccordionContentText>
               ) : (
                 it.content
-              )}
+              )} */}
+              <LeagueTabs />
             </AccordionContent>
           </AccordionItem>
           {index + 1 < items.length && <Divider />}
