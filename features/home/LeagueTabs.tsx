@@ -1,5 +1,5 @@
 // shared/ui/LeagueTabs.tsx
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Pressable,
@@ -138,25 +138,35 @@ const cols: TableColumn<OrderRow>[] = [
     key: "team",
     title: "Команда",
     render: (ren) => (
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
-        <Image source={ren.image as any} style={{ width: 20, height: 20 }} />
-        <Text>{ren.team}</Text>
-      </View>
+      <>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
+          <Image source={ren.image as any} style={{ width: 20, height: 20 }} />
+          <Text>{ren.team}</Text>
+        </View>
+      </>
     ),
   },
   {
     key: "score",
     title: " ",
     render: (r) => (
-      <View
-        style={{ flexDirection: "row", justifyContent: "flex-end", gap: 4 }}
-      >
-        {r.score && (
-          <Badge size="sm" action="success" className="w-fit justify-center">
-            <BadgeText>{r.score}</BadgeText>
-          </Badge>
-        )}
-      </View>
+      <>
+        <View
+          style={{ flexDirection: "row", justifyContent: "flex-end", gap: 4 }}
+        >
+          <React.Fragment>
+            {r.score && (
+              <Badge
+                size="sm"
+                action="success"
+                className="w-fit justify-center"
+              >
+                <BadgeText>{r.score}</BadgeText>
+              </Badge>
+            )}
+          </React.Fragment>
+        </View>
+      </>
     ),
     width: 60,
     maxWidth: 60,
