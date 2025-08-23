@@ -20,9 +20,9 @@ const TabLeaguesScreen: FC = () => {
         style={{ marginBottom: 0 }}
       >
         <VStack className="flex-1 gap-4 p-6">
-          {/* <Text style={{ color: colors.textLight }}>
+          <Text style={{ color: colors.textLight }}>
             Раздел "Лиги" - в разработке
-          </Text> */}
+          </Text>
         </VStack>
       </ScrollView>
     </KeyboardAvoidingView>
