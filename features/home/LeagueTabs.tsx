@@ -10,6 +10,37 @@ import {
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 import Table, { TableColumn } from "@/shared/ui/Table";
 import { Badge, BadgeText } from "@/components/ui/badge";
+import MatchList from "@/shared/ui/MatchList";
+
+const matchRows = [
+  {
+    id: "m1",
+    homeName: "БИИК Шымкент (Ж)",
+    awayName: "Актобе (Ж)",
+    homeLogo: require("@/assets/images/cities/astana.png"),
+    awayLogo: require("@/assets/images/cities/astana.png"),
+    score: "3:0",
+    status: "finished",
+  },
+  {
+    id: "m2",
+    homeName: "Tomiris-Turan (Ж)",
+    awayName: "Кайрат (Ж)",
+    homeLogo: require("@/assets/images/cities/astana.png"),
+    awayLogo: require("@/assets/images/cities/astana.png"),
+    status: "live",
+    score: "1:0",
+  },
+  {
+    id: "m3",
+    homeName: "Елимай (Ж)",
+    awayName: "Кызылжар (Ж)",
+    homeLogo: require("@/assets/images/cities/astana.png"),
+    awayLogo: require("@/assets/images/cities/astana.png"),
+    status: "scheduled",
+    dateISO: new Date().toISOString(),
+  },
+] as const;
 
 type OrderRow = {
   number: number;
@@ -250,7 +281,7 @@ export default function LeagueTabs() {
             keyExtractor={(r) => r.number}
           />
         )}
-        {active === "results" && <Text>Здесь будут результаты матчей.</Text>}
+        {active === "results" && <MatchList items={matchRows as any} />}
         {active === "calendar" && <Text>Здесь будет календарь матчей.</Text>}
       </View>
     </View>
