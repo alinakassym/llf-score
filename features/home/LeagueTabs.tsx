@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { View, Pressable, Text } from "react-native";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
+import Table from "@/shared/ui/Table";
 
 type TabKey = "table" | "results" | "calendar";
 
@@ -55,7 +56,10 @@ export default function LeagueTabs() {
       {/* Контент вкладок */}
       <View style={{ marginTop: 12 }}>
         {active === "table" && (
-          <Text>Здесь будет таблица лиги (LIVE/итоги).</Text>
+          <>
+            <Text>Здесь будет таблица лиги (LIVE/итоги).</Text>
+            <Table />
+          </>
         )}
         {active === "results" && <Text>Здесь будут результаты матчей.</Text>}
         {active === "calendar" && <Text>Здесь будет календарь матчей.</Text>}
