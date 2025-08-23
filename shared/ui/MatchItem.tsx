@@ -65,9 +65,7 @@ export default function MatchItem({
           source={homeLogo}
           style={{ width: 24, height: 24, borderRadius: 4 }}
         />
-        <Text numberOfLines={1} style={{ fontWeight: "600" }}>
-          {homeName}
-        </Text>
+        <Text style={{ fontWeight: "600" }}>{homeName}</Text>
       </View>
 
       {/* Center: vs */}
@@ -83,10 +81,7 @@ export default function MatchItem({
           justifyContent: "flex-end",
         }}
       >
-        <Text
-          numberOfLines={1}
-          style={{ fontWeight: "600", textAlign: "right" }}
-        >
+        <Text style={{ fontWeight: "600", textAlign: "right" }}>
           {awayName}
         </Text>
         <Image
