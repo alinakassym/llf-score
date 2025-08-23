@@ -17,6 +17,8 @@ export type TableColumn<T> = {
   className?: string;
   width?: number;
   maxWidth?: number;
+  textAlign?: "left" | "right" | "center";
+  headerTextAlign?: "left" | "right" | "center";
 };
 
 export type TableProps<T> = {
@@ -53,6 +55,7 @@ export default function Table<T>({
                   paddingBottom: 4,
                   minWidth: c?.width,
                   maxWidth: c?.maxWidth,
+                  textAlign: c?.headerTextAlign,
                 }}
               >
                 {c.title}
@@ -86,6 +89,7 @@ export default function Table<T>({
                       paddingRight: 10,
                       minWidth: c?.width,
                       maxWidth: c?.maxWidth,
+                      textAlign: c?.textAlign,
                     }}
                   >
                     {c.render ? c.render(row, rIdx) : (row as any)[c.key]}
