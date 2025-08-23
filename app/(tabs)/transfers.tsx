@@ -1,27 +1,30 @@
 import { FC } from "react";
-import {
-  Pressable,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
-
+import { KeyboardAvoidingView, Platform, ScrollView, Text } from "react-native";
+import HomeTopBar from "@/features/home/HomeTopBar";
 import { VStack } from "@/components/ui/vstack";
-import { Text } from "@/components/ui/text";
+import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 const TabTransferScreen: FC = () => {
+  const { colors } = useAppTheme();
   return (
     <KeyboardAvoidingView
-      className="flex-1 bg-white"
+      className="flex-1"
       behavior={Platform.select({ ios: "padding", android: undefined })}
+      style={{ backgroundColor: colors.secondaryBg }}
     >
-      <Pressable className="flex-1" onPress={Keyboard.dismiss}>
-        <VStack className="flex-1 px-6 py-8 gap-6">
-          <Text className="text-2xl font-semibold">
-            Transfer
+      <HomeTopBar />
+      <ScrollView
+        keyboardDismissMode={Platform.OS === "ios" ? "interactive" : "on-drag"}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+        style={{ marginBottom: 0 }}
+      >
+        <VStack className="flex-1 gap-4 p-6">
+          <Text style={{ color: colors.textLight }}>
+            Раздел "Трансферы" - в разработке
           </Text>
         </VStack>
-      </Pressable>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };
