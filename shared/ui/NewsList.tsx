@@ -11,7 +11,7 @@ export default function NewsList({
   onToggleBookmark?: (id: string) => void;
 }) {
   return (
-    <View style={{ gap: 12 }}>
+    <View style={{ gap: 8 }}>
       {items.map((n) => (
         <NewsCard
           key={n.id}

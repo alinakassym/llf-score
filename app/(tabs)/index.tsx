@@ -8,6 +8,7 @@ import BannerCarousel from "@/features/home/BannerCarousel";
 import { VStack } from "@/components/ui/vstack";
 import { banners } from "@/shared/mocks/banners";
 import HomeAccordionPreview from "@/features/home/HomeAccordionPreview";
+import NewsList from "@/features/home/NewsList";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 const TabHomeScreen: FC = () => {
@@ -29,6 +30,7 @@ const TabHomeScreen: FC = () => {
           <BannerCarousel items={banners} />
           <MenuGrid />
           <HomeAccordionPreview />
+          <NewsList />
         </VStack>
       </ScrollView>
     </KeyboardAvoidingView>

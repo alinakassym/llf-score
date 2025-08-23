@@ -7,21 +7,21 @@ const NEWS = [
     id: "n1",
     title:
       "В этом году Казахстан будут представлять две команды, это действующие чемпионы турнира – команда ...",
-    image: require("@/assets/images/sample/news1.jpg"), // пока заглушка
+    image: require("@/assets/images/adaptive-icon.png"), // пока заглушка
     bookmarked: false,
   },
   {
     id: "n2",
     title:
       "Федерация объявила расписание грядущего тура. Матчи начнутся в субботу в 18:00 по времени Астаны...",
-    image: require("@/assets/images/sample/news2.jpg"), // пока заглушка
+    image: require("@/assets/images/adaptive-icon.png"), // пока заглушка
     bookmarked: true,
   },
 ];
 
 export default function HomeNewsList() {
   return (
-    <View style={{ paddingHorizontal: 16, marginTop: 16 }}>
+    <View style={{ paddingHorizontal: 16, marginTop: 0, marginBottom: 32 }}>
       <NewsList
         items={NEWS}
         onPressItem={(id) => console.log("open news", id)}

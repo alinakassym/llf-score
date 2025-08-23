@@ -1,6 +1,5 @@
-import { Image, Pressable, View } from "react-native";
+import { Image, Pressable, View, Text } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Text } from "@/components/ui/text";
 
 export type NewsItem = {
   id: string;
@@ -27,19 +26,17 @@ export default function NewsCard({
         alignItems: "center",
         gap: 12,
         padding: 12,
-        backgroundColor: "#F3F7FF",
+        backgroundColor: "#E3F0FF",
         borderRadius: 16,
       }}
     >
       <Image
         source={image}
-        style={{ width: 88, height: 88, borderRadius: 16 }}
+        style={{ width: 60, height: 60, borderRadius: 16 }}
       />
 
       <View style={{ flex: 1 }}>
-        <Text numberOfLines={3} style={{ fontSize: 15, lineHeight: 20 }}>
-          {title}
-        </Text>
+        <Text style={{ fontSize: 14 }}>{title}</Text>
       </View>
 
       <Pressable
