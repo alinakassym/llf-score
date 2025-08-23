@@ -1,5 +1,5 @@
 // shared/ui/Table.tsx
-import { Badge, BadgeText } from "@/components/ui/badge";
+import { ReactNode } from "react";
 import { Box } from "@/components/ui/box";
 import {
   Table as GSTable,
@@ -10,106 +10,90 @@ import {
   TableData,
 } from "@/components/ui/table";
 
-type Row = {
-  id: number | string;
-  items: number;
-  name: string;
-  city: string;
-  price: string;
-  status: "success" | "info" | "warning";
+export type TableColumn<T> = {
+  title: string;
+  key: string;
+  render?: (row: T, rowIndex: number) => ReactNode;
+  className?: string;
+  width?: number;
+  maxWidth?: number;
 };
 
-const MOCK: Row[] = [
-  {
-    id: 571,
-    items: 3,
-    name: "Rajesh Kumar",
-    city: "New Jersey",
-    price: "$ 200",
-    status: "success",
-  },
-  {
-    id: 5231,
-    items: 2,
-    name: "Priya Sharma",
-    city: "Austin",
-    price: "$ 150",
-    status: "info",
-  },
-  {
-    id: 5771,
-    items: 3,
-    name: "Ravi Patel",
-    city: "Seattle",
-    price: "$ 215",
-    status: "warning",
-  },
-  {
-    id: 5232,
-    items: 4,
-    name: "Ananya Gupta",
-    city: "California",
-    price: "$ 88",
-    status: "info",
-  },
-  {
-    id: 5772,
-    items: 3,
-    name: "Arjun Singh",
-    city: "Seattle",
-    price: "$ 115",
-    status: "info",
-  },
-  {
-    id: 5773,
-    items: 3,
-    name: "Nisha Verma",
-    city: "Austin",
-    price: "$ 115",
-    status: "success",
-  },
-];
+export type TableProps<T> = {
+  columns: TableColumn<T>[];
+  data: T[];
+  keyExtractor?: (row: T, index: number) => string | number;
+  emptyText?: string;
+  headerClassName?: string;
+  rowClassName?: (row: T, index: number) => string | undefined;
+};
 
-export default function Table() {
+export default function Table<T>({
+  columns,
+  data,
+  keyExtractor,
+  emptyText = "Нет данных",
+  headerClassName,
+  rowClassName,
+}: TableProps<T>) {
   return (
-    <Box className="rounded-lg overflow-hidden">
-      <GSTable className="w-full">
+    <Box className="overflow-hidden" style={{ paddingHorizontal: 0 }}>
+      <GSTable className="w-full" style={{ marginHorizontal: 0 }}>
         <TableHeader>
-          <TableRow>
-            <TableHead className="font-bold">Order id</TableHead>
-            <TableHead>Items</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>City</TableHead>
-            <TableHead>Order price</TableHead>
-            <TableHead>Status</TableHead>
+          <TableRow className={headerClassName}>
+            {columns.map((c) => (
+              <TableHead
+                key={c.key}
+                className={c.className}
+                style={{
+                  fontSize: 12,
+                  paddingLeft: 10,
+                  paddingRight: 10,
+                  paddingTop: 4,
+                  paddingBottom: 4,
+                  minWidth: c?.width,
+                  maxWidth: c?.maxWidth,
+                }}
+              >
+                {c.title}
+              </TableHead>
+            ))}
           </TableRow>
         </TableHeader>
 
         <TableBody>
-          {MOCK.map((r) => (
-            <TableRow key={r.id}>
-              <TableData>{r.id}</TableData>
-              <TableData>{r.items}</TableData>
-              <TableData>{r.name}</TableData>
-              <TableData>{r.city}</TableData>
-              <TableData>{r.price}</TableData>
-              <TableData>
-                <Badge
-                  size="sm"
-                  action={r.status}
-                  className="w-fit justify-center"
-                >
-                  <BadgeText>
-                    {r.status === "success"
-                      ? "Completed"
-                      : r.status === "warning"
-                        ? "Shipped"
-                        : "Processing"}
-                  </BadgeText>
-                </Badge>
-              </TableData>
+          {data.length === 0 ? (
+            <TableRow>
+              {columns.map((c, idx) => (
+                <TableData key={c.key} className={c.className}>
+                  {idx === 0 ? emptyText : null}
+                </TableData>
+              ))}
             </TableRow>
-          ))}
+          ) : (
+            data.map((row, rIdx) => (
+              <TableRow
+                key={keyExtractor ? keyExtractor(row, rIdx) : rIdx}
+                className={rowClassName?.(row, rIdx)}
+              >
+                {columns.map((c) => (
+                  <TableData
+                    key={c.key}
+                    className={c.className}
+                    style={{
+                      fontSize: 12,
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                      minWidth: c?.width,
+                      maxWidth: c?.maxWidth,
+                    }}
+                  >
+                    {c.render ? c.render(row, rIdx) : (row as any)[c.key]}
+                  </TableData>
+                ))}
+              </TableRow>
+            ))
+          )}
         </TableBody>
       </GSTable>
     </Box>
