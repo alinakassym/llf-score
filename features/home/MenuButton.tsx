@@ -16,8 +16,8 @@ export default function MenuButton({ icon, label, onPress }: Props) {
       style={{
         alignItems: "center",
         justifyContent: "center",
-        width: "22%",
-        maxWidth: "22%",
+        width: "24%",
+        maxWidth: "24%",
         marginVertical: 8,
       }}
     >
@@ -33,8 +33,8 @@ export default function MenuButton({ icon, label, onPress }: Props) {
       <Text
         style={{
           marginTop: 4,
-          fontSize: 14,
-          fontWeight: 600,
+          fontSize: 12,
+          fontWeight: 400,
           color: colors.text,
         }}
       >

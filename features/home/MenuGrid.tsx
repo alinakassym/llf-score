@@ -23,7 +23,7 @@ export default function MenuGrid() {
       <MenuButton icon="football-outline" label="Бомбардиры" />
       <MenuButton icon="alert-circle-outline" label="Нарушители" />
       <MenuButton icon="images-outline" label="Фото" />
-      <MenuButton icon="play-circle" label="Видео" />
+      <MenuButton icon="play-circle-outline" label="Видео" />
     </View>
   );
 }
