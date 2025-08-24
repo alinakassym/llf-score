@@ -16,8 +16,8 @@ export default function MenuButton({ icon, label, onPress }: Props) {
       style={{
         alignItems: "center",
         justifyContent: "center",
-        width: "30%",
-        maxWidth: "30%",
+        width: "22%",
+        maxWidth: "22%",
         marginVertical: 8,
       }}
     >
