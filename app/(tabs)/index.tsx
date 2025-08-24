@@ -9,6 +9,7 @@ import { VStack } from "@/components/ui/vstack";
 import { banners } from "@/shared/mocks/banners";
 import HomeAccordionPreview from "@/features/home/HomeAccordionPreview";
 import NewsList from "@/features/home/NewsList";
+import SponsorsRow from "@/features/home/SponsorsRow";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 const TabHomeScreen: FC = () => {
@@ -19,6 +20,7 @@ const TabHomeScreen: FC = () => {
       behavior={Platform.select({ ios: "padding", android: undefined })}
       style={{ backgroundColor: colors.secondaryBg }}
     >
+      <SponsorsRow />
       <HomeTopBar />
       <ScrollView
         keyboardDismissMode={Platform.OS === "ios" ? "interactive" : "on-drag"}

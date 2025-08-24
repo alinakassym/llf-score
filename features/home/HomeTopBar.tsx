@@ -25,7 +25,7 @@ export default function HomeTopBar() {
     <View
       style={{
         paddingHorizontal: 16,
-        paddingTop: 56,
+        paddingTop: 12,
         paddingBottom: 12,
         borderBottomColor: "#ECEDEF",
         borderBottomWidth: 1,
