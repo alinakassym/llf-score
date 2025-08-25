@@ -183,7 +183,7 @@ const TabTransferScreen: FC = () => {
     <KeyboardAvoidingView
       className="flex-1"
       behavior={Platform.select({ ios: "padding", android: undefined })}
-      style={{ paddingBottom: 54, backgroundColor: colors.bg }}
+      style={{ paddingBottom: 66, backgroundColor: colors.bg }}
     >
       <SponsorsRow />
       <HomeTopBar />
