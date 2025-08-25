@@ -28,6 +28,9 @@ export type TableProps<T> = {
   emptyText?: string;
   headerClassName?: string;
   rowClassName?: (row: T, index: number) => string | undefined;
+  borderColor?: string;
+  backgroundColor?: string;
+  color?: string;
 };
 
 export default function Table<T>({
@@ -37,12 +40,15 @@ export default function Table<T>({
   emptyText = "Нет данных",
   headerClassName,
   rowClassName,
+  borderColor = "#ccc",
+  backgroundColor = "#fff",
+  color = "#000",
 }: TableProps<T>) {
   return (
     <Box className="overflow-hidden" style={{ paddingHorizontal: 0 }}>
       <GSTable className="w-full" style={{ marginHorizontal: 0 }}>
         <TableHeader>
-          <TableRow className={headerClassName}>
+          <TableRow className={headerClassName} style={{ borderColor }}>
             {columns.map((c) => (
               <TableHead
                 key={c.key}
@@ -56,6 +62,8 @@ export default function Table<T>({
                   minWidth: c?.width,
                   maxWidth: c?.maxWidth,
                   textAlign: c?.headerTextAlign,
+                  backgroundColor,
+                  color,
                 }}
               >
                 {c.title}
@@ -78,6 +86,7 @@ export default function Table<T>({
               <TableRow
                 key={keyExtractor ? keyExtractor(row, rIdx) : rIdx}
                 className={rowClassName?.(row, rIdx)}
+                style={{ borderColor }}
               >
                 {columns.map((c) => (
                   <TableData
@@ -90,6 +99,11 @@ export default function Table<T>({
                       minWidth: c?.width,
                       maxWidth: c?.maxWidth,
                       textAlign: c?.textAlign,
+                      backgroundColor,
+                      borderRightColor: "black",
+                      borderLeftColor: "black",
+                      borderColor,
+                      color,
                     }}
                   >
                     {c.render ? c.render(row, rIdx) : (row as any)[c.key]}

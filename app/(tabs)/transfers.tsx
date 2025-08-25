@@ -183,7 +183,7 @@ const TabTransferScreen: FC = () => {
     <KeyboardAvoidingView
       className="flex-1"
       behavior={Platform.select({ ios: "padding", android: undefined })}
-      style={{ paddingBottom: 66, backgroundColor: colors.bg }}
+      style={{ paddingBottom: 65, backgroundColor: colors.bg }}
     >
       <SponsorsRow />
       <HomeTopBar />
@@ -214,6 +214,8 @@ const TabTransferScreen: FC = () => {
             columns={cols}
             data={filteredRows}
             keyExtractor={(r, i) => r.player + i}
+            backgroundColor={colors.bg}
+            color={colors.text}
           />
         </VStack>
       </ScrollView>

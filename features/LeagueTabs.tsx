@@ -282,7 +282,11 @@ export default function LeagueTabs() {
           />
         )}
         {active === "results" && <MatchList items={matchRows as any} />}
-        {active === "calendar" && <Text>Здесь будет календарь матчей.</Text>}
+        {active === "calendar" && (
+          <Text style={{ paddingHorizontal: 16, color: colors.textLight }}>
+            Здесь будет календарь матчей.
+          </Text>
+        )}
       </View>
     </View>
   );

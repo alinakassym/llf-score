@@ -1,6 +1,7 @@
 // features/transfers/PlayerCell.tsx
 import { View, Image, ImageSourcePropType } from "react-native";
 import { Text } from "@/components/ui/text";
+import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 export type PlayerCellProps = {
   name: string;
@@ -17,6 +18,7 @@ export default function PlayerCell({
   size = 24,
   right,
 }: PlayerCellProps) {
+  const { colors } = useAppTheme();
   return (
     <View
       style={{ flexDirection: "row", alignItems: "center", gap: 8, flex: 1 }}
@@ -28,11 +30,17 @@ export default function PlayerCell({
         />
       )}
       <View style={{ flex: 1 }}>
-        <Text numberOfLines={1} style={{ fontWeight: "600" }}>
+        <Text
+          numberOfLines={1}
+          style={{ fontWeight: "600", color: colors.text }}
+        >
           {name}
         </Text>
         {subtext ? (
-          <Text numberOfLines={1} style={{ fontSize: 12, opacity: 0.7 }}>
+          <Text
+            numberOfLines={1}
+            style={{ fontSize: 12, color: colors.textLight, opacity: 0.7 }}
+          >
             {subtext}
           </Text>
         ) : null}

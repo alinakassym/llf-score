@@ -18,7 +18,7 @@ const TabHomeScreen: FC = () => {
     <KeyboardAvoidingView
       className="flex-1"
       behavior={Platform.select({ ios: "padding", android: undefined })}
-      style={{ paddingBottom: 54, backgroundColor: colors.secondaryBg }}
+      style={{ paddingBottom: 65, backgroundColor: colors.secondaryBg }}
     >
       <SponsorsRow />
       <HomeTopBar />

@@ -31,7 +31,7 @@ export interface ThemeTokens {
       secondaryBg: "#000000",
       text: "#FFFFFF",
       textMuted: "rgba(255,255,255,0.75)",
-      textLight: "#888888",
+      textLight: "#C1C1C1",
       surface: "rgba(255,255,255,0.06)",
       border: "rgba(255,255,255,0.14)",
       primary: "#5269D7",

@@ -2,6 +2,7 @@
 import { View, Image, Pressable } from "react-native";
 import { Text } from "@/components/ui/text";
 import { Badge, BadgeText } from "@/components/ui/badge";
+import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 export type MatchStatus = "finished" | "live" | "scheduled";
 
@@ -28,6 +29,8 @@ export default function MatchItem({
   status,
   onPress,
 }: MatchItemProps) {
+  const { colors } = useAppTheme();
+
   const rightBadge =
     status === "live" ? (
       <Badge size="sm" action="error" className="w-fit justify-center">
@@ -65,11 +68,15 @@ export default function MatchItem({
           source={homeLogo}
           style={{ width: 24, height: 24, borderRadius: 4 }}
         />
-        <Text style={{ fontWeight: "600" }}>{homeName}</Text>
+        <Text
+          style={{ fontSize: 12, fontWeight: "600", color: colors.textLight }}
+        >
+          {homeName}
+        </Text>
       </View>
 
       {/* Center: vs */}
-      <Text style={{ opacity: 0.6 }}>—</Text>
+      <Text style={{ color: colors.textLight, opacity: 0.6 }}>—</Text>
 
       {/* Away */}
       <View
@@ -81,7 +88,14 @@ export default function MatchItem({
           justifyContent: "flex-end",
         }}
       >
-        <Text style={{ fontWeight: "600", textAlign: "right" }}>
+        <Text
+          style={{
+            fontSize: 12,
+            fontWeight: "600",
+            textAlign: "right",
+            color: colors.textLight,
+          }}
+        >
           {awayName}
         </Text>
         <Image

@@ -10,7 +10,6 @@ export default function BannerCard({ item, width, height = 140 }: Props) {
   const content = (
     <ImageBackground
       source={item.image}
-      resizeMode="cover"
       imageStyle={{ borderRadius: 0 }}
       style={{ width, height, overflow: "hidden", borderRadius: 0 }}
     >
