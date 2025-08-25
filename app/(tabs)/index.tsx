@@ -2,14 +2,14 @@ import { FC } from "react";
 import {
   KeyboardAvoidingView, Platform, ScrollView
 } from "react-native";
-import HomeTopBar from '@/features/home/HomeTopBar';
-import MenuGrid from "@/features/home/MenuGrid";
-import BannerCarousel from "@/features/home/BannerCarousel";
+import HomeTopBar from "@/features/HomeTopBar";
+import MenuGrid from "@/features/MenuGrid";
+import BannerCarousel from "@/features/BannerCarousel";
 import { VStack } from "@/components/ui/vstack";
 import { banners } from "@/shared/mocks/banners";
-import HomeAccordionPreview from "@/features/home/HomeAccordionPreview";
-import NewsList from "@/features/home/NewsList";
-import SponsorsRow from "@/features/home/SponsorsRow";
+import HomeAccordionPreview from "@/features/HomeAccordionPreview";
+import NewsList from "@/features/NewsList";
+import SponsorsRow from "@/features/SponsorsRow";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 const TabHomeScreen: FC = () => {

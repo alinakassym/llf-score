@@ -9,7 +9,7 @@ import {
   AccordionTitleText,
   AccordionContent,
 } from "@/components/ui/accordion";
-import LeagueTabs from "@/features/home/LeagueTabs";
+import LeagueTabs from "@/features/LeagueTabs";
 import { Divider } from "@/components/ui/divider";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";

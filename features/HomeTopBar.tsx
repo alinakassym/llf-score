@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import IconButton from "@/shared/ui/IconButton";
-import CityPicker from "@/features/home/CityPicker";
-import LeaguePicker from "@/features/home/LeaguePicker";
+import CityPicker from "@/features/CityPicker";
+import LeaguePicker from "@/features/LeaguePicker";
 import { useAppDispatch, useAppSelector } from "@/shared/store/hooks";
 import {
   setCityId,

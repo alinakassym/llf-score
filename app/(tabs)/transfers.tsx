@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, Text } from "react-native";
-import HomeTopBar from "@/features/home/HomeTopBar";
+import HomeTopBar from "@/features/HomeTopBar";
 import { VStack } from "@/components/ui/vstack";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
