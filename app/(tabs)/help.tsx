@@ -3,6 +3,7 @@ import { KeyboardAvoidingView, Platform, ScrollView, Text } from "react-native";
 import HomeTopBar from "@/features/HomeTopBar";
 import { VStack } from "@/components/ui/vstack";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
+import SponsorsRow from "@/features/SponsorsRow";
 
 const TabHelpScreen: FC = () => {
   const { colors } = useAppTheme();
@@ -12,6 +13,7 @@ const TabHelpScreen: FC = () => {
       behavior={Platform.select({ ios: "padding", android: undefined })}
       style={{ backgroundColor: colors.secondaryBg }}
     >
+      <SponsorsRow />
       <HomeTopBar />
       <ScrollView
         keyboardDismissMode={Platform.OS === "ios" ? "interactive" : "on-drag"}

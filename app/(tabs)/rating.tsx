@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, Text } from "react-native";
 import HomeTopBar from "@/features/HomeTopBar";
+import SponsorsRow from "@/features/SponsorsRow";
 import { VStack } from "@/components/ui/vstack";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
@@ -12,6 +13,7 @@ const TabRaitingScreen: FC = () => {
       behavior={Platform.select({ ios: "padding", android: undefined })}
       style={{ backgroundColor: colors.secondaryBg }}
     >
+      <SponsorsRow />
       <HomeTopBar />
       <ScrollView
         keyboardDismissMode={Platform.OS === "ios" ? "interactive" : "on-drag"}
