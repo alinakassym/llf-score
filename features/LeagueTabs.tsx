@@ -1,15 +1,9 @@
 // shared/ui/LeagueTabs.tsx
 import React, { useState } from "react";
-import {
-  View,
-  Pressable,
-  Text,
-  Image,
-  ImageSourcePropType,
-} from "react-native";
+import { View, Pressable, Text, ImageSourcePropType } from "react-native";
+import { createLeagueTableColumns } from "@/features/ui/leagueTable.columns";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
-import Table, { TableColumn } from "@/shared/ui/Table";
-import { Badge, BadgeText } from "@/components/ui/badge";
+import Table from "@/shared/ui/Table";
 import MatchList from "@/shared/ui/MatchList";
 
 const matchRows = [
@@ -163,66 +157,6 @@ export const rows: OrderRow[] = [
   },
 ];
 
-const cols: TableColumn<OrderRow>[] = [
-  { key: "number", title: "#", width: 40, maxWidth: 40 },
-  {
-    key: "team",
-    title: "Команда",
-    render: (ren) => (
-      <>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
-          <Image source={ren.image as any} style={{ width: 20, height: 20 }} />
-          <Text>{ren.team}</Text>
-        </View>
-      </>
-    ),
-  },
-  {
-    key: "score",
-    title: " ",
-    render: (r) => (
-      <>
-        <View
-          style={{ flexDirection: "row", justifyContent: "flex-end", gap: 4 }}
-        >
-          <React.Fragment>
-            {r.score && (
-              <Badge
-                size="sm"
-                action="success"
-                className="w-fit justify-center"
-              >
-                <BadgeText>{r.score}</BadgeText>
-              </Badge>
-            )}
-          </React.Fragment>
-        </View>
-      </>
-    ),
-    width: 60,
-    maxWidth: 60,
-    textAlign: "right",
-    headerTextAlign: "right",
-  },
-  {
-    key: "games",
-    title: "И",
-    width: 55,
-    maxWidth: 55,
-    textAlign: "center",
-    headerTextAlign: "center",
-  },
-  {
-    key: "goals",
-    title: "Г",
-    width: 55,
-    maxWidth: 55,
-    textAlign: "center",
-    headerTextAlign: "center",
-  },
-  { key: "col", title: "О", width: 45, maxWidth: 45 },
-];
-
 type TabKey = "table" | "results" | "calendar";
 
 const TABS: { key: TabKey; label: string }[] = [
@@ -233,7 +167,7 @@ const TABS: { key: TabKey; label: string }[] = [
 
 export default function LeagueTabs() {
   const { colors } = useAppTheme();
-
+  const cols = React.useMemo(() => createLeagueTableColumns(colors), [colors]);
   const [active, setActive] = useState<TabKey>("table");
 
   return (
@@ -279,6 +213,8 @@ export default function LeagueTabs() {
             columns={cols}
             data={rows}
             keyExtractor={(r) => r.number}
+            backgroundColor={colors.bg}
+            color={colors.text}
           />
         )}
         {active === "results" && <MatchList items={matchRows as any} />}
