@@ -61,15 +61,21 @@ export default function HomeTopBar() {
           />
         </View>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
-          <IconButton name="search" accessibilityLabel="Поиск" />
+          <IconButton
+            name="search"
+            accessibilityLabel="Поиск"
+            color={colors.text}
+          />
           <IconButton
             name="notifications-outline"
             dot
             accessibilityLabel="Уведомления"
+            color={colors.text}
           />
           <IconButton
             name="person-circle-outline"
             accessibilityLabel="Профиль"
+            color={colors.text}
           />
         </View>
       </View>
