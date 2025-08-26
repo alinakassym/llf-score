@@ -57,6 +57,7 @@ export default function CityPicker(props: {
       color={colors.text}
       chevronColor={colors.text}
       backgroundColor={colors.bg}
+      marginTop={184}
       showItemIcon
     />
   );

@@ -25,6 +25,7 @@ type Props = {
   color?: string;
   backgroundColor?: string;
   chevronColor?: string;
+  marginTop?: number;
 };
 
 export const DrawerPickerSkeleton = ({
@@ -63,6 +64,7 @@ export default function DrawerPicker({
   color,
   backgroundColor,
   chevronColor,
+  marginTop = 0,
 }: Props) {
   const isControlled = openProp !== undefined;
   const [openUncontrolled, setOpenUncontrolled] = useState(false);
@@ -109,7 +111,7 @@ export default function DrawerPicker({
       </Pressable>
 
       <Drawer
-        style={{ marginTop: 101 }}
+        style={{ marginTop }}
         isOpen={open}
         onClose={() => setOpen(false)}
         size="auto"

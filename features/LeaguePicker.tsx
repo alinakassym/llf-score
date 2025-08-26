@@ -19,6 +19,7 @@ export default function LeaguePicker(props: {
       color={colors.text}
       chevronColor={colors.text}
       backgroundColor={colors.bg}
+      marginTop={184}
       open={props.open}
       onOpenChange={props.onOpenChange}
     />
