@@ -216,6 +216,8 @@ const TabTransferScreen: FC = () => {
             keyExtractor={(r, i) => r.player + i}
             backgroundColor={colors.bg}
             color={colors.text}
+            borderColor={colors.border}
+            hightlightColor={colors.secondaryBg}
           />
         </VStack>
       </ScrollView>

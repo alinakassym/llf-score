@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, Text } from "react-native";
 import HomeTopBar from "@/features/HomeTopBar";
+import HomeAccordionPreview from "@/features/HomeAccordionPreview";
 import { VStack } from "@/components/ui/vstack";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 import SponsorsRow from "@/features/SponsorsRow";
@@ -11,7 +12,7 @@ const TabLeaguesScreen: FC = () => {
     <KeyboardAvoidingView
       className="flex-1"
       behavior={Platform.select({ ios: "padding", android: undefined })}
-      style={{ backgroundColor: colors.secondaryBg }}
+      style={{ paddingBottom: 65, backgroundColor: colors.secondaryBg }}
     >
       <SponsorsRow />
       <HomeTopBar />
@@ -21,10 +22,8 @@ const TabLeaguesScreen: FC = () => {
         showsVerticalScrollIndicator={false}
         style={{ marginBottom: 0 }}
       >
-        <VStack className="flex-1 gap-4 p-6">
-          <Text style={{ color: colors.textLight }}>
-            Раздел "Лиги" - в разработке
-          </Text>
+        <VStack className="flex-1 gap-4">
+          <HomeAccordionPreview />
         </VStack>
       </ScrollView>
     </KeyboardAvoidingView>

@@ -1,5 +1,6 @@
 import { Image, Pressable, View, Text } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 export type NewsItem = {
   id: string;
@@ -18,6 +19,7 @@ export default function NewsCard({
   onPress,
   onToggleBookmark,
 }: NewsItem) {
+  const { colors } = useAppTheme();
   return (
     <Pressable
       onPress={() => onPress?.(id)}
@@ -26,7 +28,7 @@ export default function NewsCard({
         alignItems: "center",
         gap: 12,
         padding: 12,
-        backgroundColor: "#E3F0FF",
+        backgroundColor: colors.primaryLight,
         borderRadius: 16,
       }}
     >
@@ -36,7 +38,7 @@ export default function NewsCard({
       />
 
       <View style={{ flex: 1 }}>
-        <Text style={{ fontSize: 14 }}>{title}</Text>
+        <Text style={{ fontSize: 14, color: colors.text }}>{title}</Text>
       </View>
 
       <Pressable
@@ -47,7 +49,7 @@ export default function NewsCard({
         <Ionicons
           name={bookmarked ? "bookmark" : "bookmark-outline"}
           size={26}
-          color="#111"
+          color={colors.primary}
         />
       </Pressable>
     </Pressable>

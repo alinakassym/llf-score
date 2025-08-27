@@ -28,11 +28,11 @@ export const createLeagueTableColumns = (
     key: "team",
     title: "Команда",
     render: (r) => (
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
         {r.image && (
           <Image source={r.image} style={{ width: 20, height: 20 }} />
         )}
-        <Text style={{ color: colors.text }}>{r.team}</Text>
+        <Text style={{ fontSize: 12, color: colors.text }}>{r.team}</Text>
       </View>
     ),
   },

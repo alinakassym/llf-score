@@ -31,6 +31,7 @@ export type TableProps<T> = {
   borderColor?: string;
   backgroundColor?: string;
   color?: string;
+  hightlightColor?: string;
 };
 
 export default function Table<T>({
@@ -41,8 +42,9 @@ export default function Table<T>({
   headerClassName,
   rowClassName,
   borderColor = "#ccc",
-  backgroundColor = "#fff",
   color = "#000",
+  backgroundColor = "transparent",
+  hightlightColor = "transparent",
 }: TableProps<T>) {
   return (
     <Box className="overflow-hidden" style={{ paddingHorizontal: 0 }}>
@@ -62,7 +64,7 @@ export default function Table<T>({
                   minWidth: c?.width,
                   maxWidth: c?.maxWidth,
                   textAlign: c?.headerTextAlign,
-                  backgroundColor,
+                  backgroundColor: hightlightColor,
                   color,
                 }}
               >
@@ -86,7 +88,9 @@ export default function Table<T>({
               <TableRow
                 key={keyExtractor ? keyExtractor(row, rIdx) : rIdx}
                 className={rowClassName?.(row, rIdx)}
-                style={{ borderColor }}
+                style={{
+                  borderColor,
+                }}
               >
                 {columns.map((c) => (
                   <TableData
@@ -99,7 +103,8 @@ export default function Table<T>({
                       minWidth: c?.width,
                       maxWidth: c?.maxWidth,
                       textAlign: c?.textAlign,
-                      backgroundColor,
+                      backgroundColor:
+                        rIdx % 2 === 0 ? backgroundColor : hightlightColor,
                       borderRightColor: "black",
                       borderLeftColor: "black",
                       borderColor,

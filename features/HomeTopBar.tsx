@@ -27,7 +27,7 @@ export default function HomeTopBar() {
         paddingHorizontal: 16,
         paddingTop: 12,
         paddingBottom: 12,
-        borderBottomColor: "#ECEDEF",
+        borderBottomColor: colors.border,
         borderBottomWidth: 1,
         backgroundColor: colors.bg,
       }}

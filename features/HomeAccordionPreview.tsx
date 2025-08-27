@@ -125,7 +125,9 @@ export default function HomeAccordionPreview() {
               <LeagueTabs />
             </AccordionContent>
           </AccordionItem>
-          {index + 1 < items.length && <Divider />}
+          {index + 1 < items.length && (
+            <Divider style={{ backgroundColor: colors.border }} />
+          )}
         </React.Fragment>
       ))}
     </Accordion>
