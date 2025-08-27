@@ -32,7 +32,7 @@ export default function PlayerCell({
       <View style={{ flex: 1 }}>
         <Text
           numberOfLines={1}
-          style={{ fontWeight: "600", color: colors.text }}
+          style={{ fontSize: 14, fontWeight: "600", color: colors.text }}
         >
           {name}
         </Text>
