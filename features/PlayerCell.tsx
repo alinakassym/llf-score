@@ -30,17 +30,11 @@ export default function PlayerCell({
         />
       )}
       <View style={{ flex: 1 }}>
-        <Text
-          numberOfLines={1}
-          style={{ fontSize: 14, fontWeight: "600", color: colors.text }}
-        >
+        <Text style={{ fontSize: 14, fontWeight: "600", color: colors.text }}>
           {name}
         </Text>
         {subtext ? (
-          <Text
-            numberOfLines={1}
-            style={{ fontSize: 12, color: colors.textLight, opacity: 0.7 }}
-          >
+          <Text style={{ fontSize: 12, color: colors.textLight, opacity: 0.7 }}>
             {subtext}
           </Text>
         ) : null}

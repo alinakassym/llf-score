@@ -38,7 +38,8 @@ const cols: TableColumn<teamRatingRow>[] = [
   {
     key: "teamName",
     title: "Клубы",
-    width: 160,
+    width: 180,
+    maxWidth: 180,
     render: (r) => (
       <PlayerCell
         name={r.teamName}
@@ -51,6 +52,7 @@ const cols: TableColumn<teamRatingRow>[] = [
     key: "season1",
     title: "Сезон 1",
     width: 70,
+    maxWidth: 70,
     textAlign: "center",
     headerTextAlign: "center",
   },
@@ -58,6 +60,7 @@ const cols: TableColumn<teamRatingRow>[] = [
     key: "season2",
     title: "Сезон 2",
     width: 70,
+    maxWidth: 70,
     textAlign: "center",
     headerTextAlign: "center",
   },
@@ -65,6 +68,7 @@ const cols: TableColumn<teamRatingRow>[] = [
     key: "season3",
     title: "Сезон 3",
     width: 70,
+    maxWidth: 70,
     textAlign: "center",
     headerTextAlign: "center",
   },
@@ -72,6 +76,7 @@ const cols: TableColumn<teamRatingRow>[] = [
     key: "season4",
     title: "Сезон 4",
     width: 70,
+    maxWidth: 70,
     textAlign: "center",
     headerTextAlign: "center",
   },
@@ -79,6 +84,7 @@ const cols: TableColumn<teamRatingRow>[] = [
     key: "total",
     title: "Очки",
     width: 70,
+    maxWidth: 70,
     textAlign: "center",
     headerTextAlign: "center",
   },
@@ -269,6 +275,7 @@ const TabRaitingScreen: FC = () => {
                   color={colors.text}
                   borderColor={colors.border}
                   hightlightColor={colors.secondaryBg}
+                  scrollX={true}
                 />
               )}
 

@@ -27,7 +27,8 @@ const cols: TableColumn<TransferRow>[] = [
   {
     key: "player",
     title: "Игрок",
-    width: 160,
+    width: 190,
+    maxWidth: 190,
     render: (r) => (
       <PlayerCell
         name={r.player}
@@ -39,7 +40,8 @@ const cols: TableColumn<TransferRow>[] = [
   {
     key: "status",
     title: "Статус",
-    width: 70,
+    width: 80,
+    maxWidth: 80,
     textAlign: "center",
     headerTextAlign: "center",
   },
@@ -47,6 +49,7 @@ const cols: TableColumn<TransferRow>[] = [
     key: "cost",
     title: "Стоимость",
     width: 90,
+    maxWidth: 90,
     textAlign: "center",
     headerTextAlign: "center",
   },
@@ -54,6 +57,7 @@ const cols: TableColumn<TransferRow>[] = [
     key: "salary",
     title: "ЗП",
     width: 80,
+    maxWidth: 80,
     textAlign: "center",
     headerTextAlign: "center",
   },
@@ -218,6 +222,7 @@ const TabTransferScreen: FC = () => {
             color={colors.text}
             borderColor={colors.border}
             hightlightColor={colors.secondaryBg}
+            scrollX={true}
           />
         </VStack>
       </ScrollView>
