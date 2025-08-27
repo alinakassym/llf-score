@@ -29,7 +29,7 @@ export default function HomeTopBar() {
         paddingBottom: 12,
         borderBottomColor: "#ECEDEF",
         borderBottomWidth: 1,
-        backgroundColor: colors.secondaryBg,
+        backgroundColor: colors.bg,
       }}
     >
       <View

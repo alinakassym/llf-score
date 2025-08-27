@@ -4,14 +4,24 @@ import { LinearGradient } from "expo-linear-gradient";
 import type { Banner } from "@/shared/mocks/banners";
 import { Link } from "expo-router";
 
-type Props = { item: Banner; width: number; height?: number };
+type Props = {
+  item: Banner;
+  width: number;
+  height?: number;
+  borderRadius?: number;
+};
 
-export default function BannerCard({ item, width, height = 140 }: Props) {
+export default function BannerCard({
+  item,
+  width,
+  height = 140,
+  borderRadius = 0,
+}: Props) {
   const content = (
     <ImageBackground
       source={item.image}
       imageStyle={{ borderRadius: 0 }}
-      style={{ width, height, overflow: "hidden", borderRadius: 0 }}
+      style={{ width, height, overflow: "hidden", borderRadius }}
     >
       <LinearGradient
         colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.45)"]}

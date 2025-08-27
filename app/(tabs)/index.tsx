@@ -4,7 +4,7 @@ import {
 } from "react-native";
 import HomeTopBar from "@/features/HomeTopBar";
 import MenuGrid from "@/features/MenuGrid";
-import BannerCarousel from "@/features/BannerCarousel";
+import Carousel from "@/features/Carousel";
 import { VStack } from "@/components/ui/vstack";
 import { banners } from "@/shared/mocks/banners";
 import HomeAccordionPreview from "@/features/HomeAccordionPreview";
@@ -28,8 +28,8 @@ const TabHomeScreen: FC = () => {
         showsVerticalScrollIndicator={false}
         style={{ marginBottom: 0 }}
       >
-        <VStack className="flex-1 gap-4">
-          <BannerCarousel items={banners} />
+        <VStack className="flex-1 gap-4 pt-4">
+          <Carousel items={banners} />
           <MenuGrid />
           <HomeAccordionPreview />
           <NewsList />
