@@ -1,9 +1,9 @@
+// features/home/transfersTable.columns.ts
+import type { TableColumn } from "@/shared/ui/Table";
+import { TeamRatingRow } from "@/shared/mocks/teamRatingRows";
 import PlayerCell from "@/features/PlayerCell";
-import Table, { TableColumn } from "@/shared/ui/Table";
-import { teamRatingRows, TeamRatingRow } from "@/shared/mocks/teamRatingRows";
-import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
-const cols: TableColumn<TeamRatingRow>[] = [
+export const createRatingTableColumns = (): TableColumn<TeamRatingRow>[] => [
   {
     key: "teamName",
     title: "Клубы",
@@ -58,19 +58,3 @@ const cols: TableColumn<TeamRatingRow>[] = [
     headerTextAlign: "center",
   },
 ];
-
-export default function RatingTable() {
-  const { colors } = useAppTheme();
-  return (
-    <Table<TeamRatingRow>
-      columns={cols}
-      data={teamRatingRows}
-      keyExtractor={(r, i) => r.teamName + i}
-      backgroundColor={colors.bg}
-      color={colors.text}
-      borderColor={colors.border}
-      hightlightColor={colors.secondaryBg}
-      scrollX={true}
-    />
-  );
-}

@@ -1,14 +1,9 @@
 import { FC, useState } from "react";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  View,
-  Text,
-} from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import HomeTopBar from "@/features/HomeTopBar";
 import SponsorsRow from "@/features/SponsorsRow";
-import RatingTable from "@/features/RatingTable";
+import RatingTable from "@/features/rating/RatingTable";
+import PlayersTable from "@/features/rating/PlayersTable";
 import { VStack } from "@/components/ui/vstack";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 import Tabs from "@/shared/ui/Tabs";
@@ -52,18 +47,7 @@ const TabRaitingScreen: FC = () => {
             {/* Контент вкладок */}
             <View style={{ paddingLeft: 0 }}>
               {active === "teams" && <RatingTable />}
-
-              {active === "players" && (
-                <Text
-                  style={{
-                    paddingTop: 16,
-                    paddingHorizontal: 16,
-                    color: colors.textLight,
-                  }}
-                >
-                  Здесь будет таблица игроков.
-                </Text>
-              )}
+              {active === "players" && <PlayersTable />}
             </View>
           </View>
         </VStack>
