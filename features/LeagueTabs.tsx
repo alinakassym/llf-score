@@ -1,161 +1,12 @@
 // shared/ui/LeagueTabs.tsx
 import React, { useState } from "react";
-import { View, Pressable, Text, ImageSourcePropType } from "react-native";
+import { View, Pressable, Text } from "react-native";
 import { createLeagueTableColumns } from "@/features/ui/leagueTable.columns";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 import Table from "@/shared/ui/Table";
 import MatchList from "@/shared/ui/MatchList";
-
-const matchRows = [
-  {
-    id: "m1",
-    homeName: "БИИК Шымкент (Ж)",
-    awayName: "Актобе (Ж)",
-    homeLogo: require("@/assets/images/cities/astana.png"),
-    awayLogo: require("@/assets/images/cities/astana.png"),
-    score: "3:0",
-    status: "finished",
-  },
-  {
-    id: "m2",
-    homeName: "Tomiris-Turan (Ж)",
-    awayName: "Кайрат (Ж)",
-    homeLogo: require("@/assets/images/cities/astana.png"),
-    awayLogo: require("@/assets/images/cities/astana.png"),
-    status: "live",
-    score: "1:0",
-  },
-  {
-    id: "m3",
-    homeName: "Елимай (Ж)",
-    awayName: "Кызылжар (Ж)",
-    homeLogo: require("@/assets/images/cities/astana.png"),
-    awayLogo: require("@/assets/images/cities/astana.png"),
-    status: "scheduled",
-    dateISO: new Date().toISOString(),
-  },
-] as const;
-
-type OrderRow = {
-  number: number;
-  team: string;
-  score: string;
-  games: string;
-  goals: string;
-  col: string;
-  image?: ImageSourcePropType;
-};
-
-export const rows: OrderRow[] = [
-  {
-    number: 1,
-    team: "БИИК Шымкент",
-    score: "3:0",
-    games: "17",
-    goals: "172:6",
-    col: "46",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    number: 2,
-    team: "Актобе",
-    score: "",
-    games: "15",
-    goals: "125:4",
-    col: "43",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    number: 3,
-    team: "Tomiris-Turan",
-    score: "5:1",
-    games: "16",
-    goals: "77:17",
-    col: "37",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    number: 4,
-    team: "Кайрат",
-    score: "",
-    games: "16",
-    goals: "50:35",
-    col: "33",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    number: 5,
-    team: "Елимай",
-    score: "3:2",
-    games: "16",
-    goals: "40:29",
-    col: "29",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    number: 6,
-    team: "Кызылжар",
-    score: "",
-    games: "15",
-    goals: "28:22",
-    col: "28",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    number: 7,
-    team: "Улытай",
-    score: "0:3",
-    games: "16",
-    goals: "23:35",
-    col: "23",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    number: 8,
-    team: "Zhenis Astana",
-    score: "",
-    games: "16",
-    goals: "25:38",
-    col: "22",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    number: 9,
-    team: "Тобол",
-    score: "",
-    games: "17",
-    goals: "21:84",
-    col: "18",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    number: 10,
-    team: "Астана",
-    score: "2:3",
-    games: "16",
-    goals: "23:40",
-    col: "13",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    number: 11,
-    team: "Кайсар",
-    score: "",
-    games: "14",
-    goals: "18:34",
-    col: "12",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    number: 12,
-    team: "Жетысу",
-    score: "1:5",
-    games: "16",
-    goals: "13:59",
-    col: "10",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-];
+import { matchRows } from "@/shared/mocks/matchRows";
+import { leagueRows, OrderRow } from "@/shared/mocks/leagueRows";
 
 type TabKey = "table" | "results" | "calendar";
 
@@ -209,15 +60,6 @@ export default function LeagueTabs() {
               >
                 {t.label}
               </Text>
-              {/* Индикатор под активным табом */}
-              {/* <View
-                style={{
-                  height: 2,
-                  marginTop: 6,
-                  borderRadius: 3,
-                  backgroundColor: isActive ? colors.primary : "transparent",
-                }}
-              /> */}
             </Pressable>
           );
         })}
@@ -228,7 +70,7 @@ export default function LeagueTabs() {
         {active === "table" && (
           <Table<OrderRow>
             columns={cols}
-            data={rows}
+            data={leagueRows}
             keyExtractor={(r) => r.number}
             backgroundColor={colors.bg}
             color={colors.text}
