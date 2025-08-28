@@ -21,7 +21,7 @@ const NEWS = [
 
 export default function HomeNewsList() {
   return (
-    <View style={{ paddingHorizontal: 16, marginTop: 0, marginBottom: 32 }}>
+    <View style={{ paddingHorizontal: 16, marginTop: 0 }}>
       <NewsList
         items={NEWS}
         onPressItem={(id) => console.log("open news", id)}
