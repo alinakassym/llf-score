@@ -4,17 +4,13 @@ import {
   Platform,
   ScrollView,
   View,
-  Pressable,
   Text,
-  ImageSourcePropType,
 } from "react-native";
 import HomeTopBar from "@/features/HomeTopBar";
 import SponsorsRow from "@/features/SponsorsRow";
-import PlayerCell from "@/features/PlayerCell";
-import Table, { TableColumn } from "@/shared/ui/Table";
+import RatingTable from "@/features/RatingTable";
 import { VStack } from "@/components/ui/vstack";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
-import { teamRatingRows, TeamRatingRow } from "@/shared/mocks/teamRatingRows";
 import Tabs from "@/shared/ui/Tabs";
 
 type TabKey = "teams" | "players";
@@ -22,62 +18,6 @@ type TabKey = "teams" | "players";
 const TABS: { key: TabKey; label: string }[] = [
   { key: "teams", label: "Клубы" },
   { key: "players", label: "Игроки" },
-];
-
-const cols: TableColumn<TeamRatingRow>[] = [
-  {
-    key: "teamName",
-    title: "Клубы",
-    width: 180,
-    maxWidth: 180,
-    render: (r) => (
-      <PlayerCell
-        name={r.teamName}
-        subtext={`${r.cityName},  ${r.league}`}
-        avatar={r.image}
-      />
-    ),
-  },
-  {
-    key: "season1",
-    title: "Сезон 1",
-    width: 70,
-    maxWidth: 70,
-    textAlign: "center",
-    headerTextAlign: "center",
-  },
-  {
-    key: "season2",
-    title: "Сезон 2",
-    width: 70,
-    maxWidth: 70,
-    textAlign: "center",
-    headerTextAlign: "center",
-  },
-  {
-    key: "season3",
-    title: "Сезон 3",
-    width: 70,
-    maxWidth: 70,
-    textAlign: "center",
-    headerTextAlign: "center",
-  },
-  {
-    key: "season4",
-    title: "Сезон 4",
-    width: 70,
-    maxWidth: 70,
-    textAlign: "center",
-    headerTextAlign: "center",
-  },
-  {
-    key: "total",
-    title: "Очки",
-    width: 70,
-    maxWidth: 70,
-    textAlign: "center",
-    headerTextAlign: "center",
-  },
 ];
 
 const TabRaitingScreen: FC = () => {
@@ -111,18 +51,7 @@ const TabRaitingScreen: FC = () => {
 
             {/* Контент вкладок */}
             <View style={{ paddingLeft: 0 }}>
-              {active === "teams" && (
-                <Table<TeamRatingRow>
-                  columns={cols}
-                  data={teamRatingRows}
-                  keyExtractor={(r, i) => r.teamName + i}
-                  backgroundColor={colors.bg}
-                  color={colors.text}
-                  borderColor={colors.border}
-                  hightlightColor={colors.secondaryBg}
-                  scrollX={true}
-                />
-              )}
+              {active === "teams" && <RatingTable />}
 
               {active === "players" && (
                 <Text
