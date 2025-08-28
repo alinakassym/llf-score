@@ -12,19 +12,13 @@ export type Banner = {
 export const banners: Banner[] = [
   {
     id: "b1",
-    title: "Преодолей границы",
-    subtitle: "Достигай новых вершин",
-    image: require("@/assets/images/banners/1.png")
+    title: "",
+    subtitle: "",
+    image: require("@/assets/images/banners/1.jpg"),
   },
   {
     id: "b2",
     title: "Мячи от А до Я",
-    image: require("@/assets/images/banners/2.png")
-  },
-  {
-    id: "b3",
-    title: "Преодолей границы",
-    subtitle: "Достигай новых вершин",
-    image: require("@/assets/images/banners/1.png")
+    image: require("@/assets/images/banners/2.png"),
   },
 ];

@@ -35,9 +35,9 @@ export default function BannerCard({
           height: "55%",
         }}
       />
-      <View style={{ position: "absolute", left: 12, right: 12, bottom: 12 }}>
+      <View style={{ position: "absolute", left: 12, right: 12, top: "45%" }}>
         {item.title ? (
-          <Text style={{ color: "#fff", fontSize: 16, fontWeight: "700" }}>
+          <Text style={{ color: "#00041A", fontSize: 16, fontWeight: "700" }}>
             {item.title}
           </Text>
         ) : null}
