@@ -2,10 +2,12 @@
 import { View, Image, ImageSourcePropType } from "react-native";
 import { Text } from "@/components/ui/text";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export type PlayerCellProps = {
   name: string;
   subtext?: string; // например, клуб/позиция (мелким)
+  position?: "up" | "down";
   avatar?: ImageSourcePropType; // эмблема/фото
   size?: number; // размер аватарки
   right?: React.ReactNode; // опционально элемент справа (иконка статуса)
@@ -14,6 +16,7 @@ export type PlayerCellProps = {
 export default function PlayerCell({
   name,
   subtext,
+  position,
   avatar,
   size = 24,
   right,
@@ -30,9 +33,26 @@ export default function PlayerCell({
         />
       )}
       <View style={{ flex: 1 }}>
-        <Text style={{ fontSize: 14, fontWeight: "600", color: colors.text }}>
-          {name}
-        </Text>
+        <View style={{ flexDirection: "row", gap: 6, alignItems: "center" }}>
+          <Text
+            style={{
+              fontSize: 14,
+              fontWeight: "600",
+              color: colors.text,
+            }}
+          >
+            {name}
+          </Text>
+          {position ? (
+            <View style={{ paddingBottom: 2 }}>
+              <Ionicons
+                color={colors.text}
+                name={position === "up" ? "arrow-up" : "arrow-down"}
+                size={16}
+              />
+            </View>
+          ) : null}
+        </View>
         {subtext ? (
           <Text style={{ fontSize: 12, color: colors.textLight, opacity: 0.7 }}>
             {subtext}
