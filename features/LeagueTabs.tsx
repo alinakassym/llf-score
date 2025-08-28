@@ -7,6 +7,7 @@ import Table from "@/shared/ui/Table";
 import MatchList from "@/shared/ui/MatchList";
 import { matchRows } from "@/shared/mocks/matchRows";
 import { leagueRows, OrderRow } from "@/shared/mocks/leagueRows";
+import Tabs from "@/shared/ui/Tabs";
 
 type TabKey = "table" | "results" | "calendar";
 
@@ -24,46 +25,14 @@ export default function LeagueTabs() {
   return (
     <View>
       {/* Верхняя панель табов */}
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-around",
-          borderBottomWidth: 1,
-          borderColor: colors.border,
-        }}
-      >
-        {TABS.map((t) => {
-          const isActive = active === t.key;
-          return (
-            <Pressable
-              key={t.key}
-              onPress={() => setActive(t.key)}
-              style={{
-                paddingVertical: 10,
-                display: "flex",
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: isActive
-                  ? colors.primary
-                  : colors.primaryLight,
-              }}
-              accessibilityRole="tab"
-              accessibilityState={{ selected: isActive }}
-            >
-              <Text
-                style={{
-                  fontSize: 12,
-                  textTransform: "uppercase",
-                  color: isActive ? "#FFF" : colors.primary,
-                }}
-              >
-                {t.label}
-              </Text>
-            </Pressable>
-          );
-        })}
-      </View>
+      <Tabs
+        tabs={TABS}
+        value={active}
+        onChange={setActive}
+        variant="solid"
+        stretch
+        size={12}
+      />
 
       {/* Контент вкладок */}
       <View style={{ paddingLeft: 0 }}>
