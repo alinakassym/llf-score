@@ -12,6 +12,8 @@ export interface ThemeTokens {
   primaryText: string;
   tabGradient: readonly [string, string];
   card: string;
+  green: string;
+  red: string;
 }
 
 export const tokens: Record<"light" | "dark", ThemeTokens> = {
@@ -29,6 +31,8 @@ export const tokens: Record<"light" | "dark", ThemeTokens> = {
     primaryText: "#FFFFFF",
     tabGradient: ["#5069D8", "#9464AF"],
     card: "rgba(0,0,0,0.02)",
+    green: "#2AD724",
+    red: "#F32D2D",
   },
   dark: {
     bg: "#181A20",
@@ -44,6 +48,8 @@ export const tokens: Record<"light" | "dark", ThemeTokens> = {
     primaryText: "#FFFFFF",
     tabGradient: ["rgba(80,105,216,0.8)", "#9464AF"],
     card: "rgba(255,255,255,0.06)",
+    green: "#2AD724",
+    red: "#F32D2D",
   },
 };
   
