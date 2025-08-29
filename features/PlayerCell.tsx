@@ -46,7 +46,7 @@ export default function PlayerCell({
           {position ? (
             <View style={{ paddingBottom: 2 }}>
               <Ionicons
-                color={colors.text}
+                color={position === "up" ? colors.green : colors.red}
                 name={position === "up" ? "arrow-up" : "arrow-down"}
                 size={16}
               />

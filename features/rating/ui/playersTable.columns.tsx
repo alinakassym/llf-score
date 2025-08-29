@@ -7,8 +7,10 @@ export const createPlayersTableColumns = (): TableColumn<PlayerRatingRow>[] => [
   {
     key: "position",
     title: "Позиция",
-    width: 40,
-    maxWidth: 40,
+    width: 76,
+    maxWidth: 76,
+    textAlign: "center",
+    headerTextAlign: "center",
   },
   {
     key: "playerName",
