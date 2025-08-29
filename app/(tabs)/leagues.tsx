@@ -1,12 +1,16 @@
 import { FC } from "react";
 import { Platform, ScrollView } from "react-native";
 import { VStack } from "@/components/ui/vstack";
+import { Divider } from "@/components/ui/divider";
 import HomeTopBar from "@/features/HomeTopBar";
-import HomeAccordionPreview from "@/features/HomeAccordionPreview";
+import LeaguesAccordion from "@/features/LeaguesAccordion";
+import CitiesAccordion from "@/features/CitiesAccordion";
 import SponsorsRow from "@/features/SponsorsRow";
 import Screen from "@/shared/ui/Screen";
+import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 const TabLeaguesScreen: FC = () => {
+  const { colors } = useAppTheme();
   return (
     <Screen>
       <SponsorsRow />
@@ -17,8 +21,10 @@ const TabLeaguesScreen: FC = () => {
         showsVerticalScrollIndicator={false}
         style={{ marginBottom: 0 }}
       >
-        <VStack className="flex-1 gap-4">
-          <HomeAccordionPreview />
+        <VStack className="flex-1">
+          <LeaguesAccordion />
+          <Divider style={{ backgroundColor: colors.border }} />
+          <CitiesAccordion />
         </VStack>
       </ScrollView>
     </Screen>

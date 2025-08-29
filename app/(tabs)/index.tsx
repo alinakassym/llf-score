@@ -4,7 +4,7 @@ import { VStack } from "@/components/ui/vstack";
 import HomeTopBar from "@/features/HomeTopBar";
 import MenuGrid from "@/features/MenuGrid";
 import Carousel from "@/features/Carousel";
-import HomeAccordionPreview from "@/features/HomeAccordionPreview";
+import LeaguesAccordion from "@/features/LeaguesAccordion";
 import NewsList from "@/features/NewsList";
 import SponsorsRow from "@/features/SponsorsRow";
 import LinksColumn from "@/features/LinksColumn";
@@ -25,7 +25,7 @@ const TabHomeScreen: FC = () => {
         <VStack className="flex-1 gap-4 pt-4 mb-6">
           <Carousel items={banners} />
           <MenuGrid />
-          <HomeAccordionPreview />
+          <LeaguesAccordion />
           <NewsList />
           <LinksColumn />
         </VStack>

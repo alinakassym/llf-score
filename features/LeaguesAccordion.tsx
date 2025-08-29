@@ -42,7 +42,7 @@ const items: AccordionEntry[] = [
   },
 ];
 
-export default function HomeAccordionPreview() {
+export default function LeaguesAccordion() {
   const { colors } = useAppTheme();
   return (
     <Accordion
