@@ -69,7 +69,7 @@ const TabTransferScreen: FC = () => {
           placeholder="Поиск игрока"
           style={{
             borderWidth: 1,
-            borderColor: "#ddd",
+            borderColor: colors.border,
             borderRadius: 8,
             paddingHorizontal: 12,
             paddingVertical: 8,

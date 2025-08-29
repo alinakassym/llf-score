@@ -1,8 +1,9 @@
 import React from "react";
 import { ImageBackground, Pressable, Text, View } from "react-native";
+import { Link } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import type { Banner } from "@/shared/mocks/banners";
-import { Link } from "expo-router";
+import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 type Props = {
   item: Banner;
@@ -17,6 +18,7 @@ export default function BannerCard({
   height = 140,
   borderRadius = 0,
 }: Props) {
+  const { colors } = useAppTheme();
   const content = (
     <ImageBackground
       source={item.image}
@@ -24,7 +26,7 @@ export default function BannerCard({
       style={{ width, height, overflow: "hidden", borderRadius }}
     >
       <LinearGradient
-        colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.45)"]}
+        colors={colors.overlayGradient}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
         style={{
@@ -35,14 +37,14 @@ export default function BannerCard({
           height: "55%",
         }}
       />
-      <View style={{ position: "absolute", left: 12, right: 12, top: "45%" }}>
+      <View style={{ position: "absolute", left: 12, right: 12, top: "42%" }}>
         {item.title ? (
           <Text style={{ color: "#00041A", fontSize: 16, fontWeight: "700" }}>
             {item.title}
           </Text>
         ) : null}
         {item.subtitle ? (
-          <Text style={{ color: "#fff", opacity: 0.9, marginTop: 2 }}>
+          <Text style={{ color: "#FFFFFF", opacity: 0.9, marginTop: 2 }}>
             {item.subtitle}
           </Text>
         ) : null}
