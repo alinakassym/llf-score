@@ -1,18 +1,15 @@
 import { FC } from "react";
-import { KeyboardAvoidingView, Platform, ScrollView, Text } from "react-native";
-import HomeTopBar from "@/features/HomeTopBar";
+import { Platform, ScrollView, Text } from "react-native";
 import { VStack } from "@/components/ui/vstack";
-import { useAppTheme } from "@/shared/theme/AppThemeProvider";
+import HomeTopBar from "@/features/HomeTopBar";
 import SponsorsRow from "@/features/SponsorsRow";
+import { useAppTheme } from "@/shared/theme/AppThemeProvider";
+import Screen from "@/shared/ui/Screen";
 
 const TabHelpScreen: FC = () => {
   const { colors } = useAppTheme();
   return (
-    <KeyboardAvoidingView
-      className="flex-1"
-      behavior={Platform.select({ ios: "padding", android: undefined })}
-      style={{ backgroundColor: colors.secondaryBg }}
-    >
+    <Screen>
       <SponsorsRow />
       <HomeTopBar />
       <ScrollView
@@ -27,7 +24,7 @@ const TabHelpScreen: FC = () => {
           </Text>
         </VStack>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </Screen>
   );
 };
 

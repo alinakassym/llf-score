@@ -1,7 +1,5 @@
 import { FC } from "react";
-import {
-  KeyboardAvoidingView, Platform, ScrollView
-} from "react-native";
+import { Platform, ScrollView } from "react-native";
 import { VStack } from "@/components/ui/vstack";
 import HomeTopBar from "@/features/HomeTopBar";
 import MenuGrid from "@/features/MenuGrid";
@@ -10,17 +8,12 @@ import HomeAccordionPreview from "@/features/HomeAccordionPreview";
 import NewsList from "@/features/NewsList";
 import SponsorsRow from "@/features/SponsorsRow";
 import LinksColumn from "@/features/LinksColumn";
+import Screen from "@/shared/ui/Screen";
 import { banners } from "@/shared/mocks/banners";
-import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 const TabHomeScreen: FC = () => {
-  const { colors } = useAppTheme();
   return (
-    <KeyboardAvoidingView
-      className="flex-1"
-      behavior={Platform.select({ ios: "padding", android: undefined })}
-      style={{ paddingBottom: 65, backgroundColor: colors.secondaryBg }}
-    >
+    <Screen>
       <SponsorsRow />
       <HomeTopBar />
       <ScrollView
@@ -37,7 +30,7 @@ const TabHomeScreen: FC = () => {
           <LinksColumn />
         </VStack>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </Screen>
   );
 };
 

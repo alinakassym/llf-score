@@ -1,17 +1,12 @@
 import { FC, useState } from "react";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  View,
-  TextInput,
-} from "react-native";
-import { transferRows, TransferRow } from "@/shared/mocks/transferRows";
-import Table, { TableColumn } from "@/shared/ui/Table";
+import { Platform, ScrollView, View, TextInput } from "react-native";
+import { VStack } from "@/components/ui/vstack";
 import PlayerCell from "@/features/PlayerCell";
 import HomeTopBar from "@/features/HomeTopBar";
 import SponsorsRow from "@/features/SponsorsRow";
-import { VStack } from "@/components/ui/vstack";
+import Screen from "@/shared/ui/Screen";
+import { transferRows, TransferRow } from "@/shared/mocks/transferRows";
+import Table, { TableColumn } from "@/shared/ui/Table";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 const cols: TableColumn<TransferRow>[] = [
@@ -64,11 +59,7 @@ const TabTransferScreen: FC = () => {
   );
 
   return (
-    <KeyboardAvoidingView
-      className="flex-1"
-      behavior={Platform.select({ ios: "padding", android: undefined })}
-      style={{ paddingBottom: 65, backgroundColor: colors.bg }}
-    >
+    <Screen>
       <SponsorsRow />
       <HomeTopBar />
       <View style={{ padding: 16 }}>
@@ -106,7 +97,7 @@ const TabTransferScreen: FC = () => {
           />
         </VStack>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </Screen>
   );
 };
 

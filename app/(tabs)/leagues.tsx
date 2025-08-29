@@ -1,19 +1,14 @@
 import { FC } from "react";
-import { KeyboardAvoidingView, Platform, ScrollView, Text } from "react-native";
+import { Platform, ScrollView } from "react-native";
+import { VStack } from "@/components/ui/vstack";
 import HomeTopBar from "@/features/HomeTopBar";
 import HomeAccordionPreview from "@/features/HomeAccordionPreview";
-import { VStack } from "@/components/ui/vstack";
-import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 import SponsorsRow from "@/features/SponsorsRow";
+import Screen from "@/shared/ui/Screen";
 
 const TabLeaguesScreen: FC = () => {
-  const { colors } = useAppTheme();
   return (
-    <KeyboardAvoidingView
-      className="flex-1"
-      behavior={Platform.select({ ios: "padding", android: undefined })}
-      style={{ paddingBottom: 65, backgroundColor: colors.secondaryBg }}
-    >
+    <Screen>
       <SponsorsRow />
       <HomeTopBar />
       <ScrollView
@@ -26,7 +21,7 @@ const TabLeaguesScreen: FC = () => {
           <HomeAccordionPreview />
         </VStack>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </Screen>
   );
 };
 
