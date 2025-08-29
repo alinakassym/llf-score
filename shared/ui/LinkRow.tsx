@@ -1,63 +1,39 @@
 import React from "react";
-import { Pressable, View, Text, Platform } from "react-native";
+import { Pressable, View, Text } from "react-native";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { Divider } from "@/components/ui/divider";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 type Props = {
   label: string;
-  onPress?: () => void;
-  leftCircleColor?: string; // цвет кружка (по умолчанию – цвет темы)
-  right?: React.ReactNode; // например, иконка стрелки или счётчик
-  showDivider?: boolean; // рисовать нижний разделитель
-  disabled?: boolean;
-  testID?: string;
+  showDivider?: boolean;
 };
 
-export default function LinkRow({
-  label,
-  onPress,
-  leftCircleColor,
-  right,
-  showDivider = true,
-  disabled,
-  testID,
-}: Props) {
+export default function LinkRow({ label, showDivider = true }: Props) {
   const { colors } = useAppTheme();
-  const circle = leftCircleColor ?? colors.primary;
 
   return (
     <Pressable
-      testID={testID}
-      onPress={onPress}
-      disabled={disabled}
-      android_ripple={{ color: colors.primaryLight }}
-      style={({ pressed }) => ({
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        paddingHorizontal: 16,
-        height: 52,
-        backgroundColor: pressed ? colors.secondaryBg : colors.bg,
-        opacity: disabled ? 0.6 : 1,
-        borderBottomWidth: showDivider ? 1 : 0,
-        borderColor: colors.border,
-      })}
       accessibilityRole="button"
       accessibilityLabel={label}
+      style={{
+        backgroundColor: colors.bg,
+      }}
     >
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
-        <View
-          style={{
-            width: 12,
-            height: 12,
-            borderRadius: 6,
-            borderWidth: 2,
-            borderColor: circle,
-            backgroundColor: "transparent", // пустой круг
-          }}
-        />
+      <View
+        style={{
+          paddingHorizontal: 16,
+          paddingVertical: 16,
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 12,
+        }}
+      >
+        <FontAwesome name="circle-o" size={16} color={colors.primary} />
         <Text
           style={{
             fontSize: 14,
+            fontWeight: 600,
             color: colors.text,
           }}
           numberOfLines={1}
@@ -65,8 +41,7 @@ export default function LinkRow({
           {label}
         </Text>
       </View>
-
-      <View style={{ marginLeft: 12 }}>{right}</View>
+      {showDivider && <Divider />}
     </Pressable>
   );
 }
