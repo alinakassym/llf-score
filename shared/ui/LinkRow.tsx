@@ -41,7 +41,7 @@ export default function LinkRow({ label, showDivider = true }: Props) {
           {label}
         </Text>
       </View>
-      {showDivider && <Divider />}
+      {showDivider && <Divider style={{ backgroundColor: colors.border }} />}
     </Pressable>
   );
 }

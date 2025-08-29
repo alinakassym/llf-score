@@ -3,25 +3,18 @@ import { Tabs } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Platform } from 'react-native';
 import { TabBarIcon } from '@/shared/icons/TabBarIcon';
-import { useThemeMode } from '@/shared/theme/useThemeMode';
+import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 export default function TabLayout() {
-  const scheme = useThemeMode();
-  const isLight = scheme === 'light';
-  const tintColor = isLight ? '#FFFFFF' : '#000000';
-
-  const gradientColors: [string, string] = isLight
-    ? ['#5069D8', '#9464AF']                              
-    : ['rgba(80,105,216,0.8)', '#9464AF'];               
-
+  const { colors } = useAppTheme();
 
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarActiveTintColor: tintColor,
-        tabBarInactiveTintColor: tintColor,
+        tabBarActiveTintColor: colors.text,
+        tabBarInactiveTintColor: colors.text,
         tabBarStyle: {
           height: Platform.select({ ios: 80, android: 65, web: 65 }),
           backgroundColor: "transparent",
@@ -41,7 +34,7 @@ export default function TabLayout() {
         },
         tabBarBackground: () => (
           <LinearGradient
-            colors={gradientColors}
+            colors={colors.gradient}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={{ flex: 1 }}
