@@ -1,13 +1,12 @@
 import { FC } from "react";
-import { Platform, ScrollView, Text } from "react-native";
+import { Platform, ScrollView } from "react-native";
 import { VStack } from "@/components/ui/vstack";
 import HomeTopBar from "@/features/HomeTopBar";
 import SponsorsRow from "@/features/SponsorsRow";
-import { useAppTheme } from "@/shared/theme/AppThemeProvider";
+import FaqAccordion from "@/features/FaqAccordion";
 import Screen from "@/shared/ui/Screen";
 
 const TabHelpScreen: FC = () => {
-  const { colors } = useAppTheme();
   return (
     <Screen>
       <SponsorsRow />
@@ -18,10 +17,8 @@ const TabHelpScreen: FC = () => {
         showsVerticalScrollIndicator={false}
         style={{ marginBottom: 0 }}
       >
-        <VStack className="flex-1 gap-4 p-6">
-          <Text style={{ color: colors.textLight }}>
-            Раздел "Помощь" - в разработке
-          </Text>
+        <VStack className="flex-1">
+          <FaqAccordion />
         </VStack>
       </ScrollView>
     </Screen>
