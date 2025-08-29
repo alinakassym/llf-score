@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
+import { useThemeMode } from "@/shared/theme/useThemeMode";
 import { LinearGradient } from "expo-linear-gradient";
 
 type Props = {
@@ -32,6 +33,13 @@ export default function FeedbackForm({
     onSubmit?.(value.trim());
   }
 
+  const scheme = useThemeMode();
+  const isLight = scheme === "light";
+
+  const gradientColors: [string, string] = isLight
+    ? ["#5069D8", "#9464AF"]
+    : ["rgba(80,105,216,0.8)", "#9464AF"];
+
   return (
     <View
       style={{
@@ -42,7 +50,7 @@ export default function FeedbackForm({
       }}
     >
       <Text
-        style={{ fontSize: 16, fontWeight: 700 as any, color: colors.text }}
+        style={{ fontSize: 14, fontWeight: 700 as any, color: colors.text }}
       >
         {title}
       </Text>
@@ -80,11 +88,12 @@ export default function FeedbackForm({
         }}
       >
         <LinearGradient
-          colors={["#4F6CF3", "#A15CCF"]}
+          colors={gradientColors}
           start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
+          end={{ x: 1, y: 0 }}
           style={{
-            height: 48,
+            flex: 1,
+            padding: 16,
             borderRadius: 12,
             alignItems: "center",
             justifyContent: "center",
