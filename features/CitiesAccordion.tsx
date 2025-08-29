@@ -23,19 +23,19 @@ export type AccordionEntry = {
 
 const items: AccordionEntry[] = [
   {
-    id: "2",
+    id: "almaty",
     title: "Алматы",
     content: "В разработке...",
     image: require("@/assets/images/cities/almaty.png"),
   },
   {
-    id: "3",
+    id: "shymkent",
     title: "Шымкент",
     content: "В разработке...",
     image: require("@/assets/images/cities/shymkent.png"),
   },
   {
-    id: "3",
+    id: "atyrau",
     title: "Атырау",
     content: "В разработке...",
     image: require("@/assets/images/cities/atyrau.gif"),
