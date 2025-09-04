@@ -22,7 +22,7 @@ const TabLeaguesScreen: FC = () => {
         style={{ marginBottom: 0 }}
       >
         <VStack className="flex-1">
-          <LeaguesAccordion />
+          <LeaguesAccordion showTabs={true} />
           <Divider style={{ backgroundColor: colors.border }} />
           <CitiesAccordion />
         </VStack>

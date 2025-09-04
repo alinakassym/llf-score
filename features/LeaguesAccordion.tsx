@@ -1,6 +1,9 @@
 // features/home/HomeAccordionPreview.tsx
 import React, { ReactNode } from "react";
 import { Image, View, Text, ImageSourcePropType } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import LeagueTabs from "@/features/LeagueTabs";
+import { createLeagueTableColumns } from "@/features/ui/leagueTable.columns";
 import {
   Accordion,
   AccordionItem,
@@ -9,10 +12,14 @@ import {
   AccordionTitleText,
   AccordionContent,
 } from "@/components/ui/accordion";
-import LeagueTabs from "@/features/LeagueTabs";
 import { Divider } from "@/components/ui/divider";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import Table from "@/shared/ui/Table";
+import { leagueRows, OrderRow } from "@/shared/mocks/leagueRows";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
+
+type Props = {
+  showTabs: Boolean;
+};
 
 export type AccordionEntry = {
   id: string;
@@ -46,8 +53,10 @@ const items: AccordionEntry[] = [
   },
 ];
 
-export default function LeaguesAccordion() {
+export default function LeaguesAccordion({ showTabs = false }: Props) {
   const { colors } = useAppTheme();
+  const cols = React.useMemo(() => createLeagueTableColumns(colors), [colors]);
+
   return (
     <Accordion
       size="sm"
@@ -119,7 +128,19 @@ export default function LeaguesAccordion() {
               </AccordionTrigger>
             </AccordionHeader>
             <AccordionContent style={{ paddingLeft: 0, paddingRight: 0 }}>
-              <LeagueTabs />
+              {showTabs ? (
+                <LeagueTabs />
+              ) : (
+                <Table<OrderRow>
+                  columns={cols}
+                  data={leagueRows}
+                  keyExtractor={(r) => r.number}
+                  backgroundColor={colors.bg}
+                  color={colors.text}
+                  borderColor={colors.border}
+                  hightlightColor={colors.secondaryBg}
+                />
+              )}
             </AccordionContent>
           </AccordionItem>
           {index + 1 < items.length && (
