@@ -41,17 +41,19 @@ export default function NewsCard({
         <Text style={{ fontSize: 14, color: colors.text }}>{title}</Text>
       </View>
 
-      <Pressable
-        onPress={() => onToggleBookmark?.(id)}
-        hitSlop={12}
-        style={{ paddingLeft: 8 }}
-      >
-        <Ionicons
-          name={bookmarked ? "bookmark" : "bookmark-outline"}
-          size={26}
-          color={colors.primary}
-        />
-      </Pressable>
+      {onPress && (
+        <Pressable
+          onPress={() => onToggleBookmark?.(id)}
+          hitSlop={12}
+          style={{ paddingLeft: 8 }}
+        >
+          <Ionicons
+            name={bookmarked ? "bookmark" : "bookmark-outline"}
+            size={26}
+            color={colors.primary}
+          />
+        </Pressable>
+      )}
     </Pressable>
   );
 }

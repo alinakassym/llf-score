@@ -24,7 +24,6 @@ export default function HomeNewsList() {
     <View style={{ paddingHorizontal: 16, marginTop: 0 }}>
       <NewsList
         items={NEWS}
-        onPressItem={(id) => console.log("open news", id)}
         onToggleBookmark={(id) => console.log("toggle bookmark", id)}
       />
     </View>
