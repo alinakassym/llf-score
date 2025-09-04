@@ -96,15 +96,6 @@ export default function CitiesAccordion() {
                             >
                               {it.title}
                             </Text>
-                            <Text
-                              style={{
-                                fontSize: 14,
-                                fontWeight: 400,
-                                color: colors.textLight,
-                              }}
-                            >
-                              🇰🇿 Казахстан
-                            </Text>
                           </View>
                         </View>
                       </AccordionTitleText>

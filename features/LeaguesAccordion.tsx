@@ -16,8 +16,9 @@ import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 export type AccordionEntry = {
   id: string;
-  title: ReactNode;
+  title: string;
   content: ReactNode;
+  cityName: string;
   image?: ImageSourcePropType;
 };
 
@@ -26,18 +27,21 @@ const items: AccordionEntry[] = [
     id: "1",
     title: "Премьер-лига",
     content: "В разработке...",
+    cityName: "Астана",
     image: require("@/assets/images/cities/astana.png"),
   },
   {
     id: "2",
     title: "Супер-лига",
     content: "В разработке...",
+    cityName: "Астана",
     image: require("@/assets/images/cities/astana.png"),
   },
   {
     id: "3",
     title: "Мастер лига",
     content: "В разработке...",
+    cityName: "Астана",
     image: require("@/assets/images/cities/astana.png"),
   },
 ];
@@ -91,7 +95,7 @@ export default function LeaguesAccordion() {
                                 color: colors.textLight,
                               }}
                             >
-                              🇰🇿 Казахстан
+                              {it.cityName}
                             </Text>
                           </View>
                         </View>
@@ -115,13 +119,6 @@ export default function LeaguesAccordion() {
               </AccordionTrigger>
             </AccordionHeader>
             <AccordionContent style={{ paddingLeft: 0, paddingRight: 0 }}>
-              {/* {typeof it.content === "string" ? (
-                <AccordionContentText style={{ fontSize: 14, opacity: 0.9 }}>
-                  {it.content}
-                </AccordionContentText>
-              ) : (
-                it.content
-              )} */}
               <LeagueTabs />
             </AccordionContent>
           </AccordionItem>
