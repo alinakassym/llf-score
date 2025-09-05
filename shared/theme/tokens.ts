@@ -8,7 +8,6 @@ export interface ThemeTokens {
   primary: string;
   secondary: string;
   primaryLight: string;
-  primaryText: string;
   gradient: readonly [string, string];
   overlayGradient: readonly [string, string];
   green: string;
@@ -26,7 +25,6 @@ export const tokens: Record<"light" | "dark", ThemeTokens> = {
     primary: "#5269D7",
     secondary: "#cfdcff",
     primaryLight: "#EAEDFA",
-    primaryText: "#FFFFFF",
     gradient: ["#5069D8", "#9464AF"],
     overlayGradient: ["rgba(0,0,0,0)", "rgba(0,0,0,0.45)"],
     green: "#2AD724",
@@ -42,7 +40,6 @@ export const tokens: Record<"light" | "dark", ThemeTokens> = {
     primary: "#5269D7",
     secondary: "#cfdcff",
     primaryLight: "#181A20",
-    primaryText: "#FFFFFF",
     gradient: ["#5069D8", "#9464AF"],
     overlayGradient: ["rgba(0,0,0,0)", "rgba(0,0,0,0.45)"],
     green: "#2AD724",
