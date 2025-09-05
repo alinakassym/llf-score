@@ -11,6 +11,7 @@ import {
   DrawerBody,
   DrawerCloseButton,
 } from "@/components/ui/drawer";
+import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 export type DrawerItem = { id: string; label: string; icon?: any };
 
@@ -22,21 +23,11 @@ type Props = {
   showItemIcon?: boolean;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-  color?: string;
-  backgroundColor?: string;
-  chevronColor?: string;
   marginTop?: number;
 };
 
-export const DrawerPickerSkeleton = ({
-  label,
-  color = "#111",
-  chevronColor = "#000",
-}: {
-  label: string;
-  color?: string;
-  chevronColor?: string;
-}) => {
+export const DrawerPickerSkeleton = ({ label }: { label: string }) => {
+  const { colors } = useAppTheme();
   return (
     <View
       style={{
@@ -47,8 +38,8 @@ export const DrawerPickerSkeleton = ({
       }}
       accessibilityRole="button"
     >
-      <Text style={{ fontWeight: "700", color }}>{label}</Text>
-      <Ionicons name="chevron-down" size={16} color={chevronColor} />
+      <Text style={{ fontWeight: "700", color: colors.text }}>{label}</Text>
+      <Ionicons name="chevron-down" size={16} color={colors.text} />
     </View>
   );
 };
@@ -61,11 +52,10 @@ export default function DrawerPicker({
   showItemIcon = true,
   open: openProp,
   onOpenChange,
-  color,
-  backgroundColor,
-  chevronColor,
   marginTop = 0,
 }: Props) {
+  const { colors } = useAppTheme();
+
   const isControlled = openProp !== undefined;
   const [openUncontrolled, setOpenUncontrolled] = useState(false);
   const open = isControlled ? (openProp as boolean) : openUncontrolled;
@@ -102,16 +92,22 @@ export default function DrawerPicker({
             style={{ width: 18, height: 18, borderRadius: 4, marginRight: 6 }}
           />
         ) : null}
-        <Text style={{ fontWeight: "700", color }}>{selected?.label}</Text>
+        <Text style={{ fontWeight: "700", color: colors.text }}>
+          {selected?.label}
+        </Text>
         <Ionicons
           name={open ? "chevron-up" : "chevron-down"}
           size={16}
-          color={chevronColor}
+          color={colors.text}
         />
       </Pressable>
 
       <Drawer
-        style={{ marginTop }}
+        style={{
+          position: "relative",
+          top: marginTop,
+          overflow: "hidden",
+        }}
         isOpen={open}
         onClose={() => setOpen(false)}
         size="auto"
@@ -120,21 +116,25 @@ export default function DrawerPicker({
         <DrawerBackdrop onPress={() => setOpen(false)} />
         <DrawerContent
           style={{
+            position: "absolute",
+            top: 0,
             paddingVertical: 0,
             borderBottomLeftRadius: 16,
             borderBottomRightRadius: 16,
             overflow: "hidden",
-            backgroundColor,
+            backgroundColor: colors.bg,
             paddingHorizontal: 0,
           }}
         >
           {label && (
             <DrawerHeader style={{ paddingTop: 16 }}>
-              <Text style={{ fontSize: 16, fontWeight: "700", color }}>
+              <Text
+                style={{ fontSize: 16, fontWeight: "700", color: colors.text }}
+              >
                 {label}
               </Text>
               <DrawerCloseButton onPress={() => setOpen(false)}>
-                <Ionicons name="close" size={24} color={chevronColor} />
+                <Ionicons name="close" size={24} color={colors.text} />
               </DrawerCloseButton>
             </DrawerHeader>
           )}
@@ -154,26 +154,30 @@ export default function DrawerPicker({
                         alignItems: "center",
                         gap: 12,
                         padding: 16,
-                        backgroundColor: active ? "#a8a8a8" : "transparent",
+                        backgroundColor: active
+                          ? colors.secondaryBg
+                          : colors.bg,
                       }}
                     >
                       {showItemIcon && it.icon ? (
                         <Image
                           source={it.icon}
-                          style={{ width: 28, height: 28, borderRadius: 6 }}
+                          style={{ width: 20, height: 20, borderRadius: 6 }}
                         />
                       ) : null}
                       <Text
                         style={{
-                          fontSize: 16,
+                          fontSize: 12,
                           fontWeight: active ? "700" : "400",
-                          color,
+                          color: colors.text,
                         }}
                       >
                         {it.label}
                       </Text>
                     </Pressable>
-                    {index + 1 < items.length && <Divider />}
+                    {index + 1 < items.length && (
+                      <Divider style={{ backgroundColor: colors.border }} />
+                    )}
                   </React.Fragment>
                 );
               })}
