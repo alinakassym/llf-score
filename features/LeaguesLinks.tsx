@@ -7,6 +7,7 @@ import {
   ImageSourcePropType,
   Pressable,
 } from "react-native";
+import { useRouter } from "expo-router";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 import { Divider } from "@/components/ui/divider";
 
@@ -48,6 +49,7 @@ const items: LeaguesEntry[] = [
 
 export default function LeaguesLinks({ cityName = "" }: Props) {
   const { colors } = useAppTheme();
+  const router = useRouter();
 
   return (
     <>
@@ -59,6 +61,12 @@ export default function LeaguesLinks({ cityName = "" }: Props) {
           style={{
             backgroundColor: colors.bg,
           }}
+          onPress={() =>
+            router.push({
+              pathname: "/league",
+              params: { leagueId: String(it.id) },
+            })
+          }
         >
           <View
             className="px-4 py-3"
