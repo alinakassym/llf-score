@@ -1,4 +1,4 @@
-// features/home/HomeAccordionPreview.tsx
+// features/CitiesAccordion.tsx
 import React, { ReactNode } from "react";
 import { Image, View, Text, ImageSourcePropType } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -11,12 +11,12 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import { Divider } from "@/components/ui/divider";
-import LeaguesAccordion from "@/features/LeaguesAccordion";
+import LeaguesLinks from "@/features/LeaguesLinks";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 export type AccordionEntry = {
   id: string;
-  title: ReactNode;
+  title: string;
   content: ReactNode;
   image?: ImageSourcePropType;
 };
@@ -118,7 +118,7 @@ export default function CitiesAccordion() {
               </AccordionTrigger>
             </AccordionHeader>
             <AccordionContent style={{ paddingLeft: 8, paddingRight: 0 }}>
-              <LeaguesAccordion />
+              <LeaguesLinks cityName={it.title} />
             </AccordionContent>
           </AccordionItem>
           {index + 1 < items.length && (

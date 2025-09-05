@@ -3,7 +3,7 @@ import { Platform, ScrollView } from "react-native";
 import { VStack } from "@/components/ui/vstack";
 import { Divider } from "@/components/ui/divider";
 import HomeTopBar from "@/features/HomeTopBar";
-import LeaguesAccordion from "@/features/LeaguesAccordion";
+import LeaguesLinks from "@/features/LeaguesLinks";
 import CitiesAccordion from "@/features/CitiesAccordion";
 import SponsorsRow from "@/features/SponsorsRow";
 import Screen from "@/shared/ui/Screen";
@@ -22,7 +22,7 @@ const TabLeaguesScreen: FC = () => {
         style={{ marginBottom: 0 }}
       >
         <VStack className="flex-1">
-          <LeaguesAccordion showTabs={true} />
+          <LeaguesLinks cityName="Астана" />
           <Divider style={{ backgroundColor: colors.border }} />
           <CitiesAccordion />
         </VStack>

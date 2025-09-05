@@ -1,4 +1,4 @@
-// features/home/HomeAccordionPreview.tsx
+// features/LeaguesAccordion.tsx
 import React, { ReactNode } from "react";
 import { Image, View, Text, ImageSourcePropType } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
