@@ -12,11 +12,11 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarShowLabel: false,
+        tabBarShowLabel: true,
         tabBarActiveTintColor: colors.bg,
         tabBarInactiveTintColor: colors.bg,
         tabBarStyle: {
-          height: Platform.select({ ios: 80, android: 65, web: 65 }),
+          height: Platform.select({ ios: 90, android: 75, web: 75 }),
           backgroundColor: "transparent",
           borderTopWidth: 0,
           paddingTop: 6,
@@ -45,7 +45,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Main",
+          title: "Главная",
           tabBarIcon: ({ focused, size, color }) => (
             <TabBarIcon
               name="home"
@@ -59,7 +59,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="leagues"
         options={{
-          title: "Leagues",
+          title: "Лиги",
           tabBarIcon: ({ focused, size, color }) => (
             <TabBarIcon
               name="leagues"
@@ -73,7 +73,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="rating"
         options={{
-          title: "Rating",
+          title: "Рейтинг",
           tabBarItemStyle: { paddingBottom: 2 },
           tabBarIcon: ({ focused, size, color }) => (
             <TabBarIcon
@@ -88,7 +88,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="transfers"
         options={{
-          title: "Transfers",
+          title: "Трансферы",
           tabBarIcon: ({ focused, size, color }) => (
             <TabBarIcon
               name="transfers"
@@ -102,7 +102,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="help"
         options={{
-          title: "Help",
+          title: "Отзыв",
           tabBarIcon: ({ focused, size, color }) => (
             <TabBarIcon
               name="help"
