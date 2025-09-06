@@ -6,9 +6,9 @@ import PlayerCell from "@/features/PlayerCell";
 export const createPlayersTableColumns = (): TableColumn<PlayerRatingRow>[] => [
   {
     key: "position",
-    title: "Позиция",
-    width: 76,
-    maxWidth: 76,
+    title: "#",
+    width: 40,
+    maxWidth: 40,
     textAlign: "center",
     headerTextAlign: "center",
   },
@@ -28,7 +28,7 @@ export const createPlayersTableColumns = (): TableColumn<PlayerRatingRow>[] => [
   },
   {
     key: "tour",
-    title: "Рейтинг за тур",
+    title: "7 тур",
     width: 120,
     maxWidth: 120,
     textAlign: "center",
@@ -36,7 +36,7 @@ export const createPlayersTableColumns = (): TableColumn<PlayerRatingRow>[] => [
   },
   {
     key: "total",
-    title: "Рейтинг",
+    title: "Очки",
     width: 110,
     maxWidth: 110,
     textAlign: "center",
