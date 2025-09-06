@@ -1,20 +1,44 @@
-// app/leagues.tsx
+// app/league.tsx
 import React from "react";
-import { Text } from "react-native";
+import { Platform, ScrollView } from "react-native";
 import { useLocalSearchParams } from "expo-router";
+import { VStack } from "@/components/ui/vstack";
+import LeagueHeader from "@/features/LeagueHeader";
+import LeagueTabs from "@/features/LeagueTabs";
 import Screen from "@/shared/ui/Screen";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
-export default function LeaguesScreen() {
+export default function LeagueScreen() {
   const { leagueId } = useLocalSearchParams<{ leagueId?: string }>();
 
   const { colors } = useAppTheme();
 
+  // TODO: позже подменим реальные данные по leagueId
+  const title = "League";
+  const year = "2025";
+  const logo = require("@/assets/images/adaptive-icon.png"); // временный логотип
+
   return (
-    <Screen style={{ flex: 1, backgroundColor: colors.bg, padding: 16 }}>
-      <Text style={{ color: colors.text, fontSize: 12 }}>
-        Страница лиг — скоро тут будет контент
-      </Text>
+    <Screen>
+      <ScrollView
+        keyboardDismissMode={Platform.OS === "ios" ? "interactive" : "on-drag"}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+        style={{ marginBottom: 0 }}
+      >
+        <VStack className="flex-1">
+          <LeagueHeader
+            title={title}
+            year={year}
+            logo={logo}
+            onPressYear={() => {
+              // TODO: открыть выбор сезона (ActionSheet/DrawerPicker)
+              console.log("open year picker for league:", leagueId);
+            }}
+          />
+          <LeagueTabs />
+        </VStack>
+      </ScrollView>
     </Screen>
   );
 }
