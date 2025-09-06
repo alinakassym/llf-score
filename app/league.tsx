@@ -1,6 +1,6 @@
 // app/league.tsx
 import React from "react";
-import { Platform, ScrollView } from "react-native";
+import { Platform, ScrollView, View } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { useLocalSearchParams } from "expo-router";
 import { VStack } from "@/components/ui/vstack";
@@ -11,21 +11,22 @@ import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 export default function LeagueScreen() {
   const { leagueId } = useLocalSearchParams<{ leagueId?: string }>();
-
   const { colors } = useAppTheme();
 
-  // TODO: позже подменим реальные данные по leagueId
   const title = "League";
   const year = "2025";
-  const logo = require("@/assets/images/adaptive-icon.png"); // временный логотип
+  const logo = require("@/assets/images/adaptive-icon.png");
+
+  // выбираем правильный контейнер
+  const Container: any = Platform.OS === "android" ? Animated.View : View;
+  const containerProps =
+    Platform.OS === "android"
+      ? { entering: FadeIn.duration(60), exiting: FadeOut.duration(60) }
+      : {};
 
   return (
     <Screen>
-      <Animated.View
-        entering={FadeIn.duration(60)}
-        exiting={FadeOut.duration(60)}
-        style={{ flex: 1 }}
-      >
+      <Container style={{ flex: 1 }} {...containerProps}>
         <ScrollView
           keyboardDismissMode={
             Platform.OS === "ios" ? "interactive" : "on-drag"
@@ -40,14 +41,13 @@ export default function LeagueScreen() {
               year={year}
               logo={logo}
               onPressYear={() => {
-                // TODO: открыть выбор сезона (ActionSheet/DrawerPicker)
                 console.log("open year picker for league:", leagueId);
               }}
             />
             <LeagueTabs />
           </VStack>
         </ScrollView>
-      </Animated.View>
+      </Container>
     </Screen>
   );
 }
