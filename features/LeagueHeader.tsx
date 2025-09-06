@@ -1,6 +1,7 @@
 // features/LeagueHeader.tsx
 import React from "react";
 import {
+  Platform,
   View,
   Text,
   Image,
@@ -40,8 +41,9 @@ export default function LeagueHeader({
         flexDirection: "row",
         alignItems: "center",
         gap: 12,
+        paddingTop: Platform.OS === "ios" ? 16 : 52,
         paddingHorizontal: 16,
-        paddingVertical: 12,
+        paddingBottom: 16,
         backgroundColor: colors.bg,
         borderBottomWidth: 1,
         borderBottomColor: colors.border,
