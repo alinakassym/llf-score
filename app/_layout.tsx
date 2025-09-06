@@ -1,10 +1,12 @@
 // app/_layout.tsx
+import { useEffect } from "react";
+import { Platform } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
-import { useEffect } from "react";
+
 import "react-native-reanimated";
 import "@/global.css";
 
@@ -60,11 +62,22 @@ function RootLayoutNav() {
   return (
     <AppThemeProvider>
       <GluestackUIProvider>
-        <Stack>
+        <Stack
+          screenOptions={{
+            animation: Platform.select({
+              android: "slide_from_bottom", // или 'fade_from_bottom' / 'slide_from_right'
+              ios: "default",
+            }),
+          }}
+        >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen
             name="league"
-            options={{ headerShown: false, presentation: "modal" }}
+            options={{
+              headerShown: false,
+              animation: Platform.OS === "android" ? "fade" : "default",
+              gestureEnabled: true,
+            }}
           />
           <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         </Stack>

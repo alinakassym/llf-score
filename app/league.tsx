@@ -1,6 +1,7 @@
 // app/league.tsx
 import React from "react";
 import { Platform, ScrollView } from "react-native";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { useLocalSearchParams } from "expo-router";
 import { VStack } from "@/components/ui/vstack";
 import LeagueHeader from "@/features/LeagueHeader";
@@ -20,25 +21,33 @@ export default function LeagueScreen() {
 
   return (
     <Screen>
-      <ScrollView
-        keyboardDismissMode={Platform.OS === "ios" ? "interactive" : "on-drag"}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-        style={{ marginBottom: 0 }}
+      <Animated.View
+        entering={FadeIn.duration(60)}
+        exiting={FadeOut.duration(60)}
+        style={{ flex: 1 }}
       >
-        <VStack className="flex-1">
-          <LeagueHeader
-            title={title}
-            year={year}
-            logo={logo}
-            onPressYear={() => {
-              // TODO: открыть выбор сезона (ActionSheet/DrawerPicker)
-              console.log("open year picker for league:", leagueId);
-            }}
-          />
-          <LeagueTabs />
-        </VStack>
-      </ScrollView>
+        <ScrollView
+          keyboardDismissMode={
+            Platform.OS === "ios" ? "interactive" : "on-drag"
+          }
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          style={{ marginBottom: 0 }}
+        >
+          <VStack className="flex-1">
+            <LeagueHeader
+              title={title}
+              year={year}
+              logo={logo}
+              onPressYear={() => {
+                // TODO: открыть выбор сезона (ActionSheet/DrawerPicker)
+                console.log("open year picker for league:", leagueId);
+              }}
+            />
+            <LeagueTabs />
+          </VStack>
+        </ScrollView>
+      </Animated.View>
     </Screen>
   );
 }
