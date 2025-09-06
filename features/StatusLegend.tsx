@@ -56,7 +56,7 @@ export default function StatusLegend() {
   return (
     <View
       style={{
-        flexDirection: "column",
+        flexDirection: "row",
         flexWrap: "wrap",
         gap: 8,
         paddingHorizontal: 16,
