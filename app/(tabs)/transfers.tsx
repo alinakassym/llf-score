@@ -4,6 +4,7 @@ import { VStack } from "@/components/ui/vstack";
 import PlayerCell from "@/features/PlayerCell";
 import HomeTopBar from "@/features/HomeTopBar";
 import SponsorsRow from "@/features/SponsorsRow";
+import StatusLegend from "@/features/StatusLegend";
 import Screen from "@/shared/ui/Screen";
 import { transferRows, TransferRow } from "@/shared/mocks/transferRows";
 import Table, { TableColumn } from "@/shared/ui/Table";
@@ -85,6 +86,7 @@ const TabTransferScreen: FC = () => {
         style={{ marginBottom: 0 }}
       >
         <VStack className="flex-1 gap-4 p-0">
+          <StatusLegend />
           <Table<TransferRow>
             columns={cols}
             data={filteredRows}
