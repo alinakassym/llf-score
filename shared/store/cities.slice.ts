@@ -26,7 +26,6 @@ export const fetchCities = createAsyncThunk<City[]>(
   "cities/fetchCities",
   async () => {
     const data = await httpGet<City[]>("/api/cities?width=20&height=20");
-    console.log("fetchCities", data);
     const result = data.map(
       (c) =>
         ({
@@ -34,7 +33,6 @@ export const fetchCities = createAsyncThunk<City[]>(
           icon: { uri: `${API_BASE_URL}/api/cities/${c.id}/icon` },
         }) as City,
     );
-    console.log("fetchCities result", result);
     return result;
   },
 );
