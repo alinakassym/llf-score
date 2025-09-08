@@ -6,8 +6,6 @@ export interface ThemeTokens {
   textMuted: string;
   border: string;
   primary: string;
-  secondary: string;
-  primaryLight: string;
   gradient: readonly [string, string];
   overlayGradient: readonly [string, string];
   green: string;
@@ -36,11 +34,9 @@ export const colors: Record<"light" | "dark", ThemeTokens> = {
     text: "#111111",
     textLight: "#888888",
     textMuted: "#6B7280",
-    border: "#ECEDEF",
-    primary: "#5269D7",
-    secondary: "#cfdcff",
-    primaryLight: "#EDF2F8",
-    gradient: ["#5069D8", "#9464AF"],
+    border: "#EDF2F8",
+    primary: "#5060D8",
+    gradient: ["#5060D8", "#8450D8"],
     overlayGradient: ["rgba(0,0,0,0)", "rgba(0,0,0,0.45)"],
     green: "#2AD724",
     red: "#F32D2D",
@@ -48,16 +44,14 @@ export const colors: Record<"light" | "dark", ThemeTokens> = {
     yellow: "#FFED00",
   },
   dark: {
-    bg: "#181A20",
-    secondaryBg: "#000000",
+    bg: "#271B38",
+    secondaryBg: "#1D1527",
     text: "#FFFFFF",
-    textMuted: "rgba(255,255,255,0.75)",
     textLight: "#C1C1C1",
-    border: "#35383F",
-    primary: "#5269D7",
-    secondary: "#cfdcff",
-    primaryLight: "#181A20",
-    gradient: ["#5069D8", "#9464AF"],
+    textMuted: "rgba(255,255,255,0.75)",
+    border: "#1D1527",
+    primary: "#5060D8",
+    gradient: ["#5060D8", "#8450D8"],
     overlayGradient: ["rgba(0,0,0,0)", "rgba(0,0,0,0.45)"],
     green: "#2AD724",
     red: "#F32D2D",
