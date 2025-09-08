@@ -12,25 +12,27 @@ export interface ThemeTokens {
   overlayGradient: readonly [string, string];
   green: string;
   red: string;
+  orange: string;
   yellow: string;
 }
 
 export const tokens: Record<"light" | "dark", ThemeTokens> = {
   light: {
     bg: "#FFFFFF",
-    secondaryBg: "#F5F5F5",
+    secondaryBg: "#EDF2F8",
     text: "#111111",
     textLight: "#888888",
     textMuted: "#6B7280",
     border: "#ECEDEF",
     primary: "#5269D7",
     secondary: "#cfdcff",
-    primaryLight: "#EAEDFA",
+    primaryLight: "#EDF2F8",
     gradient: ["#5069D8", "#9464AF"],
     overlayGradient: ["rgba(0,0,0,0)", "rgba(0,0,0,0.45)"],
     green: "#2AD724",
     red: "#F32D2D",
-    yellow: "#F59E0B",
+    orange: "#F2AD3D",
+    yellow: "#FFED00",
   },
   dark: {
     bg: "#181A20",
@@ -46,7 +48,8 @@ export const tokens: Record<"light" | "dark", ThemeTokens> = {
     overlayGradient: ["rgba(0,0,0,0)", "rgba(0,0,0,0.45)"],
     green: "#2AD724",
     red: "#F32D2D",
-    yellow: "#F59E0B",
+    orange: "#F2AD3D",
+    yellow: "#FFED00",
   },
 };
   

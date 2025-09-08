@@ -76,6 +76,7 @@ const TabTransferScreen: FC = () => {
             paddingVertical: 8,
             fontSize: 14,
             color: colors.text,
+            backgroundColor: colors.bg,
           }}
         />
       </View>
@@ -85,7 +86,7 @@ const TabTransferScreen: FC = () => {
         showsVerticalScrollIndicator={false}
         style={{ marginBottom: 0 }}
       >
-        <VStack className="flex-1 gap-4 p-0">
+        <VStack className="flex-1 p-0">
           <StatusLegend />
           <Table<TransferRow>
             columns={cols}

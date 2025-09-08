@@ -21,7 +21,7 @@ const NEWS = [
 
 export default function HomeNewsList() {
   return (
-    <View style={{ paddingHorizontal: 16, marginTop: 0 }}>
+    <View style={{ marginTop: 0 }}>
       <NewsList
         items={NEWS}
         onToggleBookmark={(id) => console.log("toggle bookmark", id)}

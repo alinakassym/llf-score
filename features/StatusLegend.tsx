@@ -41,7 +41,7 @@ export default function StatusLegend() {
     },
     {
       key: "transfer",
-      color: colors?.yellow ?? "#F59E0B", // оранжевый
+      color: colors?.orange ?? "#F59E0B", // оранжевый
       icon: "checkmark",
       label: "Доступный для трансфера",
     },
@@ -59,8 +59,9 @@ export default function StatusLegend() {
         flexDirection: "row",
         flexWrap: "wrap",
         gap: 8,
-        paddingHorizontal: 16,
-        paddingVertical: 8,
+        padding: 16,
+        paddingBottom: 18,
+        backgroundColor: colors.bg,
       }}
       accessibilityRole="summary"
     >

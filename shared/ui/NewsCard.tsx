@@ -28,8 +28,7 @@ export default function NewsCard({
         alignItems: "center",
         gap: 12,
         padding: 12,
-        backgroundColor: colors.primaryLight,
-        borderRadius: 16,
+        backgroundColor: colors.bg,
       }}
     >
       <Image

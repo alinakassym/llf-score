@@ -57,9 +57,7 @@ export default function Tabs<K extends string = string>({
         const bg =
           variant === "solid"
             ? {
-                backgroundColor: isActive
-                  ? colors.primary
-                  : colors.primaryLight,
+                backgroundColor: isActive ? colors.primary : colors.bg,
               }
             : {};
         const underline =
