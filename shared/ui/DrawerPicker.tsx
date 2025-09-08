@@ -87,10 +87,19 @@ export default function DrawerPicker({
         accessibilityRole="button"
       >
         {showItemIcon && selected?.icon ? (
-          <Image
-            source={selected.icon}
-            style={{ width: 18, height: 18, borderRadius: 4, marginRight: 6 }}
-          />
+          <View
+            style={{
+              width: 18,
+              height: 18,
+              backgroundColor: colors.border,
+              borderRadius: 9,
+            }}
+          >
+            <Image
+              source={selected.icon}
+              style={{ width: 18, height: 18, borderRadius: 4, marginRight: 6 }}
+            />
+          </View>
         ) : null}
         <Text style={{ fontWeight: "700", color: colors.text }}>
           {selected?.label}
@@ -166,10 +175,19 @@ export default function DrawerPicker({
                       }}
                     >
                       {showItemIcon && it.icon ? (
-                        <Image
-                          source={it.icon}
-                          style={{ width: 20, height: 20, borderRadius: 6 }}
-                        />
+                        <View
+                          style={{
+                            width: 20,
+                            height: 20,
+                            backgroundColor: colors.border,
+                            borderRadius: 9,
+                          }}
+                        >
+                          <Image
+                            source={it.icon}
+                            style={{ width: 20, height: 20, borderRadius: 6 }}
+                          />
+                        </View>
                       ) : null}
                       <Text
                         style={{
