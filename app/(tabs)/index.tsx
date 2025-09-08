@@ -25,7 +25,7 @@ const TabHomeScreen: FC = () => {
         <VStack className="flex-1 gap-4 pt-4 mb-6">
           <Carousel items={banners} />
           <MenuGrid />
-          <LeaguesAccordion showTabs={true} />
+          <LeaguesAccordion showTabs={false} />
           <NewsList />
           <LinksColumn />
         </VStack>
