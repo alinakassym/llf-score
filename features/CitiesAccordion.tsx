@@ -23,6 +23,12 @@ export type AccordionEntry = {
 
 const items: AccordionEntry[] = [
   {
+    id: "astana",
+    title: "Астана",
+    content: "В разработке...",
+    image: require("@/assets/images/cities/astana.png"),
+  },
+  {
     id: "almaty",
     title: "Алматы",
     content: "В разработке...",
@@ -61,7 +67,7 @@ export default function CitiesAccordion() {
       size="sm"
       variant="unfilled"
       type="single"
-      isCollapsible={true}
+      isCollapsible={false}
       isDisabled={false}
       defaultValue={[]}
       style={{ backgroundColor: colors.bg }}

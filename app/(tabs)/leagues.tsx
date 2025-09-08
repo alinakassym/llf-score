@@ -22,8 +22,6 @@ const TabLeaguesScreen: FC = () => {
         style={{ marginBottom: 0 }}
       >
         <VStack className="flex-1">
-          <LeaguesLinks cityName="Астана" />
-          <Divider style={{ backgroundColor: colors.border }} />
           <CitiesAccordion />
         </VStack>
       </ScrollView>
