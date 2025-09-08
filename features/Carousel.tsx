@@ -58,6 +58,10 @@ export default function Carousel({
   const IDLE_BEFORE_RESUME_MS = 5500;
 
   const isRecenteringRef = useRef(false);
+  const dragStartXRef = useRef(0);
+
+  const SWIPE_DISTANCE_THRESHOLD = 0.3; // 30% ширины шага
+  const VELOCITY_THRESHOLD = 0.35; // «быстрый» свайп
 
   const pauseAuto = () => {
     if (resumeTimerRef.current) {
@@ -122,8 +126,10 @@ export default function Carousel({
   };
 
   // added for pause: при старте ручного свайпа — ставим паузу
-  const onScrollBeginDrag = () => {
+  const onScrollBeginDrag = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    // ADDED: получаем x
     pauseAuto();
+    dragStartXRef.current = e.nativeEvent.contentOffset.x; // ADDED
   };
 
   function onMomentumEnd(e: NativeSyntheticEvent<NativeScrollEvent>) {
@@ -166,6 +172,44 @@ export default function Carousel({
     }
   }
 
+  const onScrollEndDrag = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    // Мягкая логика: либо на текущую, либо на соседнюю
+    const step = cardW + gap;
+    const endX = e.nativeEvent.contentOffset.x;
+    const startX = dragStartXRef.current;
+    const dx = endX - startX;
+
+    // Текущий индекс на момент начала перетаскивания
+    const currentIdx = Math.round(startX / step);
+
+    // В идеале возьмём скорость (на iOS есть, на Android может быть undefined)
+    const vx = (e.nativeEvent as any).velocity?.x ?? 0;
+
+    // Условия перелистывания: достаточно быстро или далеко утащили
+    const goNext =
+      dx > 0 &&
+      (Math.abs(vx) >= VELOCITY_THRESHOLD ||
+        Math.abs(dx) >= step * SWIPE_DISTANCE_THRESHOLD);
+    const goPrev =
+      dx < 0 &&
+      (Math.abs(vx) >= VELOCITY_THRESHOLD ||
+        Math.abs(dx) >= step * SWIPE_DISTANCE_THRESHOLD);
+
+    let targetIdx = currentIdx;
+    if (!isAutoScrollRef.current) {
+      if (goNext) targetIdx = currentIdx + 1;
+      else if (goPrev) targetIdx = currentIdx - 1;
+    }
+
+    const targetOffset = targetIdx * step;
+
+    // Если уже и так почти попали — ничего не делаем
+    if (Math.abs(endX - targetOffset) > 0.5) {
+      isRecenteringRef.current = true; // чтобы onMomentumEnd не зациклиться
+      ref.current?.scrollToOffset({ offset: targetOffset, animated: true });
+    }
+  };
+
   // текущая «логическая» страница для точек
   const logicalIndex = len ? absIndex % len : 0;
 
@@ -182,6 +226,7 @@ export default function Carousel({
         decelerationRate="fast"
         bounces={false}
         onScrollBeginDrag={onScrollBeginDrag} // added for pause
+        onScrollEndDrag={onScrollEndDrag}
         onMomentumScrollEnd={onMomentumEnd}
         ItemSeparatorComponent={() => <View style={{ width: gap }} />}
         contentContainerStyle={{
