@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
+  Platform,
   Dimensions,
   FlatList,
   NativeScrollEvent,
@@ -55,7 +56,7 @@ export default function Carousel({
   const isPausedRef = useRef(false);
   const isAutoScrollRef = useRef(false); // чтобы отличать автопрокрутку от ручной
   const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const IDLE_BEFORE_RESUME_MS = 5500;
+  const IDLE_BEFORE_RESUME_MS = 10000;
 
   const isRecenteringRef = useRef(false);
   const dragStartXRef = useRef(0);
@@ -212,6 +213,10 @@ export default function Carousel({
 
   // текущая «логическая» страница для точек
   const logicalIndex = len ? absIndex % len : 0;
+  const flatListProps =
+    Platform.OS === "android"
+      ? { snapToInterval: sidePad - cardW, bounces: true }
+      : { snapToInterval: cardW + gap, bounces: false };
 
   return (
     <View>
@@ -221,10 +226,11 @@ export default function Carousel({
         data={data}
         keyExtractor={(_, i) => String(i)}
         showsHorizontalScrollIndicator={false}
-        snapToInterval={cardW + gap}
+        snapToInterval={flatListProps.snapToInterval} // чтобы был эффект «магнита» при скролле
         snapToAlignment="center"
         decelerationRate="fast"
-        bounces={false}
+        bounces={flatListProps.bounces}
+        disableIntervalMomentum
         onScrollBeginDrag={onScrollBeginDrag} // added for pause
         onScrollEndDrag={onScrollEndDrag}
         onMomentumScrollEnd={onMomentumEnd}
