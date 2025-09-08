@@ -108,15 +108,15 @@ export default function Table<T>({
                   className={c.className}
                   style={{
                     fontSize: 10,
-                    paddingLeft: 6,
-                    paddingRight: 6,
+                    paddingLeft: 4,
+                    paddingRight: 4,
+                    paddingTop: 8,
+                    paddingBottom: 8,
                     minWidth: c?.width,
                     maxWidth: c?.maxWidth,
                     textAlign: c?.textAlign,
                     backgroundColor:
                       rIdx % 2 === 0 ? backgroundColor : hightlightColor,
-                    borderRightColor: "black",
-                    borderLeftColor: "black",
                     borderColor,
                     color,
                   }}

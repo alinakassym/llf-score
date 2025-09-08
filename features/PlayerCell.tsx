@@ -1,6 +1,5 @@
 // features/transfers/PlayerCell.tsx
-import { View, Image, ImageSourcePropType } from "react-native";
-import { Text } from "@/components/ui/text";
+import { View, Text, Image, ImageSourcePropType } from "react-native";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -37,11 +36,11 @@ export default function PlayerCell({
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text
             style={{
-              ...typography.tableText,
+              ...typography.tableHeaderText,
               color: colors.text,
             }}
           >
-            {name}
+            {name} test
           </Text>
           {position ? (
             <View>
@@ -56,8 +55,7 @@ export default function PlayerCell({
         {subtext ? (
           <Text
             style={{
-              fontSize: 10,
-              lineHeight: 1.2,
+              ...typography.tableText,
               color: colors.textLight,
               opacity: 0.7,
             }}

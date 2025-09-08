@@ -15,8 +15,8 @@ function Dot({ color, icon }: { color: string; icon: Item["icon"] }) {
   return (
     <View
       style={{
-        width: 18,
-        height: 18,
+        width: 14,
+        height: 14,
         borderRadius: 9,
         backgroundColor: color,
         alignItems: "center",
@@ -24,13 +24,13 @@ function Dot({ color, icon }: { color: string; icon: Item["icon"] }) {
       }}
       accessibilityRole="image"
     >
-      <Ionicons name={icon} size={14} color="#fff" />
+      <Ionicons name={icon} size={10} color="#fff" />
     </View>
   );
 }
 
 export default function StatusLegend() {
-  const { colors } = useAppTheme();
+  const { colors, typography } = useAppTheme();
 
   const items: Item[] = [
     {
@@ -56,8 +56,8 @@ export default function StatusLegend() {
   return (
     <View
       style={{
-        flexDirection: "row",
-        flexWrap: "wrap",
+        flexDirection: "column",
+        flexWrap: "nowrap",
         gap: 8,
         padding: 16,
         paddingBottom: 18,
@@ -74,9 +74,7 @@ export default function StatusLegend() {
           <Dot color={it.color} icon={it.icon} />
           <Text
             style={{
-              fontSize: 12,
-              // немного приглушим подпись
-              opacity: 0.9,
+              ...typography.text,
               color: colors.text,
             }}
           >

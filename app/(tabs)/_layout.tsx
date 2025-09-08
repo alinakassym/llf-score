@@ -13,12 +13,13 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: true,
-        tabBarActiveTintColor: colors.bg,
-        tabBarInactiveTintColor: colors.bg,
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.textMuted,
         tabBarStyle: {
           height: Platform.select({ ios: 90, android: 75, web: 75 }),
-          backgroundColor: "transparent",
-          borderTopWidth: 0,
+          backgroundColor: colors.bg,
+          borderTopWidth: 1,
+          borderTopColor: colors.border,
           paddingTop: 6,
           paddingBottom: Platform.select({ ios: 12, android: 10, web: 10 }),
           ...Platform.select({
@@ -30,16 +31,7 @@ export default function TabLayout() {
               zIndex: 10,
             },
           }),
-          boxShadow: "0px 0px 16px rgba(0,0,0,0.5)",
         },
-        tabBarBackground: () => (
-          <LinearGradient
-            colors={colors.gradient}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={{ flex: 1 }}
-          />
-        ),
       }}
     >
       <Tabs.Screen
