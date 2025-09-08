@@ -4,6 +4,7 @@ import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export type PlayerCellProps = {
+  index: number;
   name: string;
   subtext?: string; // например, клуб/позиция (мелким)
   position?: "up" | "down";
@@ -13,15 +14,16 @@ export type PlayerCellProps = {
 };
 
 export default function PlayerCell({
+  index,
   name,
   subtext,
   position,
   avatar,
-  size = 24,
+  size = 32,
   right,
 }: PlayerCellProps) {
   const { colors, typography } = useAppTheme();
-  console.log("typography", typography);
+
   return (
     <View
       style={{ flexDirection: "row", alignItems: "center", gap: 8, flex: 1 }}
@@ -29,7 +31,12 @@ export default function PlayerCell({
       {avatar && (
         <Image
           source={avatar}
-          style={{ width: size, height: size, borderRadius: size / 2 }}
+          style={{
+            width: size,
+            height: size,
+            borderRadius: size / 2,
+            backgroundColor: index % 2 === 0 ? colors.secondaryBg : colors.bg,
+          }}
         />
       )}
       <View style={{ flex: 1, gap: 4 }}>
@@ -40,7 +47,7 @@ export default function PlayerCell({
               color: colors.text,
             }}
           >
-            {name} test
+            {name}
           </Text>
           {position ? (
             <View>

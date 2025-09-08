@@ -5,6 +5,7 @@ import PlayerCell from "@/features/PlayerCell";
 import HomeTopBar from "@/features/HomeTopBar";
 import SponsorsRow from "@/features/SponsorsRow";
 import StatusLegend from "@/features/StatusLegend";
+import StatusDot from "@/features/StatusDot";
 import Screen from "@/shared/ui/Screen";
 import { transferRows, TransferRow } from "@/shared/mocks/transferRows";
 import Table, { TableColumn } from "@/shared/ui/Table";
@@ -16,10 +17,12 @@ const cols: TableColumn<TransferRow>[] = [
     title: "Игрок",
     width: 190,
     maxWidth: 190,
-    render: (r) => (
+    headerTextAlign: "center",
+    render: (r, index) => (
       <PlayerCell
+        index={index}
         name={r.player}
-        subtext={`${r.team}  ${r.position}`}
+        subtext={`${r.team} (${r?.league}) ${r.position}`}
         avatar={r.image}
       />
     ),
@@ -27,6 +30,19 @@ const cols: TableColumn<TransferRow>[] = [
   {
     key: "status",
     title: "Статус",
+    width: 80,
+    maxWidth: 80,
+    textAlign: "center",
+    headerTextAlign: "center",
+    render: (row) => (
+      <View style={{ alignItems: "center" }}>
+        <StatusDot kind={row.status as any} />
+      </View>
+    ),
+  },
+  {
+    key: "age",
+    title: "Возраст",
     width: 80,
     maxWidth: 80,
     textAlign: "center",

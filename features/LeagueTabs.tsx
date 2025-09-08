@@ -14,7 +14,7 @@ type TabKey = "table" | "results" | "calendar";
 const TABS: { key: TabKey; label: string }[] = [
   { key: "table", label: "Таблица" },
   { key: "results", label: "Результаты" },
-  { key: "calendar", label: "Календарь" },
+  { key: "calendar", label: "Расписание" },
 ];
 
 export default function LeagueTabs() {
