@@ -69,7 +69,7 @@ export default function Table<T>({
               key={c.key}
               className={c.className}
               style={{
-                fontSize: 12,
+                fontSize: 10,
                 paddingLeft: 10,
                 paddingRight: 10,
                 paddingTop: 4,
@@ -107,9 +107,9 @@ export default function Table<T>({
                   key={c.key}
                   className={c.className}
                   style={{
-                    fontSize: 12,
-                    paddingLeft: 10,
-                    paddingRight: 10,
+                    fontSize: 10,
+                    paddingLeft: 6,
+                    paddingRight: 6,
                     minWidth: c?.width,
                     maxWidth: c?.maxWidth,
                     textAlign: c?.textAlign,

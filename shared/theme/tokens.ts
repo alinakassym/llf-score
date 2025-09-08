@@ -16,7 +16,20 @@ export interface ThemeTokens {
   yellow: string;
 }
 
-export const tokens: Record<"light" | "dark", ThemeTokens> = {
+export interface Typography {
+  tableHeaderText: {
+    fontSize: number;
+    fontWeight: number | string;
+    lineHeight: number;
+  };
+  tableText: {
+    fontSize: number;
+    fontWeight: number | string;
+    lineHeight: number;
+  };
+}
+
+export const colors: Record<"light" | "dark", ThemeTokens> = {
   light: {
     bg: "#FFFFFF",
     secondaryBg: "#EDF2F8",
@@ -52,4 +65,8 @@ export const tokens: Record<"light" | "dark", ThemeTokens> = {
     yellow: "#FFED00",
   },
 };
-  
+
+export const typography: Typography = {
+  tableHeaderText: { fontSize: 12, fontWeight: 400, lineHeight: 1.2 },
+  tableText: { fontSize: 10, fontWeight: 400, lineHeight: 1.2 },
+};

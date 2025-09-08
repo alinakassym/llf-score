@@ -21,7 +21,8 @@ export default function PlayerCell({
   size = 24,
   right,
 }: PlayerCellProps) {
-  const { colors } = useAppTheme();
+  const { colors, typography } = useAppTheme();
+  console.log("typography", typography);
   return (
     <View
       style={{ flexDirection: "row", alignItems: "center", gap: 8, flex: 1 }}
@@ -32,19 +33,18 @@ export default function PlayerCell({
           style={{ width: size, height: size, borderRadius: size / 2 }}
         />
       )}
-      <View style={{ flex: 1 }}>
-        <View style={{ flexDirection: "row", gap: 6, alignItems: "center" }}>
+      <View style={{ flex: 1, gap: 4 }}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text
             style={{
-              fontSize: 14,
-              fontWeight: "600",
+              ...typography.tableText,
               color: colors.text,
             }}
           >
             {name}
           </Text>
           {position ? (
-            <View style={{ paddingBottom: 2 }}>
+            <View>
               <Ionicons
                 color={position === "up" ? colors.green : colors.red}
                 name={position === "up" ? "arrow-up" : "arrow-down"}
@@ -54,7 +54,14 @@ export default function PlayerCell({
           ) : null}
         </View>
         {subtext ? (
-          <Text style={{ fontSize: 12, color: colors.textLight, opacity: 0.7 }}>
+          <Text
+            style={{
+              fontSize: 10,
+              lineHeight: 1.2,
+              color: colors.textLight,
+              opacity: 0.7,
+            }}
+          >
             {subtext}
           </Text>
         ) : null}
