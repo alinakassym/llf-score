@@ -1,6 +1,6 @@
 // features/MatchCard.tsx
 import React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 import { Match } from "@/shared/types/match";
 
@@ -23,7 +23,6 @@ export default function MatchCard({ match, onPress }: Props) {
         backgroundColor: colors.bg,
         borderRadius: 12,
         padding: 16,
-        marginHorizontal: 16,
         marginVertical: 8,
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
