@@ -26,27 +26,16 @@ export default function LeagueScreen() {
 
   return (
     <Screen>
-      <Container style={{ flex: 1 }} {...containerProps}>
-        <ScrollView
-          keyboardDismissMode={
-            Platform.OS === "ios" ? "interactive" : "on-drag"
-          }
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
-          style={{ marginBottom: 0 }}
-        >
-          <VStack className="flex-1">
-            <LeagueHeader
-              title={title}
-              year={year}
-              logo={logo}
-              onPressYear={() => {
-                console.log("open year picker for league:", leagueId);
-              }}
-            />
-            <LeagueTabs />
-          </VStack>
-        </ScrollView>
+      <Container style={{ flex: 1, paddingBottom: 32 }} {...containerProps}>
+        <LeagueHeader
+          title={title}
+          year={year}
+          logo={logo}
+          onPressYear={() => {
+            console.log("open year picker for league:", leagueId);
+          }}
+        />
+        <LeagueTabs />
       </Container>
     </Screen>
   );
