@@ -21,7 +21,7 @@ export default function PlayerPosition({ title, subtitle, logo }: Props) {
         gap: 12,
         paddingHorizontal: 16,
         paddingVertical: 16,
-        backgroundColor: colors.bg,
+        backgroundColor: colors.secondaryBg,
         borderBottomWidth: 1,
         borderBottomColor: colors.border,
       }}
@@ -29,10 +29,10 @@ export default function PlayerPosition({ title, subtitle, logo }: Props) {
       <Image
         source={logo}
         style={{
-          width: 32,
-          height: 32,
+          width: 42,
+          height: 42,
           borderRadius: 8,
-          backgroundColor: colors.secondaryBg,
+          backgroundColor: colors.bg,
         }}
         resizeMode="cover"
       />

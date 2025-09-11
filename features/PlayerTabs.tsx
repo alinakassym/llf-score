@@ -1,6 +1,6 @@
-// features/LeagueTabs.tsx
+// features/PlayerTabs.tsx
 import React, { useState } from "react";
-import { ScrollView, View, Text } from "react-native";
+import { Platform, ScrollView, View, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { createLeagueTableColumns } from "@/features/ui/leagueTable.columns";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
@@ -10,40 +10,34 @@ import { matchRows } from "@/shared/mocks/matchRows";
 import { leagueRows, OrderRow } from "@/shared/mocks/leagueRows";
 import Tabs from "@/shared/ui/Tabs";
 
-type TabKey = "table" | "results" | "calendar";
+type TabKey = "games" | "career" | "transfers";
 
 const TABS: { key: TabKey; label: string }[] = [
-  { key: "table", label: "Таблица" },
-  { key: "results", label: "Результаты" },
-  { key: "calendar", label: "Расписание" },
+  { key: "games", label: "Игры" },
+  { key: "career", label: "Карьера" },
+  { key: "transfers", label: "Трансферы" },
 ];
 
-export default function LeagueTabs() {
+export default function PlayerTabs() {
   const { colors } = useAppTheme();
   const cols = React.useMemo(() => createLeagueTableColumns(colors), [colors]);
-  const [active, setActive] = useState<TabKey>("table");
+  const [active, setActive] = useState<TabKey>("games");
 
   return (
     <View style={{ flex: 1 }}>
       {/* Верхняя панель табов */}
-      <LinearGradient
-        colors={colors.gradient}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      >
-        <Tabs
-          tabs={TABS}
-          value={active}
-          onChange={setActive}
-          variant="solid"
-          stretch
-          size={12}
-        />
-      </LinearGradient>
+      <Tabs
+        tabs={TABS}
+        value={active}
+        onChange={setActive}
+        variant="outline"
+        stretch
+        size={12}
+      />
 
       {/* Контент вкладок */}
       <ScrollView style={{ paddingBottom: 80 }}>
-        {active === "table" && (
+        {active === "games" && (
           <Table<OrderRow>
             columns={cols}
             data={leagueRows}
@@ -54,8 +48,8 @@ export default function LeagueTabs() {
             hightlightColor={colors.secondaryBg}
           />
         )}
-        {active === "results" && <MatchList items={matchRows as any} />}
-        {active === "calendar" && (
+        {active === "career" && <MatchList items={matchRows as any} />}
+        {active === "transfers" && (
           <Text
             style={{
               paddingTop: 16,

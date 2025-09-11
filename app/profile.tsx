@@ -1,12 +1,14 @@
 // app/profile.tsx
 import React from "react";
-import { Platform, ScrollView, View, Text } from "react-native";
+import { Platform, View } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import { LinearGradient } from "expo-linear-gradient";
 import { VStack } from "@/components/ui/vstack";
 import Screen from "@/shared/ui/Screen";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 import ProfileHeader from "@/features/ProfileHeader";
 import PlayerPosition from "@/features/PlayerPosition";
+import PlayerTabs from "@/features/PlayerTabs";
 
 export default function ProfileScreen() {
   const { colors } = useAppTheme();
@@ -23,26 +25,21 @@ export default function ProfileScreen() {
   return (
     <Screen>
       <Container style={{ flex: 1 }} {...containerProps}>
-        <ScrollView
-          keyboardDismissMode={
-            Platform.OS === "ios" ? "interactive" : "on-drag"
-          }
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
-          style={{ marginBottom: 0 }}
+        <LinearGradient
+          colors={colors.gradient}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
         >
-          <VStack className="flex-1">
-            <ProfileHeader title={"Ермек А."} year={dateOfBirth} logo={logo} />
-            <PlayerPosition
-              title={"Кайрат (Алматы)"}
-              subtitle={"Конец контракта: 31.12.2025"}
-              logo={logo}
-            />
-            <Text style={{ color: colors.text, fontSize: 18, padding: 16 }}>
-              Profile
-            </Text>
-          </VStack>
-        </ScrollView>
+          <ProfileHeader title={"Ермек А."} year={dateOfBirth} logo={logo} />
+        </LinearGradient>
+        <VStack className="flex-1">
+          <PlayerPosition
+            title={"Кайрат (Алматы)"}
+            subtitle={"Конец контракта: 31.12.2025"}
+            logo={logo}
+          />
+          <PlayerTabs />
+        </VStack>
       </Container>
     </Screen>
   );
