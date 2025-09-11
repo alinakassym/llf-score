@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/accordion";
 import { Divider } from "@/components/ui/divider";
 import LeaguesLinks from "@/features/LeaguesLinks";
+import { useAppSelector } from "@/shared/store/hooks";
+import { selectCities } from "@/shared/store/cities.slice";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 export type AccordionEntry = {
@@ -21,107 +23,11 @@ export type AccordionEntry = {
   image?: ImageSourcePropType;
 };
 
-const items: AccordionEntry[] = [
-  {
-    id: 1,
-    name: "Астана",
-    content: "В разработке...",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    id: 2,
-    name: "Алматы",
-    content: "В разработке...",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    id: 3,
-    name: "Шымкент",
-    content: "В разработке...",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    id: 4,
-    name: "Актобе",
-    content: "В разработке...",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    id: 5,
-    name: "Караганда",
-    content: "В разработке...",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    id: 6,
-    name: "Усть-Каменогорск",
-    content: "В разработке...",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    id: 7,
-    name: "Уральск",
-    content: "В разработке...",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    id: 8,
-    name: "Петропавловск",
-    content: "В разработке...",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    id: 9,
-    name: "Кызылорда",
-    content: "В разработке...",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    id: 10,
-    name: "Туркестан",
-    content: "В разработке...",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    id: 11,
-    name: "Кокшетау",
-    content: "В разработке...",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    id: 12,
-    name: "Талдыкорган",
-    content: "В разработке...",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    id: 13,
-    name: "Жезказган",
-    content: "В разработке...",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    id: 14,
-    name: "Сарыагаш",
-    content: "В разработке...",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    id: 15,
-    name: "Щучинск",
-    content: "В разработке...",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    id: 16,
-    name: "Кульсары",
-    content: "В разработке...",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-];
-
 export default function CitiesAccordion() {
   const { colors } = useAppTheme();
+
+  const cities = useAppSelector(selectCities);
+
   return (
     <Accordion
       size="sm"
@@ -132,7 +38,7 @@ export default function CitiesAccordion() {
       defaultValue={[]}
       style={{ backgroundColor: colors.bg }}
     >
-      {items.map((it, index) => (
+      {cities.map((it, index) => (
         <React.Fragment key={it.id}>
           <AccordionItem value={String(it.id)}>
             <AccordionHeader>
@@ -149,7 +55,7 @@ export default function CitiesAccordion() {
                           }}
                         >
                           <Image
-                            source={it.image as any}
+                            source={it.icon as any}
                             style={{ width: 24, height: 24 }}
                           />
                           <View>
@@ -187,7 +93,7 @@ export default function CitiesAccordion() {
               <LeaguesLinks cityName={it.name} />
             </AccordionContent>
           </AccordionItem>
-          {index + 1 < items.length && (
+          {index + 1 < cities.length && (
             <Divider style={{ backgroundColor: colors.border }} />
           )}
         </React.Fragment>

@@ -31,7 +31,7 @@ export const fetchCities = createAsyncThunk<City[]>(
         ({
           ...c,
           icon: {
-            uri: `${API_BASE_URL}/api/cities/${c.id}/icon?width=20&height=20`,
+            uri: `${API_BASE_URL}/api/cities/${c.id}/icon?width=80&height=80`,
           },
         }) as City,
     );
