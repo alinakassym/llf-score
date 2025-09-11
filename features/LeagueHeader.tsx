@@ -9,6 +9,7 @@ import {
   Pressable,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
@@ -28,6 +29,7 @@ export default function LeagueHeader({
   onClose,
 }: Props) {
   const { colors } = useAppTheme();
+  console.log("Colors in LeagueHeader:", colors);
   const router = useRouter();
 
   const handleClose = () => {
@@ -36,7 +38,10 @@ export default function LeagueHeader({
   };
 
   return (
-    <View
+    <LinearGradient
+      colors={colors.gradient}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
       style={{
         flexDirection: "row",
         alignItems: "center",
@@ -44,9 +49,6 @@ export default function LeagueHeader({
         paddingTop: Platform.OS === "ios" ? 16 : 52,
         paddingHorizontal: 16,
         paddingBottom: 16,
-        backgroundColor: colors.bg,
-        borderBottomWidth: 1,
-        borderBottomColor: colors.border,
       }}
     >
       <Image
@@ -63,7 +65,7 @@ export default function LeagueHeader({
       <View style={{ flex: 1 }}>
         <Text
           style={{
-            color: colors.text,
+            color: "#FFFFFF",
             fontSize: 20,
             fontWeight: 700 as any,
           }}
@@ -85,7 +87,7 @@ export default function LeagueHeader({
         >
           <Text
             style={{
-              color: colors.text,
+              color: "#FFFFFF",
               opacity: 0.85,
               fontSize: 14,
               fontWeight: 600 as any,
@@ -93,7 +95,7 @@ export default function LeagueHeader({
           >
             {year}
           </Text>
-          <Ionicons name="chevron-down" size={14} color={colors.text} />
+          <Ionicons name="chevron-down" size={14} color="#FFFFFF" />
         </Pressable>
       </View>
 
@@ -105,8 +107,8 @@ export default function LeagueHeader({
         hitSlop={10}
         style={{ padding: 4 }}
       >
-        <Ionicons name="close" size={24} color={colors.text} />
+        <Ionicons name="close" size={24} color="#FFFFFF" />
       </Pressable>
-    </View>
+    </LinearGradient>
   );
 }

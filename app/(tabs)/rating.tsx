@@ -33,7 +33,7 @@ const TabRaitingScreen: FC = () => {
               tabs={TABS}
               value={active}
               onChange={setActive}
-              variant="solid"
+              variant="outline"
               stretch
               size={12}
               style={{ marginBottom: 0 }}
