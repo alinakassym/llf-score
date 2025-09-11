@@ -1,6 +1,6 @@
-// shared/ui/LeagueTabs.tsx
+// features/LeagueTabs.tsx
 import React, { useState } from "react";
-import { View, Pressable, Text } from "react-native";
+import { ScrollView, View, Text } from "react-native";
 import { createLeagueTableColumns } from "@/features/ui/leagueTable.columns";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 import Table from "@/shared/ui/Table";
@@ -23,7 +23,7 @@ export default function LeagueTabs() {
   const [active, setActive] = useState<TabKey>("table");
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       {/* Верхняя панель табов */}
       <Tabs
         tabs={TABS}
@@ -35,7 +35,7 @@ export default function LeagueTabs() {
       />
 
       {/* Контент вкладок */}
-      <View style={{ paddingLeft: 0 }}>
+      <ScrollView style={{ paddingBottom: 80 }}>
         {active === "table" && (
           <Table<OrderRow>
             columns={cols}
@@ -59,7 +59,7 @@ export default function LeagueTabs() {
             Здесь будет календарь матчей.
           </Text>
         )}
-      </View>
+      </ScrollView>
     </View>
   );
 }
