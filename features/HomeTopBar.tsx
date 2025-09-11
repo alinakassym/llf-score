@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
+import { router } from "expo-router";
 import IconButton from "@/shared/ui/IconButton";
 import CityPicker from "@/features/CityPicker";
 import LeaguePicker from "@/features/LeaguePicker";
@@ -65,17 +66,23 @@ export default function HomeTopBar() {
             name="search"
             accessibilityLabel="Поиск"
             color={colors.text}
+            onPress={() => console.log("Поиск нажат")}
           />
           <IconButton
             name="notifications-outline"
             dot
             accessibilityLabel="Уведомления"
             color={colors.text}
+            onPress={() => console.log("Уведомления нажаты")}
           />
           <IconButton
             name="person-circle-outline"
             accessibilityLabel="Профиль"
             color={colors.text}
+            onPress={() => {
+              console.log("Переход на профиль");
+              router.push("/profile");
+            }}
           />
         </View>
       </View>

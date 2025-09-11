@@ -1,18 +1,24 @@
 import React from 'react';
-import { Pressable, View, Text, PressableProps, Platform } from 'react-native';
+import {
+  TouchableOpacity,
+  View,
+  Text,
+  TouchableOpacityProps,
+  Platform,
+} from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useThemeMode } from '@/shared/theme/useThemeMode';
 
-type Props = PressableProps & {
-    name: React.ComponentProps<typeof Ionicons>['name'];
-    size?: number;          // icon size
-    buttonSize?: number;    // button size (width/height)
-    variant?: 'ghost' | 'filled';
-    rounded?: boolean;      // rounding: true = circular
-    color?: string;         // override icon color
-    bgColor?: string;       // override background color
-    dot?: boolean;          // small red dot
-    badgeCount?: number;    // number in the badge
+type Props = TouchableOpacityProps & {
+  name: React.ComponentProps<typeof Ionicons>["name"];
+  size?: number; // icon size
+  buttonSize?: number; // button size (width/height)
+  variant?: "ghost" | "filled";
+  rounded?: boolean; // rounding: true = circular
+  color?: string; // override icon color
+  bgColor?: string; // override background color
+  dot?: boolean; // small red dot
+  badgeCount?: number; // number in the badge
 };
 
 export default function IconButton({
@@ -42,24 +48,23 @@ export default function IconButton({
   const showBadge = typeof badgeCount === 'number' && badgeCount > 0;
 
   return (
-    <Pressable
+    <TouchableOpacity
       {...rest}
       hitSlop={8}
-      android_ripple={Platform.OS === 'android' ? { radius: buttonSize / 2 } : undefined}
       accessibilityRole="button"
-      style={({ pressed }) => [
+      activeOpacity={0.7}
+      style={[
         {
           width: buttonSize,
           height: buttonSize,
-          alignItems: 'center',
-          justifyContent: 'center',
-          position: 'relative',
+          alignItems: "center",
+          justifyContent: "center",
+          position: "relative",
           borderRadius: rounded ? buttonSize / 2 : 12,
           backgroundColor: containerBg,
           // лёгкий контур для контраста в светлой теме
-          borderWidth: variant === 'filled' ? 0 : 0,
+          borderWidth: variant === "filled" ? 0 : 0,
           borderColor,
-          opacity: pressed ? 0.7 : 1,
         },
         style as any,
       ]}
@@ -69,13 +74,13 @@ export default function IconButton({
       {dot && !showBadge ? (
         <View
           style={{
-            position: 'absolute',
+            position: "absolute",
             top: 0,
             right: 2,
             width: 8,
             height: 8,
             borderRadius: 10,
-            backgroundColor: '#FF3B30',
+            backgroundColor: "#FF3B30",
           }}
         />
       ) : null}
@@ -83,23 +88,23 @@ export default function IconButton({
       {showBadge ? (
         <View
           style={{
-            position: 'absolute',
+            position: "absolute",
             top: 4,
             right: 4,
             minWidth: 16,
             height: 16,
             paddingHorizontal: 4,
             borderRadius: 10,
-            backgroundColor: '#FF3B30',
-            alignItems: 'center',
-            justifyContent: 'center',
+            backgroundColor: "#FF3B30",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          <Text style={{ color: '#fff', fontSize: 10, fontWeight: '700' }}>
-            {badgeCount > 99 ? '99+' : badgeCount}
+          <Text style={{ color: "#fff", fontSize: 10, fontWeight: "700" }}>
+            {badgeCount > 99 ? "99+" : badgeCount}
           </Text>
         </View>
       ) : null}
-    </Pressable>
+    </TouchableOpacity>
   );
 }
