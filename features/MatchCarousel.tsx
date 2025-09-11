@@ -15,8 +15,8 @@ type Props = {
 };
 
 const { width: screenWidth } = Dimensions.get("window");
-const CARD_WIDTH = screenWidth * 0.8; // 80% ширины экрана
-const CARD_MARGIN = 16;
+const CARD_WIDTH = screenWidth * 0.9; // 80% ширины экрана
+const CARD_MARGIN = 8;
 
 export default function MatchCarousel({ matches, onMatchPress }: Props) {
   const { colors } = useAppTheme();
@@ -26,7 +26,7 @@ export default function MatchCarousel({ matches, onMatchPress }: Props) {
   }
 
   return (
-    <View style={{ paddingVertical: 8 }}>
+    <View style={{ paddingVertical: 0 }}>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -35,7 +35,7 @@ export default function MatchCarousel({ matches, onMatchPress }: Props) {
         snapToAlignment="start"
         contentInsetAdjustmentBehavior="never"
         contentContainerStyle={{
-          paddingLeft: 16,
+          paddingLeft: 0,
           paddingRight: screenWidth * 0.2, // Добавляем отступ справа
         }}
       >

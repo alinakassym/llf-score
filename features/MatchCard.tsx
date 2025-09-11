@@ -1,6 +1,6 @@
 // features/MatchCard.tsx
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text } from "react-native";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 import { Match } from "@/shared/types/match";
 
@@ -17,20 +17,10 @@ export default function MatchCard({ match, onPress }: Props) {
   };
 
   return (
-    <TouchableOpacity
-      onPress={handlePress}
+    <View
       style={{
         backgroundColor: colors.bg,
-        borderRadius: 12,
         padding: 16,
-        marginVertical: 8,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
-        borderWidth: 1,
-        borderColor: colors.border,
       }}
     >
       {/* Tournament and time header */}
@@ -257,6 +247,6 @@ export default function MatchCard({ match, onPress }: Props) {
           </Text>
         </View>
       )}
-    </TouchableOpacity>
+    </View>
   );
 }
