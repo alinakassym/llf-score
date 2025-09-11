@@ -81,6 +81,16 @@ function RootLayoutNav() {
               gestureEnabled: true,
             }}
           />
+          <Stack.Screen
+            name="profile"
+            options={{
+              headerShown: false,
+              presentation:
+                Platform.OS === "android" ? "transparentModal" : "modal",
+              animation: Platform.OS === "android" ? "fade" : "default",
+              gestureEnabled: true,
+            }}
+          />
           <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         </Stack>
       </GluestackUIProvider>
