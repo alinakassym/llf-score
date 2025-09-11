@@ -15,48 +15,108 @@ import LeaguesLinks from "@/features/LeaguesLinks";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 export type AccordionEntry = {
-  id: string;
-  title: string;
+  id: number;
+  name: string;
   content: ReactNode;
   image?: ImageSourcePropType;
 };
 
 const items: AccordionEntry[] = [
   {
-    id: "astana",
-    title: "Астана",
+    id: 1,
+    name: "Астана",
     content: "В разработке...",
     image: require("@/assets/images/cities/astana.png"),
   },
   {
-    id: "almaty",
-    title: "Алматы",
+    id: 2,
+    name: "Алматы",
     content: "В разработке...",
-    image: require("@/assets/images/cities/almaty.png"),
+    image: require("@/assets/images/cities/astana.png"),
   },
   {
-    id: "shymkent",
-    title: "Шымкент",
+    id: 3,
+    name: "Шымкент",
     content: "В разработке...",
-    image: require("@/assets/images/cities/shymkent.png"),
+    image: require("@/assets/images/cities/astana.png"),
   },
   {
-    id: "atyrau",
-    title: "Атырау",
+    id: 4,
+    name: "Актобе",
     content: "В разработке...",
-    image: require("@/assets/images/cities/atyrau.gif"),
+    image: require("@/assets/images/cities/astana.png"),
   },
   {
-    id: "kostanai",
-    title: "Костанай",
+    id: 5,
+    name: "Караганда",
     content: "В разработке...",
-    image: require("@/assets/images/cities/kostanai.png"),
+    image: require("@/assets/images/cities/astana.png"),
   },
   {
-    id: "pavlodar",
-    title: "Павлодар",
+    id: 6,
+    name: "Усть-Каменогорск",
     content: "В разработке...",
-    image: require("@/assets/images/cities/pavlodar.png"),
+    image: require("@/assets/images/cities/astana.png"),
+  },
+  {
+    id: 7,
+    name: "Уральск",
+    content: "В разработке...",
+    image: require("@/assets/images/cities/astana.png"),
+  },
+  {
+    id: 8,
+    name: "Петропавловск",
+    content: "В разработке...",
+    image: require("@/assets/images/cities/astana.png"),
+  },
+  {
+    id: 9,
+    name: "Кызылорда",
+    content: "В разработке...",
+    image: require("@/assets/images/cities/astana.png"),
+  },
+  {
+    id: 10,
+    name: "Туркестан",
+    content: "В разработке...",
+    image: require("@/assets/images/cities/astana.png"),
+  },
+  {
+    id: 11,
+    name: "Кокшетау",
+    content: "В разработке...",
+    image: require("@/assets/images/cities/astana.png"),
+  },
+  {
+    id: 12,
+    name: "Талдыкорган",
+    content: "В разработке...",
+    image: require("@/assets/images/cities/astana.png"),
+  },
+  {
+    id: 13,
+    name: "Жезказган",
+    content: "В разработке...",
+    image: require("@/assets/images/cities/astana.png"),
+  },
+  {
+    id: 14,
+    name: "Сарыагаш",
+    content: "В разработке...",
+    image: require("@/assets/images/cities/astana.png"),
+  },
+  {
+    id: 15,
+    name: "Щучинск",
+    content: "В разработке...",
+    image: require("@/assets/images/cities/astana.png"),
+  },
+  {
+    id: 16,
+    name: "Кульсары",
+    content: "В разработке...",
+    image: require("@/assets/images/cities/astana.png"),
   },
 ];
 
@@ -74,7 +134,7 @@ export default function CitiesAccordion() {
     >
       {items.map((it, index) => (
         <React.Fragment key={it.id}>
-          <AccordionItem value={it.id}>
+          <AccordionItem value={String(it.id)}>
             <AccordionHeader>
               <AccordionTrigger>
                 {({ isExpanded }: { isExpanded: boolean }) => {
@@ -100,7 +160,7 @@ export default function CitiesAccordion() {
                                 fontWeight: 600,
                               }}
                             >
-                              {it.title}
+                              {it.name}
                             </Text>
                           </View>
                         </View>
@@ -124,7 +184,7 @@ export default function CitiesAccordion() {
               </AccordionTrigger>
             </AccordionHeader>
             <AccordionContent style={{ paddingLeft: 8, paddingRight: 0 }}>
-              <LeaguesLinks cityName={it.title} />
+              <LeaguesLinks cityName={it.name} />
             </AccordionContent>
           </AccordionItem>
           {index + 1 < items.length && (
