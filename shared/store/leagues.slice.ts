@@ -4,9 +4,13 @@ import { httpGet } from "@/services/http";
 import { API_BASE_URL } from "@/shared/config/env";
 
 export type League = {
-  id: string;
+  cityId: number;
+  cityName: string;
+  id: number;
+  leagueGroupId: number;
+  leagueGroupName: string;
   name: string;
-  cityId: string;
+  order: number;
   icon?: ImageSourcePropType;
 };
 
@@ -30,11 +34,11 @@ export const fetchLeaguesByCityId = createAsyncThunk<League[], string>(
   async (cityId: string) => {
     const data = await httpGet<League[]>(`/api/leagues?cityId=${cityId}`);
     const result = data.map(
-      (league) =>
+      (c) =>
         ({
-          ...league,
+          ...c,
           icon: {
-            uri: `${API_BASE_URL}/api/leagues/${league.id}/icon?width=80&height=80`,
+            uri: `${API_BASE_URL}/api/cities/${cityId}/icon?width=80&height=80`,
           },
         }) as League,
     );

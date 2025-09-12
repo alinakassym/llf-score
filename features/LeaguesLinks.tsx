@@ -1,55 +1,78 @@
 // features/LeaguesLinks.tsx
-import React, { ReactNode } from "react";
-import {
-  Image,
-  View,
-  Text,
-  ImageSourcePropType,
-  Pressable,
-} from "react-native";
+import React, { useEffect, useMemo } from "react";
+import { View, Text, Pressable, Image } from "react-native";
 import { useRouter } from "expo-router";
-import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 import { Divider } from "@/components/ui/divider";
+import { leagues as mockLeagues } from "@/shared/mocks/leagues";
+import { useAppSelector, useAppDispatch } from "@/shared/store/hooks";
+import {
+  League,
+  fetchLeaguesByCityId,
+  selectLeagues,
+  selectLeaguesStatus,
+} from "@/shared/store/leagues.slice";
+import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 type Props = {
+  cityId: string;
   cityName: string;
 };
 
-export type LeaguesEntry = {
-  id: string;
-  title: string;
-  content: ReactNode;
-  cityName: string;
-  image?: ImageSourcePropType;
-};
-
-const items: LeaguesEntry[] = [
-  {
-    id: "1",
-    title: "Премьер-лига",
-    content: "В разработке...",
-    cityName: "Астана",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    id: "2",
-    title: "Супер-лига",
-    content: "В разработке...",
-    cityName: "Астана",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-  {
-    id: "3",
-    title: "Мастер лига",
-    content: "В разработке...",
-    cityName: "Астана",
-    image: require("@/assets/images/cities/astana.png"),
-  },
-];
-
-export default function LeaguesLinks({ cityName = "" }: Props) {
+export default function LeaguesLinks({ cityId, cityName }: Props) {
   const { colors } = useAppTheme();
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const leagues: League[] = useAppSelector(selectLeagues);
+  const status = useAppSelector(selectLeaguesStatus);
+
+  useEffect(() => {
+    if (status === "idle") dispatch(fetchLeaguesByCityId(cityId));
+  }, [dispatch, status]);
+
+  const items: League[] = useMemo(
+    () => (leagues.length ? leagues : mockLeagues),
+    [leagues],
+  );
+
+  if (status === "loading") {
+    <View
+      style={{
+        padding: 16,
+        backgroundColor: colors.bg,
+      }}
+    >
+      <Text
+        style={{
+          fontSize: 14,
+          fontWeight: 400,
+          color: colors.textLight,
+        }}
+      >
+        Загрузка...
+      </Text>
+    </View>;
+  }
+
+  if (items.length === 0) {
+    return (
+      <View
+        style={{
+          padding: 16,
+          backgroundColor: colors.bg,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 14,
+            fontWeight: 400,
+            color: colors.textLight,
+          }}
+        >
+          Лиги не найдены
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <>
@@ -57,7 +80,7 @@ export default function LeaguesLinks({ cityName = "" }: Props) {
         <Pressable
           key={it.id}
           accessibilityRole="button"
-          accessibilityLabel={it.title}
+          accessibilityLabel={it.name}
           style={{
             backgroundColor: colors.bg,
           }}
@@ -77,7 +100,7 @@ export default function LeaguesLinks({ cityName = "" }: Props) {
               backgroundColor: colors.bg,
             }}
           >
-            <Image source={it.image as any} style={{ width: 24, height: 24 }} />
+            <Image source={it.icon as any} style={{ width: 24, height: 24 }} />
             <View>
               <Text
                 style={{
@@ -86,7 +109,7 @@ export default function LeaguesLinks({ cityName = "" }: Props) {
                   fontWeight: 600,
                 }}
               >
-                {it.title}
+                {it.name} ({it.leagueGroupName})
               </Text>
               <Text
                 style={{

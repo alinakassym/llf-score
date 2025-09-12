@@ -7,26 +7,18 @@ import {
   AccordionItem,
   AccordionHeader,
   AccordionTrigger,
-  AccordionTitleText,
   AccordionContent,
 } from "@/components/ui/accordion";
 import { Divider } from "@/components/ui/divider";
 import LeaguesLinks from "@/features/LeaguesLinks";
 import { useAppSelector } from "@/shared/store/hooks";
-import { selectCities } from "@/shared/store/cities.slice";
+import { City, selectCities } from "@/shared/store/cities.slice";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
-
-export type AccordionEntry = {
-  id: number;
-  name: string;
-  content: ReactNode;
-  image?: ImageSourcePropType;
-};
 
 export default function CitiesAccordion() {
   const { colors } = useAppTheme();
 
-  const cities = useAppSelector(selectCities);
+  const cities: City[] = useAppSelector(selectCities);
 
   return (
     <Accordion
@@ -89,7 +81,7 @@ export default function CitiesAccordion() {
               </AccordionTrigger>
             </AccordionHeader>
             <AccordionContent style={{ paddingLeft: 8, paddingRight: 0 }}>
-              <LeaguesLinks cityName={it.name} />
+              <LeaguesLinks cityName={it.name} cityId={it.id} />
             </AccordionContent>
           </AccordionItem>
           {index + 1 < cities.length && (
