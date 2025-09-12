@@ -61,7 +61,7 @@ export const themeBaseColors = {
   orange: "#F2AD3D",
   yellow: "#FFED00",
   opacity: "rgba(255,255,255,0.12)",
-  opacityDark: "rgba(0,0,0,0.15)",
+  opacityDark: "rgba(0,0,0,0.12)",
 };
 
 export const colors: Record<"light" | "dark", ThemeTokens> = {
