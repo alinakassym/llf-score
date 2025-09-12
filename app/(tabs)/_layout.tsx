@@ -39,7 +39,7 @@ export default function TabLayout() {
         options={{
           title: "Главная",
           tabBarIcon: ({ size, color }) => (
-            <VuesaxIcon name="home" size={size} color={color} />
+            <VuesaxIcon name="home2" size={size} color={color} />
           ),
         }}
       />
