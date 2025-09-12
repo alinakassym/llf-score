@@ -33,7 +33,7 @@ export default function CitiesAccordion() {
       size="sm"
       variant="unfilled"
       type="single"
-      isCollapsible={false}
+      isCollapsible={true}
       isDisabled={false}
       defaultValue={[]}
       style={{ backgroundColor: colors.bg }}
@@ -45,32 +45,31 @@ export default function CitiesAccordion() {
               <AccordionTrigger>
                 {({ isExpanded }: { isExpanded: boolean }) => {
                   return (
-                    <>
-                      <AccordionTitleText>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            gap: 10,
-                          }}
-                        >
-                          <Image
-                            source={it.icon as any}
-                            style={{ width: 24, height: 24 }}
-                          />
-                          <View>
-                            <Text
-                              style={{
-                                fontSize: 14,
-                                color: colors.text,
-                                fontWeight: 600,
-                              }}
-                            >
-                              {it.name}
-                            </Text>
-                          </View>
+                    <React.Fragment>
+                      <View
+                        style={{
+                          paddingVertical: 4,
+                          flexDirection: "row",
+                          alignItems: "center",
+                          gap: 10,
+                        }}
+                      >
+                        <Image
+                          source={it.icon as any}
+                          style={{ width: 24, height: 24 }}
+                        />
+                        <View>
+                          <Text
+                            style={{
+                              fontSize: 14,
+                              color: colors.text,
+                              fontWeight: 600,
+                            }}
+                          >
+                            {it.name}
+                          </Text>
                         </View>
-                      </AccordionTitleText>
+                      </View>
                       {isExpanded ? (
                         <Ionicons
                           color={colors.primary}
@@ -84,7 +83,7 @@ export default function CitiesAccordion() {
                           size={16}
                         />
                       )}
-                    </>
+                    </React.Fragment>
                   );
                 }}
               </AccordionTrigger>
