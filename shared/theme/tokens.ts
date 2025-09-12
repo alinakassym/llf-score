@@ -9,6 +9,7 @@ export interface ThemeBaseColors {
   orange: string;
   yellow: string;
   opacity: string;
+  opacityDark: string;
 }
 
 export interface ThemeTokens {
@@ -22,6 +23,7 @@ export interface ThemeTokens {
   orange: string;
   yellow: string;
   opacity: string;
+  opacityDark: string;
   bg: string;
   secondaryBg: string;
   text: string;
@@ -52,19 +54,19 @@ export const themeBaseColors = {
   primary: "#5060D8",
   secondary: "#8450D8",
   dark: "#271B38",
-  gradient: ["#5060D8", "#8450D8", "#50A4D8"],
+  gradient: ["#5060D8", "#5060D8", "#8450D8", "#50A4D8"],
   overlayGradient: ["rgba(0,0,0,0)", "rgba(0,0,0,0.45)"],
   green: "#2AD724",
   red: "#F32D2D",
   orange: "#F2AD3D",
   yellow: "#FFED00",
   opacity: "rgba(255,255,255,0.12)",
+  opacityDark: "rgba(0,0,0,0.15)",
 };
 
 export const colors: Record<"light" | "dark", ThemeTokens> = {
   light: {
     ...themeBaseColors,
-    overlayGradient: ["rgba(0,0,0,0)", "rgba(0,0,0,0.45)"],
     bg: "#FFFFFF",
     secondaryBg: "#EAECFA",
     text: "#111111",
@@ -74,8 +76,6 @@ export const colors: Record<"light" | "dark", ThemeTokens> = {
   },
   dark: {
     ...themeBaseColors,
-    gradient: ["#5060D8", "#8450D8"],
-    overlayGradient: ["rgba(0,0,0,0)", "rgba(0,0,0,0.45)"],
     bg: "#271B38",
     secondaryBg: "#1D1527",
     text: "#FFFFFF",
