@@ -1,13 +1,12 @@
-import React from 'react';
+import React from "react";
 import {
   TouchableOpacity,
   View,
   Text,
   TouchableOpacityProps,
-  Platform,
 } from "react-native";
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { useThemeMode } from '@/shared/theme/useThemeMode';
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 type Props = TouchableOpacityProps & {
   name: React.ComponentProps<typeof Ionicons>["name"];
@@ -25,27 +24,17 @@ export default function IconButton({
   name,
   size = 22,
   buttonSize = 36,
-  variant = 'ghost',
+  variant = "ghost",
   rounded = true,
-  color,
-  bgColor,
+  color = "#000",
+  bgColor = "transparent",
   dot,
   badgeCount,
   style,
   ...rest
 }: Props) {
-  const scheme = useThemeMode(); // 'light' | 'dark'
-  const isLight = scheme === 'light';
-
-  // автоподбор цветов от темы
-  const iconColor = color ?? (isLight ? '#111' : '#FFFFFF');
-  const containerBg =
-    variant === 'filled'
-      ? bgColor ?? (isLight ? '#F2F3F5' : 'rgba(255,255,255,0.08)')
-      : 'transparent';
-  const borderColor = isLight ? '#E6E8EB' : 'rgba(255,255,255,0.14)';
-
-  const showBadge = typeof badgeCount === 'number' && badgeCount > 0;
+  const { colors } = useAppTheme();
+  const showBadge = typeof badgeCount === "number" && badgeCount > 0;
 
   return (
     <TouchableOpacity
@@ -55,32 +44,27 @@ export default function IconButton({
       activeOpacity={0.7}
       style={[
         {
+          postion: "relative",
           width: buttonSize,
           height: buttonSize,
           alignItems: "center",
           justifyContent: "center",
-          position: "relative",
-          borderRadius: rounded ? buttonSize / 2 : 12,
-          backgroundColor: containerBg,
-          // лёгкий контур для контраста в светлой теме
-          borderWidth: variant === "filled" ? 0 : 0,
-          borderColor,
         },
         style as any,
       ]}
     >
-      <Ionicons name={name} size={size} color={iconColor} />
+      <Ionicons name={name} size={size} color={color} />
 
       {dot && !showBadge ? (
         <View
           style={{
             position: "absolute",
-            top: 0,
-            right: 2,
+            top: 6,
+            right: 8,
             width: 8,
             height: 8,
             borderRadius: 10,
-            backgroundColor: "#FF3B30",
+            backgroundColor: colors.red,
           }}
         />
       ) : null}
@@ -95,7 +79,7 @@ export default function IconButton({
             height: 16,
             paddingHorizontal: 4,
             borderRadius: 10,
-            backgroundColor: "#FF3B30",
+            backgroundColor: colors.red,
             alignItems: "center",
             justifyContent: "center",
           }}
