@@ -78,10 +78,9 @@ export default function Tabs<K extends string = string>({
             : {};
 
         return (
-          <View style={[base, underline]}>
+          <View key={t.key} style={[base, underline]}>
             <TouchableOpacity
               activeOpacity={0.7}
-              key={t.key}
               disabled={t.disabled}
               style={{ ...btn, ...bg } as any}
               onPress={() => onChange(t.key)}

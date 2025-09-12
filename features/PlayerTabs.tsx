@@ -1,7 +1,6 @@
 // features/PlayerTabs.tsx
 import React, { useState } from "react";
-import { Platform, ScrollView, View, Text } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { ScrollView, View, Text } from "react-native";
 import { createLeagueTableColumns } from "@/features/ui/leagueTable.columns";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 import Table from "@/shared/ui/Table";
