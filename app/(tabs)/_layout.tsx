@@ -1,39 +1,45 @@
 import React from 'react';
+import { View } from "react-native";
 import { Tabs } from "expo-router";
 import { Platform } from "react-native";
 import { TabBarIcon } from "@/shared/icons/TabBarIcon";
 import { VuesaxIcon } from "@/shared/icons/VuesaxIcon";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
+import SponsorsRow from "@/features/SponsorsRow";
+import HomeTopBar from "@/features/HomeTopBar";
 
 export default function TabLayout() {
   const { colors } = useAppTheme();
 
   return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-        tabBarShowLabel: true,
-        tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.textMuted,
-        tabBarStyle: {
-          height: Platform.select({ ios: 90, android: 75, web: 75 }),
-          backgroundColor: colors.bg,
-          borderTopWidth: 1,
-          borderTopColor: colors.border,
-          paddingTop: 6,
-          paddingBottom: Platform.select({ ios: 12, android: 10, web: 10 }),
-          ...Platform.select({
-            web: {
-              position: "fixed",
-              left: 0,
-              right: 0,
-              bottom: 0,
-              zIndex: 10,
-            },
-          }),
-        },
-      }}
-    >
+    <View style={{ flex: 1 }}>
+      <SponsorsRow />
+      <HomeTopBar />
+      <Tabs
+        screenOptions={{
+          headerShown: false,
+          tabBarShowLabel: true,
+          tabBarActiveTintColor: colors.primary,
+          tabBarInactiveTintColor: colors.textMuted,
+          tabBarStyle: {
+            height: Platform.select({ ios: 90, android: 75, web: 75 }),
+            backgroundColor: colors.bg,
+            borderTopWidth: 1,
+            borderTopColor: colors.border,
+            paddingTop: 6,
+            paddingBottom: Platform.select({ ios: 12, android: 10, web: 10 }),
+            ...Platform.select({
+              web: {
+                position: "fixed",
+                left: 0,
+                right: 0,
+                bottom: 0,
+                zIndex: 10,
+              },
+            }),
+          },
+        }}
+      >
       <Tabs.Screen
         name="index"
         options={{
@@ -100,6 +106,7 @@ export default function TabLayout() {
           ),
         }}
       />
-    </Tabs>
+      </Tabs>
+    </View>
   );
 }

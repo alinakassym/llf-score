@@ -2,8 +2,6 @@ import { FC, useState } from "react";
 import { Platform, ScrollView, View, TextInput } from "react-native";
 import { VStack } from "@/components/ui/vstack";
 import PlayerCell from "@/features/PlayerCell";
-import HomeTopBar from "@/features/HomeTopBar";
-import SponsorsRow from "@/features/SponsorsRow";
 import StatusLegend from "@/features/StatusLegend";
 import StatusDot from "@/features/StatusDot";
 import Screen from "@/shared/ui/Screen";
@@ -77,8 +75,6 @@ const TabTransferScreen: FC = () => {
 
   return (
     <Screen>
-      <SponsorsRow />
-      <HomeTopBar />
       <View style={{ padding: 16 }}>
         <TextInput
           value={query}

@@ -1,7 +1,5 @@
 import { FC, useState } from "react";
 import { Platform, ScrollView, View } from "react-native";
-import HomeTopBar from "@/features/HomeTopBar";
-import SponsorsRow from "@/features/SponsorsRow";
 import RatingTable from "@/features/rating/RatingTable";
 import PlayersTable from "@/features/rating/PlayersTable";
 import { VStack } from "@/components/ui/vstack";
@@ -19,8 +17,6 @@ const TabRaitingScreen: FC = () => {
   const [active, setActive] = useState<TabKey>("teams");
   return (
     <Screen>
-      <SponsorsRow />
-      <HomeTopBar />
       <ScrollView
         keyboardDismissMode={Platform.OS === "ios" ? "interactive" : "on-drag"}
         keyboardShouldPersistTaps="handled"
