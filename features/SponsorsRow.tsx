@@ -1,36 +1,45 @@
+import { LinearGradient } from "expo-linear-gradient";
 import { View, Image } from "react-native";
+import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 export default function SponsorsRow() {
+  const { colors } = useAppTheme();
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        paddingHorizontal: 16,
-        paddingTop: 56,
-        paddingBottom: 12,
-        gap: 12,
-        backgroundColor: "#003791",
-      }}
+    <LinearGradient
+      style={{}}
+      colors={colors.gradient}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
     >
-      <Image
-        accessible={true}
-        source={require("@/assets/images/sponsors/KLLF-logo-2.png")}
-        style={{ height: 50, width: 150 }}
-      />
-      <Image
-        source={require("@/assets/images/sponsors/KMFF-logo.png")}
-        style={{ height: 60, width: 54 }}
-      />
-      <Image
-        source={require("@/assets/images/sponsors/WMF-logo.png")}
-        style={{ height: 60, width: 52 }}
-      />
-      <Image
-        source={require("@/assets/images/sponsors/EMF-logo.png")}
-        style={{ height: 60, width: 54 }}
-      />
-    </View>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingTop: 56,
+          paddingVertical: 8,
+          paddingHorizontal: 12,
+          backgroundColor: colors.opacityDark,
+        }}
+      >
+        <Image
+          accessible={true}
+          source={require("@/assets/images/sponsors/KLLF-logo.png")}
+          style={{ height: 60, width: 180 }}
+        />
+        <Image
+          source={require("@/assets/images/sponsors/KMFF-logo.png")}
+          style={{ height: 60, width: 60 }}
+        />
+        <Image
+          source={require("@/assets/images/sponsors/WMF-logo.png")}
+          style={{ height: 60, width: 57 }}
+        />
+        <Image
+          source={require("@/assets/images/sponsors/EMF-logo.png")}
+          style={{ height: 60, width: 66 }}
+        />
+      </View>
+    </LinearGradient>
   );
 }
