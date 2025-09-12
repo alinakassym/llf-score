@@ -1,8 +1,8 @@
 import React from 'react';
-import { Tabs } from 'expo-router';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Platform } from 'react-native';
-import { TabBarIcon } from '@/shared/icons/TabBarIcon';
+import { Tabs } from "expo-router";
+import { Platform } from "react-native";
+import { TabBarIcon } from "@/shared/icons/TabBarIcon";
+import { VuesaxIcon } from "@/shared/icons/VuesaxIcon";
 import { useAppTheme } from "@/shared/theme/AppThemeProvider";
 
 export default function TabLayout() {
@@ -38,13 +38,8 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Главная",
-          tabBarIcon: ({ focused, size, color }) => (
-            <TabBarIcon
-              name="home"
-              focused={focused}
-              size={size}
-              color={color}
-            />
+          tabBarIcon: ({ size, color }) => (
+            <VuesaxIcon name="home" size={size} color={color} />
           ),
         }}
       />
@@ -52,10 +47,10 @@ export default function TabLayout() {
         name="leagues"
         options={{
           title: "Лиги",
-          tabBarIcon: ({ focused, size, color }) => (
+          tabBarIcon: ({ size, color }) => (
             <TabBarIcon
-              name="leagues"
-              focused={focused}
+              name="leagues-flat"
+              focused={false}
               size={size}
               color={color}
             />
@@ -66,12 +61,12 @@ export default function TabLayout() {
         name="rating"
         options={{
           title: "Рейтинг",
-          tabBarItemStyle: { paddingBottom: 2 },
-          tabBarIcon: ({ focused, size, color }) => (
+          tabBarItemStyle: { marginBottom: 0 },
+          tabBarIcon: ({ size, color }) => (
             <TabBarIcon
-              name="rating"
-              focused={focused}
-              size={size + 2}
+              name="rating-flat"
+              focused={false}
+              size={size}
               color={color}
             />
           ),
@@ -81,10 +76,10 @@ export default function TabLayout() {
         name="transfers"
         options={{
           title: "Трансферы",
-          tabBarIcon: ({ focused, size, color }) => (
+          tabBarIcon: ({ size, color }) => (
             <TabBarIcon
-              name="transfers"
-              focused={focused}
+              name="transfers-flat"
+              focused={false}
               size={size}
               color={color}
             />
@@ -95,10 +90,10 @@ export default function TabLayout() {
         name="help"
         options={{
           title: "Отзыв",
-          tabBarIcon: ({ focused, size, color }) => (
+          tabBarIcon: ({ size, color }) => (
             <TabBarIcon
-              name="help"
-              focused={focused}
+              name="help-flat"
+              focused={false}
               size={size}
               color={color}
             />
