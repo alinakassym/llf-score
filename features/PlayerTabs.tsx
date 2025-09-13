@@ -14,7 +14,7 @@ type TabKey = "games" | "career" | "transfers";
 const TABS: { key: TabKey; label: string }[] = [
   { key: "games", label: "Игры" },
   { key: "career", label: "Карьера" },
-  { key: "transfers", label: "Трансферы" },
+  { key: "transfers", label: "Переходы" },
 ];
 
 export default function PlayerTabs() {
