@@ -77,7 +77,6 @@ export default function Table<T>({
                 minWidth: c?.width,
                 maxWidth: c?.maxWidth,
                 textAlign: c?.headerTextAlign,
-                backgroundColor: hightlightColor,
                 color,
               }}
             >
@@ -116,7 +115,7 @@ export default function Table<T>({
                     maxWidth: c?.maxWidth,
                     textAlign: c?.textAlign,
                     backgroundColor:
-                      rIdx % 2 === 0 ? backgroundColor : hightlightColor,
+                      rIdx % 2 !== 0 ? backgroundColor : hightlightColor,
                     borderColor,
                     color,
                   }}
