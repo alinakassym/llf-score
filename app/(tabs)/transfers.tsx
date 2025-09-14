@@ -107,7 +107,7 @@ const TabTransferScreen: FC = () => {
             backgroundColor={colors.bg}
             color={colors.text}
             borderColor={colors.border}
-            hightlightColor={colors.secondaryBg}
+            hightlightColor={colors.tertiaryBg}
             scrollX={true}
           />
         </VStack>

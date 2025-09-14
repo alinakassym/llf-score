@@ -63,8 +63,7 @@ export default function PlayerCell({
           <Text
             style={{
               ...typography.tableText,
-              color: colors.textLight,
-              opacity: 0.7,
+              color: colors.textLight
             }}
           >
             {subtext}
