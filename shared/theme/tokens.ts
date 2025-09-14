@@ -26,6 +26,7 @@ export interface ThemeTokens {
   opacityDark: string;
   bg: string;
   secondaryBg: string;
+  tertiaryBg: string;
   text: string;
   textLight: string;
   textMuted: string;
@@ -69,8 +70,9 @@ export const colors: Record<"light" | "dark", ThemeTokens> = {
     ...themeBaseColors,
     bg: "#FFFFFF",
     secondaryBg: "#EAECFA",
+    tertiaryBg: "#F7F8FD",
     text: "#111111",
-    textLight: "#888888",
+    textLight: "#666666",
     textMuted: "#6B7280",
     border: "#EDF2F8",
   },
@@ -78,6 +80,7 @@ export const colors: Record<"light" | "dark", ThemeTokens> = {
     ...themeBaseColors,
     bg: "#271B38",
     secondaryBg: "#1D1527",
+    tertiaryBg: "#1D1527",
     text: "#FFFFFF",
     textLight: "#C1C1C1",
     textMuted: "rgba(255,255,255,0.75)",
