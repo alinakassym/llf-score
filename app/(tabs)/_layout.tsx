@@ -1,5 +1,6 @@
 import { TabIcon } from "@/components/icons/tab-icons";
 import SponsorsRow from "@/components/SponsorsRow";
+import { TopBar } from "@/components/TopBar";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -19,6 +20,7 @@ export default function TabLayout() {
   return (
     <View style={{ flex: 1 }}>
       <SponsorsRow />
+      <TopBar />
       <Tabs
         screenOptions={{
           headerShown: false,
