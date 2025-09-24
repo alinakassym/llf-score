@@ -17,6 +17,7 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const scheme = useThemeMode();
+  const c = Colors[scheme];
   return (
     <View style={{ flex: 1 }}>
       <SponsorsRow />

@@ -11,7 +11,7 @@ export const Screen: FC<Props> = ({ children, style }) => {
   return (
     <SafeAreaView
       edges={["top", "right", "bottom", "left"]}
-      style={[{ flex: 1, backgroundColor: Colors[scheme].background }, style]}
+      style={[{ flex: 1, backgroundColor: Colors[scheme].surface }, style]}
     >
       {children}
     </SafeAreaView>

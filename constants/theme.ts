@@ -5,6 +5,7 @@ type Palette = {
   secondary: string;
   gradient: any;
   background: string;
+  surface: string;
   text: string;
   textMuted: string;
   card: string;
@@ -26,6 +27,7 @@ export const Colors: Record<ThemeName, Palette> = {
   light: {
     ...baseColors,
     background: "#FFFFFF",
+    surface: "#EAECFA",
     text: "#111111",
     textMuted: "#6B7280",
     card: "#F8F9FB",
@@ -39,6 +41,7 @@ export const Colors: Record<ThemeName, Palette> = {
   dark: {
     ...baseColors,
     background: "#271B38",
+    surface: "#1D1527",
     text: "#FFFFFF",
     textMuted: "rgba(255,255,255,0.75)",
     card: "rgba(255,255,255,0.06)",
