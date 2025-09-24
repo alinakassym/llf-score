@@ -81,7 +81,7 @@ export const Select: FC<Props> = ({ value, onChange, options }) => {
                     },
                   ]}
                 >
-                  <Text style={{ color: c.text, fontSize: 16, flex: 1 }}>
+                  <Text style={{ color: c.text, fontSize: 14, flex: 1 }}>
                     {item.label}
                   </Text>
                   {isSelected ? (
@@ -111,25 +111,25 @@ const styles = StyleSheet.create({
   buttonText: { fontSize: 14 },
   backdrop: {
     position: "absolute",
-    top: 0,
+    top: 124,
     right: 0,
     bottom: 0,
     left: 0,
-    backgroundColor: "rgba(0,0,0,0.8)",
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
   sheet: {
     position: "absolute",
-    top: 84,
-    left: 16,
-    right: 16,
+    top: 164,
+    left: 0,
+    right: 0,
     maxHeight: "60%",
-    borderRadius: 16,
-    borderWidth: 1,
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
     overflow: "hidden",
   },
   option: {
-    paddingHorizontal: 14,
-    paddingVertical: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
     flexDirection: "row",
     alignItems: "center",
   },
