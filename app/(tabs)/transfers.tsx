@@ -3,12 +3,12 @@ import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { StyleSheet, Text } from "react-native";
 
-export default function TabTwoScreen() {
+export default function TabTransfersScreen() {
   const scheme = useThemeMode();
   return (
     <Screen style={styles.container}>
       <Text style={[styles.title, { color: Colors[scheme].text }]}>
-        Tab Two
+        Transfers
       </Text>
     </Screen>
   );
