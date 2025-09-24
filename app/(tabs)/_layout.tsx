@@ -28,6 +28,7 @@ export default function TabLayout() {
           tabBarShowLabel: true,
           tabBarActiveTintColor: Colors[scheme].primary,
           tabBarInactiveTintColor: Colors[scheme].textMuted,
+          tabBarPosition: "bottom",
           tabBarStyle: {
             height: Platform.select({ ios: 90, android: 75, web: 75 }),
             backgroundColor: Colors[scheme].background,
@@ -35,15 +36,9 @@ export default function TabLayout() {
             borderTopColor: Colors[scheme].border,
             paddingTop: 6,
             paddingBottom: Platform.select({ ios: 12, android: 10, web: 10 }),
-            ...Platform.select({
-              web: {
-                position: "fixed",
-                left: 0,
-                right: 0,
-                bottom: 0,
-                zIndex: 10,
-              },
-            }),
+          },
+          sceneStyle: {
+            backgroundColor: Colors[scheme].surface,
           },
         }}
       >

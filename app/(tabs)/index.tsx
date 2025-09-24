@@ -1,6 +1,5 @@
 import { Carousel } from "@/components/InfiniteCarousel";
 import MatchCarousel from "@/components/MatchCarousel";
-import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { mockMatches } from "@/mock/matches";
 import { ScrollView, StyleSheet } from "react-native";
@@ -14,12 +13,7 @@ export default function TabOneScreen() {
     "https://picsum.photos/400/200?random=4",
   ];
   return (
-    <ScrollView
-      contentContainerStyle={[
-        styles.scrollViewContent,
-        { backgroundColor: Colors[scheme].surface },
-      ]}
-    >
+    <ScrollView contentContainerStyle={[styles.scrollViewContent]}>
       <Carousel images={carouselImages} height={150} />
       <MatchCarousel
         matches={mockMatches}
