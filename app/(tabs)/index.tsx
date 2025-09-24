@@ -1,7 +1,6 @@
-import { Carousel } from "@/components/carousel";
-import { Screen } from "@/components/Screen";
+import { Carousel } from "@/components/InfiniteCarousel";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
 export default function TabOneScreen() {
   const scheme = useThemeMode();
@@ -12,23 +11,19 @@ export default function TabOneScreen() {
     "https://picsum.photos/400/200?random=4",
   ];
   return (
-    <Screen style={styles.container}>
+    <ScrollView contentContainerStyle={styles.scrollViewContent}>
       <Carousel images={carouselImages} height={150} />
-    </Screen>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: "flex-start",
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
+  scrollViewContent: {
+    flexGrow: 1,
+    gap: 8,
   },
 });
