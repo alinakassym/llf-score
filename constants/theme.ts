@@ -1,11 +1,12 @@
 export type ThemeName = "light" | "dark";
 
 type Palette = {
+  primary: string;
+  secondary: string;
+  gradient: any;
   background: string;
   text: string;
   textMuted: string;
-  primary: string;
-  secondary: string;
   card: string;
   border: string;
   muted: string;
@@ -18,6 +19,7 @@ type Palette = {
 const baseColors = {
   primary: "#5060D8",
   secondary: "#8450D8",
+  gradient: ["#5060D8", "#5060D8", "#8450D8", "#50A4D8"],
 };
 
 export const Colors: Record<ThemeName, Palette> = {
