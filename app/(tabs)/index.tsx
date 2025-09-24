@@ -1,4 +1,5 @@
 import { Carousel } from "@/components/InfiniteCarousel";
+import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { ScrollView, StyleSheet } from "react-native";
 
@@ -11,7 +12,12 @@ export default function TabOneScreen() {
     "https://picsum.photos/400/200?random=4",
   ];
   return (
-    <ScrollView contentContainerStyle={styles.scrollViewContent}>
+    <ScrollView
+      contentContainerStyle={[
+        styles.scrollViewContent,
+        { backgroundColor: Colors[scheme].background },
+      ]}
+    >
       <Carousel images={carouselImages} height={150} />
     </ScrollView>
   );
