@@ -1,15 +1,19 @@
+import { Carousel } from "@/components/carousel";
 import { Screen } from "@/components/Screen";
-import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 
 export default function TabOneScreen() {
   const scheme = useThemeMode();
+  const carouselImages = [
+    "https://picsum.photos/400/200?random=1",
+    "https://picsum.photos/400/200?random=2",
+    "https://picsum.photos/400/200?random=3",
+    "https://picsum.photos/400/200?random=4",
+  ];
   return (
     <Screen style={styles.container}>
-      <Text style={[styles.title, { color: Colors[scheme].text }]}>
-        Tab One
-      </Text>
+      <Carousel images={carouselImages} height={150} />
     </Screen>
   );
 }
@@ -17,8 +21,6 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
   title: {
     fontSize: 20,
