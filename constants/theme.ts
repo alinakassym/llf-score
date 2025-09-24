@@ -3,6 +3,7 @@ export type ThemeName = "light" | "dark";
 type Palette = {
   background: string;
   text: string;
+  textMuted: string;
   primary: string;
   secondary: string;
   card: string;
@@ -24,6 +25,7 @@ export const Colors: Record<ThemeName, Palette> = {
     ...baseColors,
     background: "#FFFFFF",
     text: "#111111",
+    textMuted: "#6B7280",
     card: "#F8F9FB",
     border: "#E6E8EB",
     muted: "#6B7280",
@@ -36,6 +38,7 @@ export const Colors: Record<ThemeName, Palette> = {
     ...baseColors,
     background: "#271B38",
     text: "#FFFFFF",
+    textMuted: "rgba(255,255,255,0.75)",
     card: "rgba(255,255,255,0.06)",
     border: "rgba(255,255,255,0.14)",
     muted: "#9CA3AF",
