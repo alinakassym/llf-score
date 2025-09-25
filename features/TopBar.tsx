@@ -3,7 +3,7 @@ import { Option, Select } from "@/components/Select";
 import { Colors } from "@/constants/theme";
 import { CityPicker } from "@/features/CityPicker";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { fetchCities, selectCitiesStatus } from "@/store/cities.slice";
+import { fetchCities, selectCities, selectCitiesStatus } from "@/store/cities.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -22,10 +22,18 @@ export const TopBar: React.FC = () => {
   const c = Colors[scheme];
 
   const dispatch = useAppDispatch();
+  const cities = useAppSelector(selectCities);
   const status = useAppSelector(selectCitiesStatus);
 
-  const [city, setCity] = useState("astana");
+  const [city, setCity] = useState<string>("");
   const [league, setLeague] = useState("pl");
+
+  // Выбираем первый город по умолчанию когда города загрузились
+  useEffect(() => {
+    if (cities.length > 0 && !city) {
+      setCity(cities[0].id);
+    }
+  }, [cities, city]);
 
   useEffect(() => {
     if (status === "idle") dispatch(fetchCities());
