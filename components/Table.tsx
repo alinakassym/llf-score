@@ -82,7 +82,10 @@ export function Table<T>({
     <View
       style={[
         styles.row,
-        { borderBottomColor: c.border },
+        {
+          borderBottomColor:
+            index < columns.length - 1 ? c.border : "transparent",
+        },
         rowStyle,
         separator && styles.rowWithSeparator,
       ]}
@@ -117,9 +120,6 @@ export function Table<T>({
     <View
       style={{
         overflow: "hidden",
-        borderRadius: 12,
-        borderWidth: 1,
-        borderColor: c.border,
       }}
     >
       {renderHeader()}
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   row: {
-    minHeight: 56,
+    minHeight: 42,
     paddingHorizontal: 8,
     flexDirection: "row",
     alignItems: "center",

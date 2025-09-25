@@ -155,7 +155,7 @@ export function LeagueTable({ rows }: { rows: LeagueRow[] }) {
       data={rows}
       keyExtractor={(r) => r.id}
       headerStyle={{ height: 36 }}
-      rowStyle={{ minHeight: 56 }}
+      rowStyle={{ minHeight: 42 }}
       separator
     />
   );
