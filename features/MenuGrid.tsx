@@ -1,8 +1,8 @@
-// components/MenuGrid.tsx
+// features/MenuGrid.tsx
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { View } from "react-native";
-import MenuButton from "./MenuButton";
+import MenuButton from "../components/MenuButton";
 
 export default function MenuGrid() {
   const scheme = useThemeMode();

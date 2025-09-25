@@ -1,7 +1,7 @@
-// features/MatchCard.tsx
+// features/match/MatchCard.tsx
 import { Colors } from "@/constants/theme";
+import { Match } from "@/features/match/types";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { Match } from "@/types/match";
 import React from "react";
 import { Text, View } from "react-native";
 

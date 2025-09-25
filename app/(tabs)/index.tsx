@@ -1,8 +1,11 @@
-import { Carousel } from "@/components/InfiniteCarousel";
-import MatchCarousel from "@/components/MatchCarousel";
-import MenuGrid from "@/components/MenuGrid";
+// app/(tabs)/index.tsx
+import { Carousel } from "@/features/Carousel";
+import { LeagueTable } from "@/features/league/LeagueTable";
+import { leagueMock } from "@/features/league/mocks";
+import MatchCarousel from "@/features/match/MatchCarousel";
+import { mockMatches } from "@/features/match/mocks";
+import MenuGrid from "@/features/MenuGrid";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { mockMatches } from "@/mock/matches";
 import { ScrollView, StyleSheet } from "react-native";
 
 export default function TabOneScreen() {
@@ -22,6 +25,7 @@ export default function TabOneScreen() {
         matches={mockMatches}
         onMatchPress={(match) => console.log("Match pressed:", match.id)}
       />
+      <LeagueTable rows={leagueMock} />
     </ScrollView>
   );
 }

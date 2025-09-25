@@ -1,5 +1,5 @@
-// shared/mocks/matches.ts
-import { Match } from "@/types/match";
+// features/match/mocks.ts
+import { Match } from "@/features/match/types";
 
 export const mockMatches: Match[] = [
   {

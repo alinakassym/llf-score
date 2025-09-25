@@ -1,7 +1,7 @@
-// components/MatchCarousel.tsx
+// components/match/MatchCarousel.tsx
 import { Colors } from "@/constants/theme";
+import { Match } from "@/features/match/types";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { Match } from "@/types/match";
 import React from "react";
 import { Dimensions, ScrollView, View } from "react-native";
 import MatchCard from "./MatchCard";

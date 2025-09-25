@@ -1,3 +1,4 @@
+// features/Carousel.tsx
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Dimensions, Image, ScrollView, StyleSheet, View } from "react-native";
 
