@@ -1,9 +1,10 @@
 // features/TopBar.tsx
-import { Option, Select } from "@/components/Select";
 import { Colors } from "@/constants/theme";
 import { CityPicker } from "@/features/CityPicker";
+import { LeaguePicker } from "@/features/LeaguePicker";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { useCityStorage } from "@/hooks/useCityStorage";
+import { useLeagueStorage } from "@/hooks/useLeagueStorage";
 import {
   fetchCities,
   selectCities,
@@ -13,14 +14,6 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
-const LEAGUES: Option[] = [
-  { id: "pl", label: "Премьер лига" },
-  { id: "fl", label: "Первая лига" },
-  { id: "youth", label: "Юношеская" },
-  { id: "leagueA", label: "Лига A" },
-  { id: "leagueB", label: "Лига B" },
-  { id: "leagueC", label: "Лига C" },
-];
 
 export const TopBar: React.FC = () => {
   const scheme = useThemeMode();
@@ -30,6 +23,7 @@ export const TopBar: React.FC = () => {
   const cities = useAppSelector(selectCities);
   const status = useAppSelector(selectCitiesStatus);
   const { saveCity, loadCity } = useCityStorage();
+  const { saveLeague, loadLeague } = useLeagueStorage();
 
   const [city, setCity] = useState<number | string>(0);
   const [league, setLeague] = useState<number | string>("pl");
@@ -50,6 +44,19 @@ export const TopBar: React.FC = () => {
     })();
   }, [status, cities, loadCity]);
 
+  // Загружаем сохранённую лигу при старте
+  useEffect(() => {
+    (async () => {
+      const saved = await loadLeague();
+      if (saved && typeof saved === "string") {
+        setLeague(saved);
+        return;
+      }
+      // По умолчанию "pl" (Премьер лига)
+      setLeague("pl");
+    })();
+  }, [loadLeague]);
+
   // Сохраняем выбор города
   const handleCityChange = useCallback(
     async (cityId: number | string) => {
@@ -57,6 +64,15 @@ export const TopBar: React.FC = () => {
       await saveCity(String(cityId));
     },
     [saveCity],
+  );
+
+  // Сохраняем выбор лиги
+  const handleLeagueChange = useCallback(
+    async (leagueId: number | string) => {
+      setLeague(leagueId);
+      await saveLeague(String(leagueId));
+    },
+    [saveLeague],
   );
 
   useEffect(() => {
@@ -77,7 +93,7 @@ export const TopBar: React.FC = () => {
       <View style={styles.left}>
         <CityPicker value={city} onChange={handleCityChange} />
 
-        <Select value={league} onChange={setLeague} options={LEAGUES} />
+        <LeaguePicker value={league} onChange={handleLeagueChange} />
       </View>
 
       {/* справа пока пусто — добавим иконки позже */}
