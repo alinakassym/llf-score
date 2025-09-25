@@ -31,24 +31,29 @@ export const TopBar: React.FC = () => {
   const status = useAppSelector(selectCitiesStatus);
   const { saveCity, loadCity } = useCityStorage();
 
-  const [city, setCity] = useState<string>("");
-  const [league, setLeague] = useState("pl");
+  const [city, setCity] = useState<number | string>(0);
+  const [league, setLeague] = useState<number | string>("pl");
 
   // Загружаем сохранённый город при старте
   useEffect(() => {
     if (status !== "succeeded" || cities.length === 0) return;
     (async () => {
+      console.log("cities: ", cities);
       const saved = await loadCity();
-      console.log("cities[0].id:", cities[0].id, "type:", typeof cities[0].id);
-      setCity(
-        saved && cities.some((c) => c.id === saved) ? saved : cities[0].id,
-      );
+      if (saved && typeof saved === "string") {
+        setCity(+saved);
+        return;
+      }
+      if (cities.length) {
+        setCity(cities[0]?.id);
+        return;
+      }
     })();
   }, [status, cities, loadCity]);
 
   // Сохраняем выбор города
   const handleCityChange = useCallback(
-    async (cityId: string) => {
+    async (cityId: number | string) => {
       console.log("User selected city:", cityId, "type:", typeof cityId);
       setCity(cityId);
       await saveCity(String(cityId));

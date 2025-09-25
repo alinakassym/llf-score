@@ -28,7 +28,9 @@ export async function saveCity(cityId: string) {
 export async function loadCity(): Promise<string | null> {
   const ok = await isSecureStoreAvailable();
   if (ok) {
-    return (await SecureStore.getItemAsync(KEY)) ?? null;
+    const keyVal = await SecureStore.getItemAsync(KEY);
+    console.log("keyVal: ", keyVal, typeof keyVal);
+    return keyVal ?? null;
   } else if (Platform.OS === "web") {
     try {
       return window.localStorage.getItem(KEY);

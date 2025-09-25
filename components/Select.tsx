@@ -15,11 +15,15 @@ import {
 } from "react-native";
 import { VuesaxIcon } from "./icons";
 
-export type Option = { id: string; label: string; icon?: ImageSourcePropType };
+export type Option = {
+  id: any;
+  label: string;
+  icon?: ImageSourcePropType;
+};
 
 type Props = {
-  value: string;
-  onChange: (id: string) => void;
+  value: number | string;
+  onChange: (id: number | string) => void;
   options: Option[];
   top?: number;
 };
@@ -68,7 +72,7 @@ export const Select: FC<Props> = ({ value, onChange, options, top = 164 }) => {
         >
           <FlatList
             data={options}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => String(item.id)}
             renderItem={({ item }) => {
               const isSelected = item.id === value;
               return (

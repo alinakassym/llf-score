@@ -4,8 +4,8 @@ import { useAppSelector } from "@/store/hooks";
 import React, { FC } from "react";
 
 type Props = {
-  value: string;
-  onChange: (id: string) => void;
+  value: number | string;
+  onChange: (id: number | string) => void;
   top?: number;
 };
 

@@ -4,7 +4,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { ImageSourcePropType } from "react-native";
 
 export type City = {
-  id: string;
+  id: number;
   name: string;
   icon?: ImageSourcePropType;
 };
