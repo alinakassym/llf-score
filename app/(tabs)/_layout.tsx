@@ -1,20 +1,12 @@
 // app/(tabs)/_layout.tsx
-import { TabIcon } from "@/components/icons/tab-icons";
+import { TabIcon } from "@/components/icons";
 import { Colors } from "@/constants/theme";
 import SponsorsRow from "@/features/SponsorsRow";
 import { TopBar } from "@/features/TopBar";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 import React from "react";
 import { Platform, View } from "react-native";
-
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
 
 export default function TabLayout() {
   const scheme = useThemeMode();
@@ -30,6 +22,7 @@ export default function TabLayout() {
           tabBarActiveTintColor: Colors[scheme].primary,
           tabBarInactiveTintColor: Colors[scheme].textMuted,
           tabBarPosition: "bottom",
+          tabBarLabelStyle: { marginTop: 4 },
           tabBarStyle: {
             height: Platform.select({ ios: 90, android: 75, web: 75 }),
             backgroundColor: Colors[scheme].background,
