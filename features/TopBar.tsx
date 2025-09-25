@@ -29,7 +29,14 @@ export const TopBar: React.FC = () => {
 
   return (
     <View
-      style={[styles.container, { backgroundColor: Colors[scheme].background }]}
+      style={[
+        styles.container,
+        {
+          borderBottomWidth: 1,
+          borderBottomColor: c.border,
+          backgroundColor: c.background,
+        },
+      ]}
     >
       <View style={styles.left}>
         <Select value={city} onChange={setCity} options={CITIES} />
