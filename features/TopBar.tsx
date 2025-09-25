@@ -2,7 +2,13 @@
 import { Option, Select } from "@/components/Select";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import React, { useState } from "react";
+import {
+  fetchCities,
+  selectCities,
+  selectCitiesStatus,
+} from "@/store/cities.slice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 const CITIES: Option[] = [
@@ -24,8 +30,16 @@ export const TopBar: React.FC = () => {
   const scheme = useThemeMode();
   const c = Colors[scheme];
 
+  const dispatch = useAppDispatch();
+  const cities = useAppSelector(selectCities);
+  const status = useAppSelector(selectCitiesStatus);
+
   const [city, setCity] = useState("astana");
   const [league, setLeague] = useState("pl");
+
+  useEffect(() => {
+    if (status === "idle") dispatch(fetchCities());
+  }, [dispatch, status]);
 
   return (
     <View
@@ -39,7 +53,11 @@ export const TopBar: React.FC = () => {
       ]}
     >
       <View style={styles.left}>
-        <Select value={city} onChange={setCity} options={CITIES} />
+        <Select
+          value={city}
+          onChange={setCity}
+          options={cities.map((c) => ({ id: c.id, label: c.name }))}
+        />
 
         <Select value={league} onChange={setLeague} options={LEAGUES} />
       </View>
