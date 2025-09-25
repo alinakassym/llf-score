@@ -151,26 +151,24 @@ const align = (value: Align | undefined): ViewStyle => {
 const styles = StyleSheet.create({
   header: {
     height: 40,
-    paddingHorizontal: 12,
+    paddingHorizontal: 8,
     borderBottomWidth: 1,
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
   },
   headerText: {
-    fontSize: 12,
-    fontWeight: "600",
-    letterSpacing: 0.2,
+    fontSize: 11,
     textTransform: "uppercase",
   },
   row: {
     minHeight: 56,
-    paddingHorizontal: 12,
+    paddingHorizontal: 8,
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
   },
   rowWithSeparator: { borderBottomWidth: 1 },
   cell: { justifyContent: "center" },
-  cellText: { fontSize: 16 },
+  cellText: { fontSize: 11 },
 });
