@@ -1,14 +1,8 @@
-import { Option, Select } from "@/components/Select";
+import { Select } from "@/components/Select";
+import { useAppSelector } from "@/store/hooks";
+import { selectLeagues } from "@/store/leagues.slice";
 import React, { FC } from "react";
-
-const LEAGUES: Option[] = [
-  { id: "pl", label: "Премьер лига" },
-  { id: "fl", label: "Первая лига" },
-  { id: "youth", label: "Юношеская" },
-  { id: "leagueA", label: "Лига A" },
-  { id: "leagueB", label: "Лига B" },
-  { id: "leagueC", label: "Лига C" },
-];
+import { Text, View } from "react-native";
 
 type Props = {
   value: number | string;
@@ -17,12 +11,19 @@ type Props = {
 };
 
 export const LeaguePicker: FC<Props> = ({ value, onChange, top }) => {
+  const leagues = useAppSelector(selectLeagues) ?? [];
+  const mappedItems =
+    leagues.length > 0 ? leagues.map((l) => ({ id: l.id, label: l.name })) : [];
+
+  if (mappedItems.length === 0) {
+    return (
+      <View>
+        <Text>Загрузка</Text>
+      </View>
+    );
+  }
+
   return (
-    <Select
-      value={value}
-      onChange={onChange}
-      options={LEAGUES}
-      top={top}
-    />
+    <Select value={value} onChange={onChange} options={mappedItems} top={top} />
   );
 };

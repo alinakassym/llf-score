@@ -11,9 +11,14 @@ import {
   selectCitiesStatus,
 } from "@/store/cities.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import {
+  fetchLeagues,
+  selectLeagues,
+  selectLeaguesCityId,
+  selectLeaguesStatus,
+} from "@/store/leagues.slice";
 import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-
 
 export const TopBar: React.FC = () => {
   const scheme = useThemeMode();
@@ -21,7 +26,10 @@ export const TopBar: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const cities = useAppSelector(selectCities);
-  const status = useAppSelector(selectCitiesStatus);
+  const citiesStatus = useAppSelector(selectCitiesStatus);
+  const leagues = useAppSelector(selectLeagues);
+  const leaguesStatus = useAppSelector(selectLeaguesStatus);
+  const leaguesCityId = useAppSelector(selectLeaguesCityId);
   const { saveCity, loadCity } = useCityStorage();
   const { saveLeague, loadLeague } = useLeagueStorage();
 
@@ -30,7 +38,7 @@ export const TopBar: React.FC = () => {
 
   // Загружаем сохранённый город при старте
   useEffect(() => {
-    if (status !== "succeeded" || cities.length === 0) return;
+    if (citiesStatus !== "succeeded" || cities.length === 0) return;
     (async () => {
       const saved = await loadCity();
       if (saved && typeof saved === "string") {
@@ -42,20 +50,35 @@ export const TopBar: React.FC = () => {
         return;
       }
     })();
-  }, [status, cities, loadCity]);
+  }, [citiesStatus, cities, loadCity]);
 
-  // Загружаем сохранённую лигу при старте
+  // Загружаем лиги когда город изменился
   useEffect(() => {
+    if (typeof city === "number" && city > 0) {
+      // Загружаем лиги только если нужно (город изменился)
+      if (leaguesCityId !== city) {
+        dispatch(fetchLeagues(city));
+      }
+    }
+  }, [city, dispatch, leaguesCityId]);
+
+  // Загружаем сохранённую лигу когда лиги загрузились
+  useEffect(() => {
+    console.log("leagues: ", leagues);
+    if (leaguesStatus !== "succeeded" || leagues.length === 0) return;
     (async () => {
       const saved = await loadLeague();
-      if (saved && typeof saved === "string") {
+      console.log("leagues: ", leagues);
+      if (saved && leagues.length > 0 && leagues.some((l) => l.id === saved)) {
         setLeague(saved);
         return;
       }
-      // По умолчанию "pl" (Премьер лига)
-      setLeague("pl");
+      // Выбираем первую лигу по умолчанию
+      if (leagues.length > 0) {
+        setLeague(leagues[0].id);
+      }
     })();
-  }, [loadLeague]);
+  }, [leaguesStatus, leagues, loadLeague]);
 
   // Сохраняем выбор города
   const handleCityChange = useCallback(
@@ -76,8 +99,8 @@ export const TopBar: React.FC = () => {
   );
 
   useEffect(() => {
-    if (status === "idle") dispatch(fetchCities());
-  }, [dispatch, status]);
+    if (citiesStatus === "idle") dispatch(fetchCities());
+  }, [dispatch, citiesStatus]);
 
   return (
     <View
