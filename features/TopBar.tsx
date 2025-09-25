@@ -38,7 +38,6 @@ export const TopBar: React.FC = () => {
   useEffect(() => {
     if (status !== "succeeded" || cities.length === 0) return;
     (async () => {
-      console.log("cities: ", cities);
       const saved = await loadCity();
       if (saved && typeof saved === "string") {
         setCity(+saved);
@@ -54,7 +53,6 @@ export const TopBar: React.FC = () => {
   // Сохраняем выбор города
   const handleCityChange = useCallback(
     async (cityId: number | string) => {
-      console.log("User selected city:", cityId, "type:", typeof cityId);
       setCity(cityId);
       await saveCity(String(cityId));
     },

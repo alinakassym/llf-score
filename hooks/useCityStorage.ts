@@ -29,7 +29,6 @@ export async function loadCity(): Promise<string | null> {
   const ok = await isSecureStoreAvailable();
   if (ok) {
     const keyVal = await SecureStore.getItemAsync(KEY);
-    console.log("keyVal: ", keyVal, typeof keyVal);
     return keyVal ?? null;
   } else if (Platform.OS === "web") {
     try {
