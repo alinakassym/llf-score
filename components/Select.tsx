@@ -3,6 +3,8 @@ import { useThemeMode } from "@/hooks/use-theme-mode";
 import React, { FC, useMemo, useState } from "react";
 import {
   FlatList,
+  Image,
+  ImageSourcePropType,
   Modal,
   Pressable,
   StyleSheet,
@@ -13,7 +15,7 @@ import {
 } from "react-native";
 import { VuesaxIcon } from "./icons";
 
-export type Option = { id: string; label: string };
+export type Option = { id: string; label: string; icon?: ImageSourcePropType };
 
 type Props = {
   value: string;
@@ -35,6 +37,9 @@ export const Select: FC<Props> = ({ value, onChange, options, top = 164 }) => {
   return (
     <>
       <TouchableOpacity onPress={() => setOpen(true)} style={[styles.button]}>
+        {selected?.icon && (
+          <Image source={selected.icon} style={styles.buttonIcon} />
+        )}
         <Text numberOfLines={1} style={[styles.buttonText, { color: c.text }]}>
           {selected?.label ?? "Выбрать"}
         </Text>
@@ -83,6 +88,9 @@ export const Select: FC<Props> = ({ value, onChange, options, top = 164 }) => {
                     },
                   ]}
                 >
+                  {item.icon && (
+                    <Image source={item.icon} style={styles.optionIcon} />
+                  )}
                   <Text style={{ color: c.text, fontSize: 14, flex: 1 }}>
                     {item.label}
                   </Text>
@@ -111,6 +119,12 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   buttonText: { fontSize: 14 },
+  buttonIcon: {
+    marginRight: 4,
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+  },
   backdrop: {
     position: "absolute",
     top: 124,
@@ -133,6 +147,12 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     flexDirection: "row",
     alignItems: "center",
+  },
+  optionIcon: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    marginRight: 12,
   },
   sep: { height: 1, opacity: 0.6 },
 });

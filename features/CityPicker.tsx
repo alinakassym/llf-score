@@ -16,7 +16,7 @@ export const CityPicker: FC<Props> = ({ value, onChange, top }) => {
     <Select
       value={value}
       onChange={onChange}
-      options={cities.map((c) => ({ id: c.id, label: c.name }))}
+      options={cities.map((c) => ({ id: c.id, label: c.name, icon: c.icon }))}
       top={top}
     />
   );
