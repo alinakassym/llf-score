@@ -3,9 +3,14 @@ import { Option, Select } from "@/components/Select";
 import { Colors } from "@/constants/theme";
 import { CityPicker } from "@/features/CityPicker";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { fetchCities, selectCities, selectCitiesStatus } from "@/store/cities.slice";
+import { useCityStorage } from "@/hooks/useCityStorage";
+import {
+  fetchCities,
+  selectCities,
+  selectCitiesStatus,
+} from "@/store/cities.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 const LEAGUES: Option[] = [
@@ -24,16 +29,32 @@ export const TopBar: React.FC = () => {
   const dispatch = useAppDispatch();
   const cities = useAppSelector(selectCities);
   const status = useAppSelector(selectCitiesStatus);
+  const { saveCity, loadCity } = useCityStorage();
 
   const [city, setCity] = useState<string>("");
   const [league, setLeague] = useState("pl");
 
-  // Выбираем первый город по умолчанию когда города загрузились
+  // Загружаем сохранённый город при старте
   useEffect(() => {
-    if (cities.length > 0 && !city) {
-      setCity(cities[0].id);
-    }
-  }, [cities, city]);
+    if (status !== "succeeded" || cities.length === 0) return;
+    (async () => {
+      const saved = await loadCity();
+      console.log("cities[0].id:", cities[0].id, "type:", typeof cities[0].id);
+      setCity(
+        saved && cities.some((c) => c.id === saved) ? saved : cities[0].id,
+      );
+    })();
+  }, [status, cities, loadCity]);
+
+  // Сохраняем выбор города
+  const handleCityChange = useCallback(
+    async (cityId: string) => {
+      console.log("User selected city:", cityId, "type:", typeof cityId);
+      setCity(cityId);
+      await saveCity(String(cityId));
+    },
+    [saveCity],
+  );
 
   useEffect(() => {
     if (status === "idle") dispatch(fetchCities());
@@ -51,7 +72,7 @@ export const TopBar: React.FC = () => {
       ]}
     >
       <View style={styles.left}>
-        <CityPicker value={city} onChange={setCity} />
+        <CityPicker value={city} onChange={handleCityChange} />
 
         <Select value={league} onChange={setLeague} options={LEAGUES} />
       </View>
