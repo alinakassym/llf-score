@@ -19,9 +19,10 @@ type Props = {
   value: string;
   onChange: (id: string) => void;
   options: Option[];
+  top?: number;
 };
 
-export const Select: FC<Props> = ({ value, onChange, options }) => {
+export const Select: FC<Props> = ({ value, onChange, options, top = 164 }) => {
   const scheme = useThemeMode();
   const c = Colors[scheme];
   const [open, setOpen] = useState(false);
@@ -56,6 +57,7 @@ export const Select: FC<Props> = ({ value, onChange, options }) => {
             {
               backgroundColor: c.background,
               borderColor: c.border,
+              top,
             },
           ]}
         >
@@ -119,7 +121,6 @@ const styles = StyleSheet.create({
   },
   sheet: {
     position: "absolute",
-    top: 164,
     left: 0,
     right: 0,
     maxHeight: "60%",

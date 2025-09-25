@@ -1,21 +1,12 @@
-// features/TopVar.tsx
+// features/TopBar.tsx
 import { Option, Select } from "@/components/Select";
 import { Colors } from "@/constants/theme";
+import { CityPicker } from "@/features/CityPicker";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import {
-  fetchCities,
-  selectCities,
-  selectCitiesStatus,
-} from "@/store/cities.slice";
+import { fetchCities, selectCitiesStatus } from "@/store/cities.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-
-const CITIES: Option[] = [
-  { id: "astana", label: "Астана" },
-  { id: "almaty", label: "Алматы" },
-  { id: "karaganda", label: "Караганда" },
-];
 
 const LEAGUES: Option[] = [
   { id: "pl", label: "Премьер лига" },
@@ -31,7 +22,6 @@ export const TopBar: React.FC = () => {
   const c = Colors[scheme];
 
   const dispatch = useAppDispatch();
-  const cities = useAppSelector(selectCities);
   const status = useAppSelector(selectCitiesStatus);
 
   const [city, setCity] = useState("astana");
@@ -53,11 +43,7 @@ export const TopBar: React.FC = () => {
       ]}
     >
       <View style={styles.left}>
-        <Select
-          value={city}
-          onChange={setCity}
-          options={cities.map((c) => ({ id: c.id, label: c.name }))}
-        />
+        <CityPicker value={city} onChange={setCity} />
 
         <Select value={league} onChange={setLeague} options={LEAGUES} />
       </View>
