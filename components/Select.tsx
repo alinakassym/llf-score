@@ -123,7 +123,6 @@ const styles = StyleSheet.create({
     marginRight: 4,
     width: 16,
     height: 16,
-    borderRadius: 8,
   },
   backdrop: {
     position: "absolute",
@@ -151,7 +150,6 @@ const styles = StyleSheet.create({
   optionIcon: {
     width: 20,
     height: 20,
-    borderRadius: 10,
     marginRight: 12,
   },
   sep: { height: 1, opacity: 0.6 },
