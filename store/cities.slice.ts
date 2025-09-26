@@ -4,7 +4,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { ImageSourcePropType } from "react-native";
 
 export type City = {
-  id: number;
+  id: string;
   name: string;
   icon?: ImageSourcePropType;
 };
@@ -35,6 +35,7 @@ export const fetchCities = createAsyncThunk<City[]>(
           },
         }) as City,
     );
+    console.log("fetchCities result: ", result);
     return result;
   },
 );

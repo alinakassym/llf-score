@@ -1,31 +1,53 @@
+import { API_BASE_URL } from "@/config/env";
 import { httpGet } from "@/services/http";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type League = {
-  id: string;
+  cityId: number;
+  cityName: string;
+  id: number;
+  leagueGroupId: number;
+  leagueGroupName: string;
   name: string;
+  order: number;
+  icon?: any;
 };
 
 type LeaguesState = {
   items: League[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
-  cityId: number | null; // для отслеживания для какого города загружены лиги
+};
+
+type leaguesData = {
+  leagues: LeaguesState[];
 };
 
 const initialState: LeaguesState = {
   items: [],
   status: "idle",
   error: null,
-  cityId: null,
 };
 
 // thunk для загрузки лиг по cityId
-export const fetchLeagues = createAsyncThunk<League[], number>(
-  "leagues/fetchLeagues",
-  async (cityId) => {
-    const data = await httpGet<League[]>(`/api/leagues?cityId=${cityId}`);
-    return data;
+export const fetchLeaguesByCityId = createAsyncThunk<League[], number | string>(
+  "leagues/fetchLeaguesByCityId",
+  async (cityId: number | string) => {
+    const { leagues } = await httpGet<leaguesData>(
+      `/api/leagues?cityId=${cityId}`,
+    );
+    console.log("fetchLeaguesByCityId data: ", leagues);
+    const result = leagues.map(
+      (c) =>
+        ({
+          ...c,
+          icon: {
+            uri: `${API_BASE_URL}/api/cities/${cityId}/icon?width=80&height=80`,
+          },
+        }) as League,
+    );
+    console.log("leagues.slice result: ", result);
+    return result;
   },
 );
 
@@ -40,23 +62,22 @@ const leaguesSlice = createSlice({
       s.items = [];
       s.status = "idle";
       s.error = null;
-      s.cityId = null;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchLeagues.pending, (s, a) => {
+      .addCase(fetchLeaguesByCityId.pending, (s, a) => {
         s.status = "loading";
         s.error = null;
-        s.cityId = a.meta.arg; // сохраняем cityId для которого загружаем
       })
-      .addCase(fetchLeagues.fulfilled, (s, a) => {
+      .addCase(fetchLeaguesByCityId.fulfilled, (s, a) => {
         s.status = "succeeded";
         s.items = a.payload;
       })
-      .addCase(fetchLeagues.rejected, (s, a) => {
+      .addCase(fetchLeaguesByCityId.rejected, (s, a) => {
         s.status = "failed";
         s.error = a.error.message ?? "Failed to load leagues";
+        console.log("leaguesSlice s.error", s.error);
       });
   },
 });
@@ -69,4 +90,3 @@ export type RootState = { leagues: LeaguesState }; // переопределит
 export const selectLeagues = (s: RootState) => s.leagues.items;
 export const selectLeaguesStatus = (s: RootState) => s.leagues.status;
 export const selectLeaguesError = (s: RootState) => s.leagues.error;
-export const selectLeaguesCityId = (s: RootState) => s.leagues.cityId;
