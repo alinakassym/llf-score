@@ -4,6 +4,7 @@ type Palette = {
   primary: string;
   secondary: string;
   gradient: any;
+  lightOpacity: string;
   background: string;
   surface: string;
   text: string;
@@ -21,6 +22,7 @@ const baseColors = {
   primary: "#5060D8",
   secondary: "#8450D8",
   gradient: ["#5060D8", "#5060D8", "#8450D8", "#50A4D8"],
+  lightOpacity: "rgba(255, 255, 255, 0.4)",
 };
 
 export const Colors: Record<ThemeName, Palette> = {
