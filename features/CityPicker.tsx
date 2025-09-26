@@ -11,9 +11,15 @@ type Props = {
   value: string;
   onChange?: (id: string) => void;
   top?: number;
+  color?: string;
 };
 
-export const CityPicker: FC<Props> = ({ value, onChange, top }) => {
+export const CityPicker: FC<Props> = ({
+  value,
+  onChange,
+  top,
+  color = "#000",
+}) => {
   const dispatch = useAppDispatch();
   const cities = useAppSelector(selectCities);
   const status = useAppSelector(selectCitiesStatus);
@@ -28,6 +34,7 @@ export const CityPicker: FC<Props> = ({ value, onChange, top }) => {
       onChange={onChange || (() => {})}
       options={cities.map((c) => ({ id: c.id, label: c.name, icon: c.icon }))}
       top={top}
+      color={color}
     />
   );
 };

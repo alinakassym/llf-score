@@ -26,9 +26,16 @@ type Props = {
   onChange: (id: string) => void;
   options: Option[];
   top?: number;
+  color?: string;
 };
 
-export const Select: FC<Props> = ({ value, onChange, options, top = 164 }) => {
+export const Select: FC<Props> = ({
+  value,
+  onChange,
+  options,
+  top = 164,
+  color = "#000",
+}) => {
   const scheme = useThemeMode();
   const c = Colors[scheme];
   const [open, setOpen] = useState(false);
@@ -49,10 +56,10 @@ export const Select: FC<Props> = ({ value, onChange, options, top = 164 }) => {
         {selected?.icon && (
           <Image source={selected.icon} style={styles.buttonIcon} />
         )}
-        <Text numberOfLines={1} style={[styles.buttonText]}>
+        <Text numberOfLines={1} style={[styles.buttonText, { color: color }]}>
           {selected?.label ?? "Выбрать"}
         </Text>
-        <VuesaxIcon name="chevron" size={16} />
+        <VuesaxIcon name="chevron" size={16} color={color} />
       </TouchableOpacity>
 
       <Modal

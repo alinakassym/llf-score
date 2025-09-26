@@ -30,16 +30,18 @@ export const TopBar: React.FC = () => {
       style={[styles.container]}
     >
       <View style={[styles.left]}>
-        <View style={[styles.btn, { backgroundColor: c.lightOpacity }]}>
+        <View style={[styles.btn, { backgroundColor: c.darkOpacity }]}>
           <CityPicker
+            color={c.white}
             top={172}
             value={cityId}
             onChange={(id) => dispatch(setCityId(id))}
           />
         </View>
 
-        <View style={[styles.btn, { backgroundColor: c.lightOpacity }]}>
+        <View style={[styles.btn, { backgroundColor: c.darkOpacity }]}>
           <LeaguePicker
+            color={c.white}
             top={172}
             value={leagueId}
             onChange={(id) => dispatch(setLeagueId(id))}

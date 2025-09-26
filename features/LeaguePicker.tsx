@@ -5,7 +5,6 @@ import {
   League,
   fetchLeaguesByCityId,
   selectLeagues,
-  selectLeaguesError,
   selectLeaguesStatus,
 } from "@/store/leagues.slice";
 import React, { FC, useEffect, useState } from "react";
@@ -14,13 +13,18 @@ type Props = {
   value: string;
   onChange?: (id: string) => void;
   top?: number;
+  color?: string;
 };
 
-export const LeaguePicker: FC<Props> = ({ value, onChange, top }) => {
+export const LeaguePicker: FC<Props> = ({
+  value,
+  onChange,
+  top,
+  color = "#000",
+}) => {
   const dispatch = useAppDispatch();
   const leagues: League[] = useAppSelector(selectLeagues);
   const status = useAppSelector(selectLeaguesStatus);
-  const error = useAppSelector(selectLeaguesError);
   const cityId: number | string = useAppSelector(selectCityId) ?? "";
   const [items, setItems] = useState<Option[]>([]);
 
@@ -47,6 +51,7 @@ export const LeaguePicker: FC<Props> = ({ value, onChange, top }) => {
       onChange={onChange || (() => {})}
       options={items}
       top={top}
+      color={color}
     />
   );
 };

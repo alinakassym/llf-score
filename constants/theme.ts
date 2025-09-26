@@ -5,6 +5,8 @@ type Palette = {
   secondary: string;
   gradient: any;
   lightOpacity: string;
+  darkOpacity: string;
+  white: string;
   background: string;
   surface: string;
   text: string;
@@ -16,6 +18,7 @@ type Palette = {
   success: string;
   warning: string;
   button: string;
+  opacity: string;
 };
 
 const baseColors = {
@@ -23,6 +26,8 @@ const baseColors = {
   secondary: "#8450D8",
   gradient: ["#5060D8", "#5060D8", "#8450D8", "#50A4D8"],
   lightOpacity: "rgba(255, 255, 255, 0.4)",
+  darkOpacity: "rgba(0, 0, 0, 0.2)",
+  white: "#FFFFFF",
 };
 
 export const Colors: Record<ThemeName, Palette> = {
@@ -39,6 +44,7 @@ export const Colors: Record<ThemeName, Palette> = {
     success: "#16A34A",
     warning: "#D97706",
     button: "#F2F3F5",
+    opacity: "rgba(0, 0, 0, 0.4)",
   },
   dark: {
     ...baseColors,
@@ -53,5 +59,6 @@ export const Colors: Record<ThemeName, Palette> = {
     success: "#34D399",
     warning: "#FBBF24",
     button: "rgba(255,255,255,0.08)",
+    opacity: "rgba(255, 255, 255, 0.4)",
   },
 };
