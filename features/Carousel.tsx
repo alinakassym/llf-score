@@ -14,7 +14,7 @@ interface CarouselProps {
 
 const { width: screenWidth } = Dimensions.get("window");
 const CARD_WIDTH = screenWidth * 0.94; // основная карточка занимает 80% экрана
-const CARD_SPACING = 4; // отступ между карточками
+const CARD_SPACING = 8; // отступ между карточками
 
 export function Carousel({
   images,

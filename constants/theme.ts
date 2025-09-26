@@ -19,6 +19,7 @@ type Palette = {
   warning: string;
   button: string;
   opacity: string;
+  bgOpacity: string;
 };
 
 const baseColors = {
@@ -33,7 +34,7 @@ const baseColors = {
 export const Colors: Record<ThemeName, Palette> = {
   light: {
     ...baseColors,
-    background: "#FFFFFF",
+    background: "rgba(255, 255, 255, 0.6)",
     surface: "#EAECFA",
     text: "#111111",
     textMuted: "#6B7280",
@@ -45,10 +46,11 @@ export const Colors: Record<ThemeName, Palette> = {
     warning: "#D97706",
     button: "#F2F3F5",
     opacity: "rgba(0, 0, 0, 0.4)",
+    bgOpacity: "rgba(255, 255, 255, 0.6)",
   },
   dark: {
     ...baseColors,
-    background: "#271B38",
+    background: "rgba(39, 27, 56, 0.6)",
     surface: "#1D1527",
     text: "#FFFFFF",
     textMuted: "rgba(255,255,255,0.75)",
@@ -60,5 +62,6 @@ export const Colors: Record<ThemeName, Palette> = {
     warning: "#FBBF24",
     button: "rgba(255,255,255,0.08)",
     opacity: "rgba(255, 255, 255, 0.4)",
+    bgOpacity: "rgba(39, 27, 56, 0.6)",
   },
 };

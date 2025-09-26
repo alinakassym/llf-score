@@ -1,4 +1,5 @@
 // app/(tabs)/index.tsx
+import { Card } from "@/components/Card";
 import { Carousel } from "@/features/Carousel";
 import { LeagueTable } from "@/features/league/LeagueTable";
 import { leagueMock } from "@/features/league/mocks";
@@ -6,7 +7,7 @@ import MatchCarousel from "@/features/match/MatchCarousel";
 import { mockMatches } from "@/features/match/mocks";
 import MenuGrid from "@/features/MenuGrid";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 export default function TabOneScreen() {
   const scheme = useThemeMode();
@@ -25,7 +26,11 @@ export default function TabOneScreen() {
         matches={mockMatches}
         onMatchPress={(match) => console.log("Match pressed:", match.id)}
       />
-      <LeagueTable rows={leagueMock} />
+      <View style={{ width: "94%", alignSelf: "center" }}>
+        <Card>
+          <LeagueTable rows={leagueMock} />
+        </Card>
+      </View>
     </ScrollView>
   );
 }
@@ -36,7 +41,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   scrollViewContent: {
-    paddingTop: 8,
+    paddingVertical: 8,
     flexGrow: 1,
     gap: 8,
   },
