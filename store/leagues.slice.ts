@@ -10,7 +10,7 @@ export type League = {
   leagueGroupName: string;
   name: string;
   order: number;
-  icon?: any;
+  icon?: { uri: string };
 };
 
 type LeaguesState = {
@@ -20,7 +20,7 @@ type LeaguesState = {
 };
 
 type leaguesData = {
-  leagues: LeaguesState[];
+  leagues: League[];
 };
 
 const initialState: LeaguesState = {
@@ -36,7 +36,6 @@ export const fetchLeaguesByCityId = createAsyncThunk<League[], number | string>(
     const { leagues } = await httpGet<leaguesData>(
       `/api/leagues?cityId=${cityId}`,
     );
-    console.log("fetchLeaguesByCityId data: ", leagues);
     const result = leagues.map(
       (c) =>
         ({
@@ -46,7 +45,6 @@ export const fetchLeaguesByCityId = createAsyncThunk<League[], number | string>(
           },
         }) as League,
     );
-    console.log("leagues.slice result: ", result);
     return result;
   },
 );

@@ -12,7 +12,6 @@ export async function httpGet<T>(path: string, init?: RequestInit): Promise<T> {
     ...init,
   })
     .then((data) => {
-      console.log("httpGet response", data);
       return data;
     })
     .catch((error) => {

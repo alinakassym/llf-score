@@ -1,6 +1,6 @@
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import React, { FC, useMemo, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import {
   FlatList,
   Image,
@@ -16,7 +16,7 @@ import {
 import { VuesaxIcon } from "./icons";
 
 export type Option = {
-  id: any;
+  id: number | string;
   label: string;
   icon?: ImageSourcePropType;
 };
@@ -32,11 +32,16 @@ export const Select: FC<Props> = ({ value, onChange, options, top = 164 }) => {
   const scheme = useThemeMode();
   const c = Colors[scheme];
   const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<Option>();
 
-  const selected = useMemo(
-    () => options.find((o) => o.id === value),
-    [options, value],
-  );
+  useEffect(() => {
+    if (value && options.length) {
+      const findedOption: Option | undefined = options.find(
+        (o) => o.id === value,
+      );
+      setSelected(findedOption);
+    }
+  }, [value, options]);
 
   return (
     <>

@@ -8,8 +8,7 @@ import {
   selectLeaguesError,
   selectLeaguesStatus,
 } from "@/store/leagues.slice";
-import React, { FC, useEffect, useMemo } from "react";
-import { Text } from "react-native";
+import React, { FC, useEffect, useState } from "react";
 
 type Props = {
   value: number | string;
@@ -18,39 +17,29 @@ type Props = {
 };
 
 export const LeaguePicker: FC<Props> = ({ value, onChange, top }) => {
-  console.log("LeaguePicker value: ", value);
   const dispatch = useAppDispatch();
   const leagues: League[] = useAppSelector(selectLeagues);
   const status = useAppSelector(selectLeaguesStatus);
   const error = useAppSelector(selectLeaguesError);
   const cityId: number | string = useAppSelector(selectCityId) ?? "";
+  const [items, setItems] = useState<Option[]>([]);
 
   useEffect(() => {
-    console.log("LeaguePicker cityId: ", cityId);
-    console.log("LeaguePicker status: ", status);
-    if (status === "idle") {
-      console.log("IFFF LeaguePicker cityId: ", cityId);
+    if (cityId && status === "idle") {
       dispatch(fetchLeaguesByCityId(cityId));
-
-      console.log("IFFF LeaguePicker error: ", error);
     }
   }, [dispatch, cityId, status]);
 
-  const items: Option[] = useMemo(
-    () =>
-      (leagues.length
-        ? leagues
-        : [{ name: "Test league", id: 0, icon: "" }]
-      ).map((c) => ({
+  useEffect(() => {
+    if (leagues.length) {
+      const mappedItems = leagues.map((c) => ({
         label: c.name,
-        id: c.id.toString(),
+        id: c.id,
         icon: undefined,
-      })),
-    [leagues],
-  );
-  if (status === "loading") {
-    return <Text>Загрузка</Text>;
-  }
+      }));
+      setItems(mappedItems);
+    }
+  }, [leagues]);
 
   return (
     <Select

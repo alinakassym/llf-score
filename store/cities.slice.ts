@@ -35,7 +35,6 @@ export const fetchCities = createAsyncThunk<City[]>(
           },
         }) as City,
     );
-    console.log("fetchCities result: ", result);
     return result;
   },
 );
