@@ -8,8 +8,8 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import React, { FC, useEffect } from "react";
 
 type Props = {
-  value: number | string;
-  onChange?: (id: number | string) => void;
+  value: string;
+  onChange?: (id: string) => void;
   top?: number;
 };
 

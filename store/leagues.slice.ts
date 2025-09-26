@@ -3,9 +3,9 @@ import { httpGet } from "@/services/http";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type League = {
-  cityId: number;
+  cityId: string;
   cityName: string;
-  id: number;
+  id: string;
   leagueGroupId: number;
   leagueGroupName: string;
   name: string;
@@ -30,9 +30,9 @@ const initialState: LeaguesState = {
 };
 
 // thunk для загрузки лиг по cityId
-export const fetchLeaguesByCityId = createAsyncThunk<League[], number | string>(
+export const fetchLeaguesByCityId = createAsyncThunk<League[], string>(
   "leagues/fetchLeaguesByCityId",
-  async (cityId: number | string) => {
+  async (cityId: string) => {
     const { leagues } = await httpGet<leaguesData>(
       `/api/leagues?cityId=${cityId}`,
     );
@@ -40,6 +40,7 @@ export const fetchLeaguesByCityId = createAsyncThunk<League[], number | string>(
       (c) =>
         ({
           ...c,
+          id: String(c.id),
           icon: {
             uri: `${API_BASE_URL}/api/cities/${cityId}/icon?width=80&height=80`,
           },

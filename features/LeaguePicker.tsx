@@ -11,8 +11,8 @@ import {
 import React, { FC, useEffect, useState } from "react";
 
 type Props = {
-  value: number | string;
-  onChange?: (id: number | string) => void;
+  value: string;
+  onChange?: (id: string) => void;
   top?: number;
 };
 
@@ -34,7 +34,7 @@ export const LeaguePicker: FC<Props> = ({ value, onChange, top }) => {
     if (leagues.length) {
       const mappedItems = leagues.map((c) => ({
         label: c.name,
-        id: c.id,
+        id: String(c.id),
         icon: undefined,
       }));
       setItems(mappedItems);

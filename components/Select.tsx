@@ -16,14 +16,14 @@ import {
 import { VuesaxIcon } from "./icons";
 
 export type Option = {
-  id: number | string;
+  id: string;
   label: string;
   icon?: ImageSourcePropType;
 };
 
 type Props = {
-  value: number | string;
-  onChange: (id: number | string) => void;
+  value: string;
+  onChange: (id: string) => void;
   options: Option[];
   top?: number;
 };

@@ -13,10 +13,6 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-const toInt = (v: unknown) => {
-  const n = Number.parseInt(String(v).trim(), 10);
-  return Number.isNaN(n) ? null : n;
-};
 
 export const TopBar: React.FC = () => {
   const scheme = useThemeMode();

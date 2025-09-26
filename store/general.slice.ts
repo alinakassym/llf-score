@@ -1,23 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type GeneralState = {
-  cityId: number | string;
-  leagueId: number | string;
+  cityId: string;
+  leagueId: string;
 };
 
 const initialState: GeneralState = {
-  cityId: 1,
-  leagueId: 1,
+  cityId: "1",
+  leagueId: "1",
 };
 
 const generalSlice = createSlice({
   name: "general",
   initialState,
   reducers: {
-    setCityId: (s, a: PayloadAction<number | string>) => {
+    setCityId: (s, a: PayloadAction<string>) => {
       s.cityId = a.payload;
     },
-    setLeagueId: (s, a: PayloadAction<number | string>) => {
+    setLeagueId: (s, a: PayloadAction<string>) => {
       s.leagueId = a.payload;
     },
   },
