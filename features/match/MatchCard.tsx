@@ -1,4 +1,5 @@
 // features/match/MatchCard.tsx
+import { LLFLogo } from "@/components/icons/LLFLogo";
 import { Colors } from "@/constants/theme";
 import { Match } from "@/features/match/types";
 import { useThemeMode } from "@/hooks/use-theme-mode";
@@ -36,14 +37,14 @@ export default function MatchCard({ match, onPress }: Props) {
         }}
       >
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-          <View
+          {/* <View
             style={{
               width: 8,
               height: 8,
               borderRadius: 4,
               backgroundColor: c.error,
             }}
-          />
+          /> */}
           <Text
             style={{
               color: c.textMuted,
@@ -54,7 +55,7 @@ export default function MatchCard({ match, onPress }: Props) {
             {match.tournament}
           </Text>
         </View>
-        <Text
+        {/* <Text
           style={{
             color: c.textMuted,
             fontSize: 12,
@@ -62,12 +63,13 @@ export default function MatchCard({ match, onPress }: Props) {
           }}
         >
           {match.time}
-        </Text>
+        </Text> */}
       </View>
 
       {/* Teams and score */}
       <View
         style={{
+          height: 113,
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
@@ -159,23 +161,26 @@ export default function MatchCard({ match, onPress }: Props) {
             </Text>
           </View>
           {match.isLive && (
-            <View
-              style={{
-                backgroundColor: c.error,
-                paddingHorizontal: 8,
-                paddingVertical: 4,
-                borderRadius: 12,
-              }}
-            >
-              <Text
+            <View style={{ gap: 4, alignItems: "center" }}>
+              <View
                 style={{
-                  color: "#FFFFFF",
-                  fontSize: 10,
-                  fontWeight: "700",
+                  backgroundColor: c.error,
+                  paddingHorizontal: 8,
+                  paddingVertical: 4,
+                  borderRadius: 12,
                 }}
               >
-                Live
-              </Text>
+                <Text
+                  style={{
+                    color: "#FFFFFF",
+                    fontSize: 10,
+                    fontWeight: "700",
+                  }}
+                >
+                  Live
+                </Text>
+              </View>
+              <LLFLogo height={12} color={c.text} />
             </View>
           )}
         </View>

@@ -33,7 +33,7 @@ export default function MatchCarousel({ matches, onMatchPress }: Props) {
         snapToAlignment="start"
         contentInsetAdjustmentBehavior="never"
         contentContainerStyle={{
-          paddingLeft: 0,
+          paddingLeft: 13,
           paddingRight: screenWidth * 0.2, // Добавляем отступ справа
         }}
       >
@@ -42,7 +42,7 @@ export default function MatchCarousel({ matches, onMatchPress }: Props) {
             key={match.id}
             style={{
               width: CARD_WIDTH,
-              marginRight: index < matches.length - 1 ? CARD_MARGIN : 0,
+              marginRight: index < matches.length - 1 ? CARD_MARGIN : -56,
             }}
           >
             <MatchCard match={match} onPress={onMatchPress} />

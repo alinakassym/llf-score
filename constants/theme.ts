@@ -50,7 +50,7 @@ export const Colors: Record<ThemeName, Palette> = {
   },
   dark: {
     ...baseColors,
-    background: "rgba(39, 27, 56, 0.6)",
+    background: "rgba(39, 27, 56, 1)",
     surface: "#1D1527",
     text: "#FFFFFF",
     textMuted: "rgba(255,255,255,0.75)",
@@ -62,6 +62,6 @@ export const Colors: Record<ThemeName, Palette> = {
     warning: "#FBBF24",
     button: "rgba(255,255,255,0.08)",
     opacity: "rgba(255, 255, 255, 0.4)",
-    bgOpacity: "rgba(39, 27, 56, 0.6)",
+    bgOpacity: "rgba(39, 27, 56, 0.8)",
   },
 };

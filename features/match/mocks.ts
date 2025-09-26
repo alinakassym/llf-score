@@ -88,4 +88,23 @@ export const mockMatches: Match[] = [
     round: "16 тур",
     isLive: true,
   },
+
+  {
+    id: "51",
+    homeTeam: {
+      name: "ОРДАБАСЫ test",
+      city: "ШЫМКЕНТ test",
+    },
+    awayTeam: {
+      name: "АТЫРАУ test",
+      city: "АТЫРАУ test",
+    },
+    homeScore: 3,
+    awayScore: 2,
+    status: "live",
+    time: "Сейчас",
+    tournament: "Премьер лига Казахстана test",
+    round: "16 тур test",
+    isLive: true,
+  },
 ];
