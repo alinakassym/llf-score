@@ -33,7 +33,7 @@ export const TopBar: React.FC = () => {
         <View style={[styles.btn, { backgroundColor: c.darkOpacity }]}>
           <CityPicker
             color={c.white}
-            top={172}
+            top={175}
             value={cityId}
             onChange={(id) => dispatch(setCityId(id))}
           />
@@ -42,7 +42,7 @@ export const TopBar: React.FC = () => {
         <View style={[styles.btn, { backgroundColor: c.darkOpacity }]}>
           <LeaguePicker
             color={c.white}
-            top={172}
+            top={175}
             value={leagueId}
             onChange={(id) => dispatch(setLeagueId(id))}
           />
