@@ -63,7 +63,7 @@ const icons: Record<string, IconDef> = {
     ),
   },
   arrows: {
-    viewBox: "0 0 25 25",
+    viewBox: "0 0 26 25",
     paths: ({ color }) => (
       <>
         <Path
