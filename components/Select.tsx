@@ -52,7 +52,11 @@ export const Select: FC<Props> = ({
 
   return (
     <>
-      <TouchableOpacity onPress={() => setOpen(true)} style={[styles.button]}>
+      <TouchableOpacity
+        activeOpacity={0.5}
+        onPress={() => setOpen(true)}
+        style={[styles.button]}
+      >
         {selected?.icon && (
           <Image source={selected.icon} style={styles.buttonIcon} />
         )}

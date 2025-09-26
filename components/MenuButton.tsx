@@ -1,7 +1,7 @@
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Pressable, Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 type Props = {
   icon: keyof typeof Ionicons.glyphMap;
@@ -14,14 +14,16 @@ export default function MenuButton({ icon, label, onPress }: Props) {
   const c = Colors[scheme];
 
   return (
-    <Pressable
+    <TouchableOpacity
+      activeOpacity={0.5}
       onPress={onPress}
       style={{
+        paddingVertical: 8,
         alignItems: "center",
         justifyContent: "center",
-        width: "24%",
-        maxWidth: "24%",
-        marginVertical: 8,
+        flex: 1,
+        borderRadius: 8,
+        backgroundColor: c.lightOpacity,
       }}
     >
       <View
@@ -31,7 +33,7 @@ export default function MenuButton({ icon, label, onPress }: Props) {
           justifyContent: "center",
         }}
       >
-        <Ionicons name={icon} size={28} color={c.primary} />
+        <Ionicons name={icon} size={18} color={c.primary} />
       </View>
       <Text
         style={{
@@ -43,6 +45,6 @@ export default function MenuButton({ icon, label, onPress }: Props) {
       >
         {label}
       </Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
