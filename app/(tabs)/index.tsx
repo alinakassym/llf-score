@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   scrollViewContent: {
+    paddingTop: 8,
     flexGrow: 1,
     gap: 8,
   },
