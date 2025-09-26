@@ -5,7 +5,7 @@ export const leagueMock: LeagueRow[] = [
   {
     id: "bltk",
     pos: 1,
-    name: "БИИК Шымкент (Ж)",
+    name: "БИИК Шымкент",
     lastScore: { gf: 3, ga: 0 },
     played: 17,
     goalsFor: 172,
@@ -15,7 +15,7 @@ export const leagueMock: LeagueRow[] = [
   {
     id: "akt",
     pos: 2,
-    name: "Актобе (Ж)",
+    name: "Актобе",
     played: 15,
     goalsFor: 125,
     goalsAgainst: 4,
@@ -24,7 +24,7 @@ export const leagueMock: LeagueRow[] = [
   {
     id: "tom",
     pos: 3,
-    name: "Tomiris-Turan (Ж)",
+    name: "Tomiris-Turan",
     lastScore: { gf: 5, ga: 1 },
     played: 16,
     goalsFor: 77,
@@ -34,7 +34,7 @@ export const leagueMock: LeagueRow[] = [
   {
     id: "kai",
     pos: 4,
-    name: "Кайрат (Ж)",
+    name: "Кайрат",
     played: 16,
     goalsFor: 50,
     goalsAgainst: 35,
@@ -43,7 +43,7 @@ export const leagueMock: LeagueRow[] = [
   {
     id: "eli",
     pos: 5,
-    name: "Елимай (Ж)",
+    name: "Елимай",
     posDiff: +1,
     lastScore: { gf: 3, ga: 2 },
     played: 16,
