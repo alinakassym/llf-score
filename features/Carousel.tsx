@@ -13,6 +13,8 @@ interface CarouselProps {
 }
 
 const { width: screenWidth } = Dimensions.get("window");
+const CARD_WIDTH = screenWidth * 0.9; // основная карточка занимает 80% экрана
+const CARD_SPACING = 8; // отступ между карточками
 
 export function Carousel({
   images,
@@ -39,8 +41,9 @@ export function Carousel({
     intervalRef.current = setInterval(() => {
       setCurrentIndex((prevIndex) => {
         const nextIndex = prevIndex + 1;
+        const scrollX = nextIndex * (CARD_WIDTH + CARD_SPACING);
         scrollViewRef.current?.scrollTo({
-          x: nextIndex * screenWidth,
+          x: scrollX,
           animated: true,
         });
         return nextIndex;
@@ -93,17 +96,22 @@ export function Carousel({
 
   const handleScrollEnd = (event: any) => {
     const contentOffset = event.nativeEvent.contentOffset.x;
-    const index = Math.round(contentOffset / screenWidth);
+    const cardPosition = CARD_WIDTH + CARD_SPACING;
+    const index = Math.round(contentOffset / cardPosition);
 
     if (index === 0) {
+      // Переходим к последней реальной карточке
+      const newScrollX = images.length * cardPosition;
       scrollViewRef.current?.scrollTo({
-        x: images.length * screenWidth,
+        x: newScrollX,
         animated: false,
       });
       setCurrentIndex(images.length);
     } else if (index === extendedImages.length - 1) {
+      // Переходим к первой реальной карточке
+      const newScrollX = 1 * cardPosition;
       scrollViewRef.current?.scrollTo({
-        x: screenWidth,
+        x: newScrollX,
         animated: false,
       });
       setCurrentIndex(1);
@@ -123,8 +131,10 @@ export function Carousel({
 
   useEffect(() => {
     if (images.length > 1) {
+      // Устанавливаем начальную позицию на первую реальную карточку (индекс 1)
+      const initialScrollX = 1 * (CARD_WIDTH + CARD_SPACING);
       scrollViewRef.current?.scrollTo({
-        x: screenWidth,
+        x: initialScrollX,
         animated: false,
       });
     }
@@ -141,19 +151,27 @@ export function Carousel({
       <ScrollView
         ref={scrollViewRef}
         horizontal
-        pagingEnabled
+        pagingEnabled={false}
         showsHorizontalScrollIndicator={false}
         onMomentumScrollEnd={handleScrollEnd}
         onScrollBeginDrag={handleTouchStart}
         style={[styles.scrollView, { height }]}
+        contentContainerStyle={styles.scrollContent}
+        snapToInterval={CARD_WIDTH + CARD_SPACING}
+        decelerationRate="fast"
+        snapToAlignment="start"
       >
         {extendedImages.map((image, index) => (
-          <Image
-            key={index}
-            source={{ uri: image }}
-            style={[styles.image, { width: screenWidth, height }]}
-            resizeMode="cover"
-          />
+          <View key={index} style={styles.cardContainer}>
+            <Image
+              source={{ uri: image }}
+              style={[
+                styles.image,
+                { width: CARD_WIDTH, height, borderRadius: 8 },
+              ]}
+              resizeMode="cover"
+            />
+          </View>
         ))}
       </ScrollView>
 
@@ -186,6 +204,13 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     width: screenWidth,
+  },
+  scrollContent: {
+    paddingLeft: (screenWidth - CARD_WIDTH) / 2,
+    paddingRight: (screenWidth - CARD_WIDTH) / 2,
+  },
+  cardContainer: {
+    marginRight: CARD_SPACING,
   },
   image: {
     backgroundColor: "#f0f0f0",
