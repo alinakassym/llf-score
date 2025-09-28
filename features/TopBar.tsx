@@ -12,6 +12,7 @@ import {
 } from "@/store/general.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { LinearGradient } from "expo-linear-gradient";
+import { router } from "expo-router";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
@@ -22,6 +23,11 @@ export const TopBar: React.FC = () => {
   const dispatch = useAppDispatch();
   const cityId = useAppSelector(selectCityId);
   const leagueId = useAppSelector(selectLeagueId);
+
+  // Функция для открытия страницы профиля
+  const handleProfilePress = () => {
+    router.push("/profile");
+  };
 
   return (
     <LinearGradient
@@ -50,9 +56,17 @@ export const TopBar: React.FC = () => {
         </View>
       </View>
       <View style={styles.right}>
-        <IconButton icon="search" color={c.white} />
-        <IconButton icon="notifications-outline" color={c.white} />
-        <IconButton icon="person-circle-outline" color={c.white} />
+        <IconButton
+          icon="search"
+          color={c.white}
+          onPress={handleProfilePress}
+        />
+        <IconButton icon="notifications" color={c.white} />
+        <IconButton
+          icon="person"
+          color={c.white}
+          onPress={handleProfilePress}
+        />
       </View>
     </LinearGradient>
   );

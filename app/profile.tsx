@@ -2,6 +2,8 @@
 import ProfileHeader from "@/components/ProfileHeader";
 import { Screen } from "@/components/Screen";
 import { Colors } from "@/constants/theme";
+import PlayerPosition from "@/features/PlayerPosition";
+import PlayerTabs from "@/features/PlayerTabs";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
@@ -31,7 +33,14 @@ export default function ProfileScreen() {
         >
           <ProfileHeader title={"Ермек А."} year={dateOfBirth} logo={logo} />
         </LinearGradient>
-        <ScrollView className="flex-1"></ScrollView>
+        <ScrollView className="flex-1">
+          <PlayerPosition
+            title={"Кайрат (Алматы)"}
+            subtitle={"Конец контракта: 31.12.2025"}
+            logo={logo}
+          />
+          <PlayerTabs />
+        </ScrollView>
       </Container>
     </Screen>
   );

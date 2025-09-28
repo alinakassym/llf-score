@@ -7,6 +7,8 @@ type Palette = {
   lightOpacity: string;
   darkOpacity: string;
   white: string;
+  green: string;
+  dark: string;
   background: string;
   surface: string;
   text: string;
@@ -29,6 +31,8 @@ const baseColors = {
   lightOpacity: "rgba(255, 255, 255, 0.4)",
   darkOpacity: "rgba(0, 0, 0, 0.2)",
   white: "#FFFFFF",
+  green: "#2AD724",
+  dark: "#271B38",
 };
 
 export const Colors: Record<ThemeName, Palette> = {
@@ -37,7 +41,7 @@ export const Colors: Record<ThemeName, Palette> = {
     background: "#F9FAFE",
     surface: "#EAECFA",
     text: "#111111",
-    textMuted: "#6B7280",
+    textMuted: "#666666",
     card: "#F8F9FB",
     border: "#EDF2F8",
     muted: "#6B7280",
@@ -53,7 +57,7 @@ export const Colors: Record<ThemeName, Palette> = {
     background: "rgba(39, 27, 56, 1)",
     surface: "#1D1527",
     text: "#FFFFFF",
-    textMuted: "rgba(255,255,255,0.75)",
+    textMuted: "#C1C1C1",
     card: "rgba(255,255,255,0.06)",
     border: "#1D1527",
     muted: "#9CA3AF",

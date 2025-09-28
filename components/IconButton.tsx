@@ -1,7 +1,6 @@
-import { Colors } from "@/constants/theme";
-import { useThemeMode } from "@/hooks/use-theme-mode";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { TouchableOpacity } from "react-native";
+import { FlatIcon } from "./icons";
 
 type Props = {
   icon: keyof typeof Ionicons.glyphMap;
@@ -16,9 +15,6 @@ export default function IconButton({
   color = "#FFFFFF",
   onPress,
 }: Props) {
-  const scheme = useThemeMode();
-  const c = Colors[scheme];
-
   const getSizeParams = () => {
     switch (size) {
       case "sm":
@@ -55,11 +51,15 @@ export default function IconButton({
         borderRadius: 50,
       }}
     >
-      <Ionicons
-        name={icon}
-        size={icon === "person-circle-outline" ? 22 : 20}
-        color={color}
-      />
+      {["person", "notification"].includes(icon) ? (
+        <FlatIcon name={icon} size={22} color={color} />
+      ) : (
+        <Ionicons
+          name={icon}
+          size={icon === "person-circle-outline" ? 22 : 20}
+          color={color}
+        />
+      )}
     </TouchableOpacity>
   );
 }
