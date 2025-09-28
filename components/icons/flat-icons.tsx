@@ -22,7 +22,7 @@ type IconDef = {
 };
 
 const icons: Record<string, IconDef> = {
-  notification: {
+  notifications: {
     viewBox: "0 0 15 17",
     paths: ({ color }) => (
       <>

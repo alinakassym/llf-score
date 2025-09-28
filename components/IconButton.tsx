@@ -51,7 +51,7 @@ export default function IconButton({
         borderRadius: 50,
       }}
     >
-      {["person", "notification"].includes(icon) ? (
+      {["person", "notifications"].includes(icon) ? (
         <FlatIcon name={icon} size={22} color={color} />
       ) : (
         <Ionicons
