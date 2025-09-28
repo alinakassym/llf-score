@@ -1,6 +1,9 @@
 // features/PlayerTabs.tsx
+import { Card } from "@/components/Card";
 import Tabs from "@/components/Tabs";
 import { Colors } from "@/constants/theme";
+import { LeagueTable } from "@/features/league/LeagueTable";
+import { leagueMock } from "@/features/league/mocks";
 import MatchList from "@/features/match/MatchList";
 import { matchRows } from "@/features/match/matchRows";
 import { useThemeMode } from "@/hooks/use-theme-mode";
@@ -34,7 +37,13 @@ export default function PlayerTabs() {
 
       {/* Контент вкладок */}
       <ScrollView style={{ paddingBottom: 80 }}>
-        {active === "games" && <Text>Table</Text>}
+        {active === "games" && (
+          <View style={{ padding: 4, width: "100%", alignSelf: "center" }}>
+            <Card>
+              <LeagueTable rows={leagueMock} />
+            </Card>
+          </View>
+        )}
         {active === "career" && <MatchList items={matchRows as any} />}
         {active === "transfers" && (
           <Text

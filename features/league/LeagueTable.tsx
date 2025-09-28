@@ -75,9 +75,13 @@ export function LeagueTable({ rows }: { rows: LeagueRow[] }) {
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
           {r.crest ? (
             <Image
-              source={{ uri: r.crest }}
-              style={{ width: 24, height: 24, borderRadius: 4 }}
-              resizeMode="contain"
+              source={r.crest}
+              style={{
+                width: 24,
+                height: 24,
+                borderRadius: 4,
+                backgroundColor: c.muted,
+              }}
             />
           ) : (
             <View

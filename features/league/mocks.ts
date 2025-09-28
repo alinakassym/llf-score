@@ -11,6 +11,7 @@ export const leagueMock: LeagueRow[] = [
     goalsFor: 172,
     goalsAgainst: 6,
     points: 46,
+    crest: require("@/assets/images/adaptive-icon.png"),
   },
   {
     id: "akt",
@@ -20,6 +21,7 @@ export const leagueMock: LeagueRow[] = [
     goalsFor: 125,
     goalsAgainst: 4,
     points: 43,
+    crest: require("@/assets/images/adaptive-icon.png"),
   },
   {
     id: "tom",
@@ -30,6 +32,7 @@ export const leagueMock: LeagueRow[] = [
     goalsFor: 77,
     goalsAgainst: 17,
     points: 37,
+    crest: require("@/assets/images/adaptive-icon.png"),
   },
   {
     id: "kai",
@@ -39,6 +42,7 @@ export const leagueMock: LeagueRow[] = [
     goalsFor: 50,
     goalsAgainst: 35,
     points: 33,
+    crest: require("@/assets/images/adaptive-icon.png"),
   },
   {
     id: "eli",
@@ -50,5 +54,6 @@ export const leagueMock: LeagueRow[] = [
     goalsFor: 40,
     goalsAgainst: 29,
     points: 29,
+    crest: require("@/assets/images/adaptive-icon.png"),
   },
 ];
