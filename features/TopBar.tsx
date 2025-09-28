@@ -52,7 +52,7 @@ export const TopBar: React.FC = () => {
       <View style={styles.right}>
         <IconButton icon="search" color={c.white} />
         <IconButton icon="notifications-outline" color={c.white} />
-        <IconButton icon="person" color={c.white} />
+        <IconButton icon="person-circle-outline" color={c.white} />
       </View>
     </LinearGradient>
   );

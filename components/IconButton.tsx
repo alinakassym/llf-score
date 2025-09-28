@@ -55,7 +55,11 @@ export default function IconButton({
         borderRadius: 50,
       }}
     >
-      <Ionicons name={icon} size={18} color={color} />
+      <Ionicons
+        name={icon}
+        size={icon === "person-circle-outline" ? 22 : 20}
+        color={color}
+      />
     </TouchableOpacity>
   );
 }
