@@ -1,5 +1,6 @@
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { FC, useEffect, useState } from "react";
 import {
   FlatList,
@@ -18,7 +19,6 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { VuesaxIcon } from "./icons";
 
 export type Option = {
   id: string;
@@ -102,7 +102,7 @@ export const Select: FC<Props> = ({
         <Text numberOfLines={1} style={[styles.buttonText, { color: color }]}>
           {selected?.label ?? "Выбрать"}
         </Text>
-        <VuesaxIcon name="chevron" size={16} color={color} />
+        <Ionicons name="chevron-down" size={14} color={color} />
       </TouchableOpacity>
 
       <Modal

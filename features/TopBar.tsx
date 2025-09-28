@@ -1,4 +1,5 @@
 // TopBar.tsx
+import IconButton from "@/components/IconButton";
 import { Colors } from "@/constants/theme";
 import { CityPicker } from "@/features/CityPicker";
 import { LeaguePicker } from "@/features/LeaguePicker";
@@ -48,7 +49,11 @@ export const TopBar: React.FC = () => {
           />
         </View>
       </View>
-      <View style={styles.right} />
+      <View style={styles.right}>
+        <IconButton icon="search" color={c.white} />
+        <IconButton icon="notifications-outline" color={c.white} />
+        <IconButton icon="person" color={c.white} />
+      </View>
     </LinearGradient>
   );
 };
@@ -62,7 +67,12 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   left: { flexDirection: "row", alignItems: "center", gap: 8 },
-  right: { flexDirection: "row", alignItems: "center" },
+  right: {
+    paddingHorizontal: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
   btn: {
     paddingHorizontal: 4,
     borderRadius: 8,
