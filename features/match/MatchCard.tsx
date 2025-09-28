@@ -24,7 +24,7 @@ export default function MatchCard({ match, onPress }: Props) {
       style={{
         padding: 16,
         borderRadius: 8,
-        backgroundColor: c.bgOpacity,
+        backgroundColor: c.background,
       }}
     >
       {/* Tournament and time header */}

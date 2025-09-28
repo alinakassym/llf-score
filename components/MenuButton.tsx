@@ -23,7 +23,7 @@ export default function MenuButton({ icon, label, onPress }: Props) {
         justifyContent: "center",
         flex: 1,
         borderRadius: 8,
-        backgroundColor: c.bgOpacity,
+        backgroundColor: c.background,
       }}
     >
       <View

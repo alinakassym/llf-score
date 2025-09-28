@@ -40,7 +40,7 @@ export default function NewsCard({
       />
 
       <View style={{ flex: 1 }}>
-        <Text style={{ fontSize: 14, color: c.text }}>{title}</Text>
+        <Text style={{ fontSize: 12, color: c.text }}>{title}</Text>
       </View>
 
       {onPress && (

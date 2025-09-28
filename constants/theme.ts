@@ -34,7 +34,7 @@ const baseColors = {
 export const Colors: Record<ThemeName, Palette> = {
   light: {
     ...baseColors,
-    background: "rgba(255, 255, 255, 1)",
+    background: "#F9FAFE",
     surface: "#EAECFA",
     text: "#111111",
     textMuted: "#6B7280",
