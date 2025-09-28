@@ -1,4 +1,5 @@
 // features/league/LeagueTable.tsx
+import { Badge } from "@/components/Badge";
 import { Column, Table } from "@/components/Table";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
@@ -7,9 +8,6 @@ import { Image, Text, View } from "react-native";
 import { LeagueRow } from "./types";
 
 function PosChip({ n, highlight }: { n: number; highlight?: boolean }) {
-  const scheme = useThemeMode();
-  const c = Colors[scheme];
-
   return (
     <View
       style={{
@@ -30,23 +28,11 @@ function ScorePill({ gf, ga }: { gf: number; ga: number }) {
   const win = gf > ga;
   const lose = gf < ga;
 
-  const bg = win ? "#16A34A" : lose ? "#DC2626" : "#6B7280";
+  const type = win ? "success" : lose ? "error" : "warning";
   return (
-    <View
-      style={{
-        height: 22,
-        minWidth: 40,
-        paddingHorizontal: 6,
-        borderRadius: 8,
-        backgroundColor: bg,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Text style={{ color: "#fff", fontWeight: "700", fontSize: 11 }}>
-        {gf}:{ga}
-      </Text>
-    </View>
+    <Badge type={type}>
+      {gf}:{ga}
+    </Badge>
   );
 }
 
@@ -55,7 +41,7 @@ function PosDiff({ diff = 0 }: { diff?: number }) {
   const c = Colors[scheme];
   if (!diff) return null;
   const up = diff > 0;
-  const color = up ? "#16A34A" : "#DC2626";
+  const color = up ? c.green : c.red;
   return (
     <Text style={{ color, fontSize: 11, marginLeft: 4 }}>
       {up ? "▲" : "▼"} {Math.abs(diff)}

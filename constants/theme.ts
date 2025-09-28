@@ -8,6 +8,8 @@ type Palette = {
   darkOpacity: string;
   white: string;
   green: string;
+  red: string;
+  orange: string;
   dark: string;
   background: string;
   surface: string;
@@ -31,7 +33,9 @@ const baseColors = {
   lightOpacity: "rgba(255, 255, 255, 0.4)",
   darkOpacity: "rgba(0, 0, 0, 0.2)",
   white: "#FFFFFF",
-  green: "#2AD724",
+  green: "#2A7948",
+  red: "#DC2626",
+  orange: "#D76C1F",
   dark: "#271B38",
 };
 
@@ -61,7 +65,7 @@ export const Colors: Record<ThemeName, Palette> = {
     card: "rgba(255,255,255,0.06)",
     border: "#1D1527",
     muted: "#9CA3AF",
-    error: "#F87171",
+    error: "#DC2626",
     success: "#34D399",
     warning: "#FBBF24",
     button: "rgba(255,255,255,0.08)",
