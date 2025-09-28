@@ -6,11 +6,14 @@ import { leagueMock } from "@/features/league/mocks";
 import MatchCarousel from "@/features/match/MatchCarousel";
 import { mockMatches } from "@/features/match/mocks";
 import MenuGrid from "@/features/MenuGrid";
+import { mockNews } from "@/features/news/mocks";
+import NewsList from "@/features/news/NewsList";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 export default function TabOneScreen() {
   const scheme = useThemeMode();
+  const newsItems = mockNews;
   const carouselImages = [
     "https://picsum.photos/400/200?random=1",
     "https://picsum.photos/400/200?random=2",
@@ -29,6 +32,11 @@ export default function TabOneScreen() {
       <View style={{ width: "94%", alignSelf: "center" }}>
         <Card>
           <LeagueTable rows={leagueMock} />
+        </Card>
+      </View>
+      <View style={{ width: "94%", alignSelf: "center" }}>
+        <Card>
+          <NewsList items={newsItems} />
         </Card>
       </View>
     </ScrollView>
