@@ -7,7 +7,9 @@ import React from "react";
 import { Image, Text, View } from "react-native";
 import { LeagueRow } from "./types";
 
-function PosChip({ n, highlight }: { n: number; highlight?: boolean }) {
+function PosChip({ n }: { n: number }) {
+  const scheme = useThemeMode();
+  const c = Colors[scheme];
   return (
     <View
       style={{
@@ -17,7 +19,9 @@ function PosChip({ n, highlight }: { n: number; highlight?: boolean }) {
         justifyContent: "center",
       }}
     >
-      <Text style={{ fontWeight: "600", fontSize: 11 }}>{n}</Text>
+      <Text style={{ fontWeight: "600", fontSize: 11, color: c.text }}>
+        {n}
+      </Text>
     </View>
   );
 }
@@ -60,7 +64,7 @@ export function LeagueTable({ rows }: { rows: LeagueRow[] }) {
       title: "#",
       width: 40,
       align: "center",
-      render: (r) => <PosChip n={r.pos} highlight={r.pos === 1} />,
+      render: (r) => <PosChip n={r.pos} />,
     },
     {
       key: "team",

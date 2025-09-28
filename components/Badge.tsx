@@ -14,20 +14,10 @@ export function Badge({ type, children }: Props) {
 
   // Используем цвета из темы в зависимости от типа
   const backgroundColor =
-    type === "success"
-      ? scheme === "light"
-        ? "#EDFCF2"
-        : "rgba(52, 211, 153, 0.1)"
-      : type === "error"
-        ? scheme === "light"
-          ? "#FEF1F1"
-          : "rgba(220, 38, 38, 0.1)"
-        : scheme === "light"
-          ? "#FFF3EA"
-          : "rgba(251, 191, 36, 0.1)";
+    type === "success" ? c.green : type === "error" ? c.red : c.orange;
 
   const textColor =
-    type === "success" ? c.success : type === "error" ? c.error : c.warning;
+    type === "success" ? c.green : type === "error" ? c.red : c.orange;
 
   return (
     <View
@@ -41,7 +31,7 @@ export function Badge({ type, children }: Props) {
         justifyContent: "center",
       }}
     >
-      <Text style={{ color: textColor, fontSize: 11 }}>{children}</Text>
+      <Text style={{ color: c.white, fontSize: 11 }}>{children}</Text>
     </View>
   );
 }
