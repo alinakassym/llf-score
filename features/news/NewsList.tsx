@@ -1,3 +1,4 @@
+import { Divider } from "@/components/Divider";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import React from "react";
@@ -25,15 +26,7 @@ export default function NewsList({
             onPress={onPressItem}
             onToggleBookmark={onToggleBookmark}
           />
-          {index + 1 < items.length && (
-            <View
-              style={{
-                width: "100%",
-                borderBottomWidth: 1,
-                borderBottomColor: c.border,
-              }}
-            />
-          )}
+          {index + 1 < items.length && <Divider />}
         </React.Fragment>
       ))}
     </View>

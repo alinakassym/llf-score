@@ -31,7 +31,7 @@ export default function NewsCard({
         alignItems: "center",
         gap: 12,
         padding: 12,
-        backgroundColor: c.bgOpacity,
+        backgroundColor: c.background,
       }}
     >
       <Image

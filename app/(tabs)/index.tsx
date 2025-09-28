@@ -3,6 +3,7 @@ import { Card } from "@/components/Card";
 import { Carousel } from "@/features/Carousel";
 import { LeagueTable } from "@/features/league/LeagueTable";
 import { leagueMock } from "@/features/league/mocks";
+import LinksColumn from "@/features/LinksColumn";
 import MatchCarousel from "@/features/match/MatchCarousel";
 import { mockMatches } from "@/features/match/mocks";
 import MenuGrid from "@/features/MenuGrid";
@@ -37,6 +38,12 @@ export default function TabOneScreen() {
       <View style={{ width: "94%", alignSelf: "center" }}>
         <Card>
           <NewsList items={newsItems} />
+        </Card>
+      </View>
+
+      <View style={{ width: "94%", alignSelf: "center" }}>
+        <Card>
+          <LinksColumn />
         </Card>
       </View>
     </ScrollView>
