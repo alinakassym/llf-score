@@ -13,6 +13,11 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 import { VuesaxIcon } from "./icons";
 
 export type Option = {
@@ -41,6 +46,10 @@ export const Select: FC<Props> = ({
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<Option>();
 
+  // Анимированные значения для высоты выпадающего списка и прозрачности
+  const dropdownHeight = useSharedValue(0);
+  const opacity = useSharedValue(0);
+
   useEffect(() => {
     if (value && options.length) {
       const findedOption: Option | undefined = options.find(
@@ -49,6 +58,36 @@ export const Select: FC<Props> = ({
       setSelected(findedOption);
     }
   }, [value, options]);
+
+  // Анимация открытия/закрытия выпадающего списка
+  useEffect(() => {
+    if (open) {
+      // Открытие: плавное увеличение высоты без отскока
+      dropdownHeight.value = withTiming(1, {
+        duration: 200, // Быстрая анимация 150мс
+      });
+      // Появление фона с прозрачностью
+      opacity.value = withTiming(1, { duration: 200 });
+    } else {
+      // Закрытие: быстрое уменьшение высоты
+      dropdownHeight.value = withTiming(0, {
+        duration: 150, // Еще быстрее при закрытии
+      });
+      // Исчезание фона
+      opacity.value = withTiming(0, { duration: 150 });
+    }
+  }, [open]);
+
+  // Стили для анимации выпадающего списка
+  const animatedDropdownStyle = useAnimatedStyle(() => ({
+    transform: [{ scaleY: dropdownHeight.value }], // Масштабирование по вертикали (0 = свернуто, 1 = развернуто)
+    opacity: opacity.value, // Прозрачность (0 = невидимо, 1 = видимо)
+  }));
+
+  // Стили для анимации затемненного фона
+  const animatedBackdropStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value, // Плавное появление/исчезание фона
+  }));
 
   return (
     <>
@@ -69,21 +108,23 @@ export const Select: FC<Props> = ({
       <Modal
         transparent
         visible={open}
-        animationType="fade"
+        animationType="none"
         onRequestClose={() => setOpen(false)}
       >
         <TouchableWithoutFeedback onPress={() => setOpen(false)}>
-          <View style={styles.backdrop} />
+          <Animated.View style={[styles.backdrop, animatedBackdropStyle]} />
         </TouchableWithoutFeedback>
 
-        <View
+        <Animated.View
           style={[
             styles.sheet,
             {
               backgroundColor: c.background,
               borderColor: c.border,
               top,
+              transformOrigin: "top",
             },
+            animatedDropdownStyle,
           ]}
         >
           <FlatList
@@ -124,7 +165,7 @@ export const Select: FC<Props> = ({
               <View style={[styles.sep, { backgroundColor: c.border }]} />
             )}
           />
-        </View>
+        </Animated.View>
       </Modal>
     </>
   );
