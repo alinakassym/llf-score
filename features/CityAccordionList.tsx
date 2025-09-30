@@ -9,21 +9,60 @@ import {
   selectCitiesStatus,
 } from "@/store/cities.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import React, { FC, useEffect } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import {
+  fetchLeaguesByCityId,
+  selectLeagues,
+  selectLeaguesStatus,
+} from "@/store/leagues.slice";
+import React, { FC, useCallback, useEffect, useState } from "react";
+import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
 
 export const CityAccordionList: FC = () => {
   const scheme = useThemeMode();
   const c = Colors[scheme];
   const dispatch = useAppDispatch();
   const cities = useAppSelector(selectCities);
-  const status = useAppSelector(selectCitiesStatus);
+  const citiesStatus = useAppSelector(selectCitiesStatus);
+  const leagues = useAppSelector(selectLeagues);
+  const leaguesStatus = useAppSelector(selectLeaguesStatus);
+
+  // Состояние для отслеживания загруженных лиг по городам
+  const [loadedCities, setLoadedCities] = useState<Set<string>>(new Set());
+  const [openCities, setOpenCities] = useState<Set<string>>(new Set());
 
   useEffect(() => {
-    if (status === "idle") dispatch(fetchCities());
-  }, [dispatch, status]);
+    if (citiesStatus === "idle") dispatch(fetchCities());
+  }, [dispatch, citiesStatus]);
 
-  if (status === "loading") {
+  // Функция для загрузки лиг при открытии аккордиона
+  const handleAccordionToggle = useCallback(
+    (cityId: string, isOpen: boolean) => {
+      if (isOpen && !loadedCities.has(cityId)) {
+        dispatch(fetchLeaguesByCityId(cityId));
+        setLoadedCities((prev) => new Set([...prev, cityId]));
+      }
+
+      setOpenCities((prev) => {
+        const newSet = new Set(prev);
+        if (isOpen) {
+          newSet.add(cityId);
+        } else {
+          newSet.delete(cityId);
+        }
+        return newSet;
+      });
+    },
+    [dispatch, loadedCities]
+  );
+
+  // Загрузка лиг для первого города (открыт по умолчанию)
+  useEffect(() => {
+    if (cities.length > 0 && !loadedCities.has(cities[0].id)) {
+      handleAccordionToggle(cities[0].id, true);
+    }
+  }, [cities, loadedCities, handleAccordionToggle]);
+
+  if (citiesStatus === "loading") {
     return (
       <View style={styles.centerContainer}>
         <Text style={[styles.loadingText, { color: c.textMuted }]}>
@@ -33,7 +72,7 @@ export const CityAccordionList: FC = () => {
     );
   }
 
-  if (status === "failed") {
+  if (citiesStatus === "failed") {
     return (
       <View style={styles.centerContainer}>
         <Text style={[styles.errorText, { color: c.error }]}>
@@ -42,6 +81,31 @@ export const CityAccordionList: FC = () => {
       </View>
     );
   }
+
+  // Компонент для отображения контента аккордиона
+  const renderAccordionContent = (cityId: string) => {
+    const isOpen = openCities.has(cityId);
+    const isLoading = isOpen && leaguesStatus === "loading" && loadedCities.has(cityId);
+
+    if (isLoading) {
+      return (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="small" color={c.primary} />
+          <Text style={[styles.loadingText, { color: c.textMuted }]}>
+            Загрузка лиг...
+          </Text>
+        </View>
+      );
+    }
+
+    // Пока используем моковые данные для таблицы
+    // В будущем здесь можно будет получать данные таблицы лиги по leagueId
+    return (
+      <View style={styles.tableContainer}>
+        <LeagueTable rows={leagueMock} />
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -65,10 +129,9 @@ export const CityAccordionList: FC = () => {
               </View>
             }
             defaultOpen={index === 0}
+            onToggle={(isOpen) => handleAccordionToggle(city.id, isOpen)}
           >
-            <View style={styles.tableContainer}>
-              <LeagueTable rows={leagueMock} />
-            </View>
+            {renderAccordionContent(city.id)}
           </Accordion>
         </View>
       ))}
@@ -115,5 +178,12 @@ const styles = StyleSheet.create({
   },
   tableContainer: {
     paddingBottom: 16,
+  },
+  loadingContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    paddingVertical: 24,
   },
 });
