@@ -1,6 +1,6 @@
 import { Accordion } from "@/components/Accordion";
 import { Colors } from "@/constants/theme";
-import { LeagueAccordionList } from "@/features/LeagueAccordionList";
+import { LeagueList } from "@/features/LeagueList";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import {
   fetchCities,
@@ -10,10 +10,10 @@ import {
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   fetchLeaguesByCityId,
-  selectLeaguesLoadingForCity,
+  League,
 } from "@/store/leagues.slice";
 import React, { FC, useCallback, useEffect, useState } from "react";
-import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 
 export const CityAccordionList: FC = () => {
   const scheme = useThemeMode();
@@ -26,9 +26,11 @@ export const CityAccordionList: FC = () => {
   const [loadedCities, setLoadedCities] = useState<Set<string>>(new Set());
   const [openCities, setOpenCities] = useState<Set<string>>(new Set());
 
-  useEffect(() => {
-    if (citiesStatus === "idle") dispatch(fetchCities());
-  }, [dispatch, citiesStatus]);
+  // Обработчик нажатия на лигу
+  const handleLeaguePress = useCallback((league: League) => {
+    console.log("Выбрана лига:", league.name);
+    // Здесь можно добавить навигацию к таблице лиги или другие действия
+  }, []);
 
   // Функция для загрузки лиг при открытии аккордиона
   const handleAccordionToggle = useCallback(
@@ -50,6 +52,10 @@ export const CityAccordionList: FC = () => {
     },
     [dispatch, loadedCities]
   );
+
+  useEffect(() => {
+    if (citiesStatus === "idle") dispatch(fetchCities());
+  }, [dispatch, citiesStatus]);
 
   // Загрузка лиг для первого города (открыт по умолчанию)
   useEffect(() => {
@@ -81,10 +87,9 @@ export const CityAccordionList: FC = () => {
   // Компонент для отображения контента аккордиона
   const renderAccordionContent = (cityId: string) => {
     // Показываем список лиг для данного города
-    // LeagueAccordionList теперь сам обрабатывает состояния загрузки
     return (
       <View style={styles.leagueContainer}>
-        <LeagueAccordionList cityId={cityId} />
+        <LeagueList cityId={cityId} onLeaguePress={handleLeaguePress} />
       </View>
     );
   };
