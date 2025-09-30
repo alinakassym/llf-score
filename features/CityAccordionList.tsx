@@ -75,11 +75,15 @@ export const CityAccordionList: FC = () => {
   }
 
   // Компонент для отображения контента аккордиона
-  const renderAccordionContent = (cityId: string) => {
+  const renderAccordionContent = (cityId: string, cityName: string) => {
     // Показываем список лиг для данного города
     return (
       <View style={styles.leagueContainer}>
-        <LeagueList cityId={cityId} onLeaguePress={handleLeaguePress} />
+        <LeagueList
+          cityId={cityId}
+          cityName={cityName}
+          onLeaguePress={handleLeaguePress}
+        />
       </View>
     );
   };
@@ -108,7 +112,7 @@ export const CityAccordionList: FC = () => {
             defaultOpen={false}
             onToggle={(isOpen) => handleAccordionToggle(city.id, isOpen)}
           >
-            {renderAccordionContent(city.id)}
+            {renderAccordionContent(city.id, city.name)}
           </Accordion>
         </View>
       ))}

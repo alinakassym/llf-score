@@ -20,10 +20,11 @@ import {
 
 type Props = {
   cityId: string;
+  cityName: string;
   onLeaguePress?: (league: League) => void;
 };
 
-export const LeagueList: FC<Props> = ({ cityId, onLeaguePress }) => {
+export const LeagueList: FC<Props> = ({ cityId, cityName, onLeaguePress }) => {
   const scheme = useThemeMode();
   const c = Colors[scheme];
   const cityLeagues = useAppSelector(selectLeaguesByCity(cityId));
@@ -102,7 +103,7 @@ export const LeagueList: FC<Props> = ({ cityId, onLeaguePress }) => {
                 {league.name}
               </Text>
               <Text style={[styles.leagueGroup, { color: c.textMuted }]}>
-                {league.leagueGroupName}
+                {cityName}
               </Text>
             </View>
           </View>
