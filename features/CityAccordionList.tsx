@@ -94,8 +94,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   accordionContainer: {
-    marginHorizontal: 16,
-    marginVertical: 8,
+    marginVertical: 4,
     borderRadius: 12,
     borderWidth: 1,
     overflow: "hidden",
@@ -111,7 +110,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   cityName: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "600",
   },
   tableContainer: {

@@ -13,8 +13,10 @@ export default function TabLeaguesScreen() {
 
 const styles = StyleSheet.create({
   scrollViewContent: {
+    width: "94%",
     paddingVertical: 8,
     flexGrow: 1,
     gap: 8,
+    alignSelf: "center",
   },
 });
