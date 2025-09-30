@@ -1,32 +1,20 @@
-import { Screen } from "@/components/Screen";
-import { Colors } from "@/constants/theme";
+import { CityAccordionList } from "@/features/CityAccordionList";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { StyleSheet, Text } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
 export default function TabLeaguesScreen() {
   const scheme = useThemeMode();
   return (
-    <Screen style={styles.container}>
-      <Text style={[styles.title, { color: Colors[scheme].text }]}>
-        Leagues
-      </Text>
-    </Screen>
+    <ScrollView contentContainerStyle={[styles.scrollViewContent]}>
+      <CityAccordionList />
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
+  scrollViewContent: {
+    paddingVertical: 8,
+    flexGrow: 1,
+    gap: 8,
   },
 });
