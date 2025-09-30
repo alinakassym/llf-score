@@ -20,22 +20,26 @@ export default function IconButton({
       case "sm":
         return {
           height: 32,
-          width: 32,
+          maxWidth: 32,
+          minWidth: 32,
         };
       case "md":
         return {
           height: 32,
-          width: 32,
+          maxWidth: 32,
+          minWidth: 32,
         };
       case "lg":
         return {
           height: 32,
-          width: 32,
+          maxWidth: 32,
+          minWidth: 32,
         };
       default:
         return {
           height: 32,
-          width: 32,
+          maxWidth: 32,
+          minWidth: 32,
         };
     }
   };
@@ -52,7 +56,7 @@ export default function IconButton({
       }}
     >
       {["person", "notifications"].includes(icon) ? (
-        <FlatIcon name={icon} size={22} color={color} />
+        <FlatIcon name={icon} size={20} color={color} />
       ) : (
         <Ionicons
           name={icon}

@@ -38,7 +38,9 @@ export default function ProfileHeader({ title, year, logo, onClose }: Props) {
         gap: 12,
         paddingTop: Platform.OS === "ios" ? 16 : 52,
         paddingHorizontal: 16,
-        paddingBottom: 16,
+        paddingBottom: 8,
+
+        // backgroundColor: c.bgOpacity,
       }}
     >
       <View

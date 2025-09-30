@@ -39,7 +39,7 @@ export default function Tabs<K extends string = string>({
     <View
       style={[
         {
-          paddingHorizontal: 2,
+          paddingHorizontal: 4,
           flexDirection: "row",
           borderBottomWidth: variant === "underline" ? 1 : 0,
           borderColor: c.border,
@@ -50,8 +50,8 @@ export default function Tabs<K extends string = string>({
       {tabs.map((t) => {
         const isActive = t.key === value;
         const base = {
-          paddingVertical: 4,
-          paddingHorizontal: 2,
+          paddingVertical: 8,
+          paddingHorizontal: 4,
           justifyContent: "center" as const,
           flex: stretch ? 1 : undefined,
           opacity: t.disabled ? 0.5 : 1,

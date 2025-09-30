@@ -1,5 +1,4 @@
 // features/PlayerTabs.tsx
-import { Card } from "@/components/Card";
 import Tabs from "@/components/Tabs";
 import { Colors } from "@/constants/theme";
 import { LeagueTable } from "@/features/league/LeagueTable";
@@ -24,13 +23,13 @@ export default function PlayerTabs() {
   const [active, setActive] = useState<TabKey>("games");
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ marginTop: -46, flex: 1 }}>
       {/* Верхняя панель табов */}
       <Tabs
         tabs={TABS}
         value={active}
         onChange={setActive}
-        variant="outline"
+        variant="solid"
         stretch
         size={12}
       />
@@ -38,10 +37,8 @@ export default function PlayerTabs() {
       {/* Контент вкладок */}
       <ScrollView style={{ paddingBottom: 80 }}>
         {active === "games" && (
-          <View style={{ padding: 4, width: "100%", alignSelf: "center" }}>
-            <Card>
-              <LeagueTable rows={leagueMock} />
-            </Card>
+          <View style={{ width: "100%", alignSelf: "center" }}>
+            <LeagueTable rows={leagueMock} />
           </View>
         )}
         {active === "career" && <MatchList items={matchRows as any} />}

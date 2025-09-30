@@ -7,7 +7,7 @@ import PlayerTabs from "@/features/PlayerTabs";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { Platform, ScrollView, View } from "react-native";
+import { Platform, View } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 export default function ProfileScreen() {
@@ -32,15 +32,13 @@ export default function ProfileScreen() {
           end={{ x: 1, y: 1 }}
         >
           <ProfileHeader title={"Ермек А."} year={dateOfBirth} logo={logo} />
-        </LinearGradient>
-        <ScrollView className="flex-1">
           <PlayerPosition
             title={"Кайрат (Алматы)"}
             subtitle={"Конец контракта: 31.12.2025"}
             logo={logo}
           />
-          <PlayerTabs />
-        </ScrollView>
+        </LinearGradient>
+        <PlayerTabs />
       </Container>
     </Screen>
   );

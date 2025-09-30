@@ -8,10 +8,7 @@ import {
   selectCitiesStatus,
 } from "@/store/cities.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import {
-  fetchLeaguesByCityId,
-  League,
-} from "@/store/leagues.slice";
+import { fetchLeaguesByCityId, League } from "@/store/leagues.slice";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
@@ -56,7 +53,6 @@ export const CityAccordionList: FC = () => {
   useEffect(() => {
     if (citiesStatus === "idle") dispatch(fetchCities());
   }, [dispatch, citiesStatus]);
-
 
   if (citiesStatus === "loading") {
     return (

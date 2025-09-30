@@ -53,8 +53,8 @@ export const Colors: Record<ThemeName, Palette> = {
     success: "#16A34A",
     warning: "#D97706",
     button: "#F2F3F5",
-    opacity: "rgba(0, 0, 0, 0.4)",
-    bgOpacity: "rgba(255, 255, 255, 0.6)",
+    opacity: "rgba(0, 0, 0, 0.2)",
+    bgOpacity: "rgba(255, 255, 255, 0.4)",
   },
   dark: {
     ...baseColors,
@@ -69,7 +69,7 @@ export const Colors: Record<ThemeName, Palette> = {
     success: "#34D399",
     warning: "#FBBF24",
     button: "rgba(255,255,255,0.08)",
-    opacity: "rgba(255, 255, 255, 0.4)",
-    bgOpacity: "rgba(39, 27, 56, 0.8)",
+    opacity: "rgba(255, 255, 255, 0.2)",
+    bgOpacity: "rgba(39, 27, 56, 0.4)",
   },
 };

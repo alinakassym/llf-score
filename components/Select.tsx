@@ -179,7 +179,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 8,
   },
-  buttonText: { fontSize: 14 },
+  buttonText: {
+    maxWidth: 72,
+    fontSize: 14,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  },
   buttonIcon: {
     marginRight: 4,
     width: 16,

@@ -16,72 +16,75 @@ export default function PlayerPosition({ title, subtitle, logo }: Props) {
   const c = Colors[scheme];
 
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 12,
-        paddingHorizontal: 16,
-        paddingVertical: 16,
-        backgroundColor: c.surface,
-        borderBottomWidth: 1,
-        borderBottomColor: c.border,
-      }}
-    >
-      <Image
-        source={logo}
+    <View style={{ paddingHorizontal: 8, marginBottom: 46 }}>
+      <View
         style={{
-          width: 42,
-          height: 42,
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 12,
+          paddingHorizontal: 8,
+          paddingVertical: 8,
+          backgroundColor: c.bgOpacity,
           borderRadius: 8,
-          backgroundColor: c.background,
+          // borderTopLeftRadius: 8,
+          // borderTopRightRadius: 8,
         }}
-        resizeMode="cover"
-      />
+      >
+        <Image
+          source={logo}
+          style={{
+            width: 42,
+            height: 42,
+            borderRadius: 8,
+            backgroundColor: c.background,
+          }}
+          resizeMode="cover"
+        />
 
-      <View style={{ flex: 1 }}>
-        <Text
-          style={{
-            color: c.text,
-            fontSize: 14,
-            fontWeight: 700 as any,
-          }}
-          numberOfLines={1}
-        >
-          {title}
-        </Text>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 6,
-            marginTop: 4,
-          }}
-        >
-          <Ionicons name="calendar-outline" size={14} color={c.text} />
+        <View style={{ flex: 1 }}>
+          <Text
+            style={{
+              color: c.text,
+              fontSize: 14,
+              fontWeight: 700 as any,
+            }}
+            numberOfLines={1}
+          >
+            {title}
+          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 6,
+              marginTop: 4,
+            }}
+          >
+            <Ionicons name="calendar-outline" size={14} color={c.text} />
+            <Text
+              style={{
+                color: c.text,
+                opacity: 0.85,
+                fontSize: 12,
+                fontWeight: 600 as any,
+              }}
+            >
+              {subtitle}
+            </Text>
+          </View>
+        </View>
+
+        <View style={{ padding: 4 }}>
           <Text
             style={{
               color: c.text,
               opacity: 0.85,
               fontSize: 12,
-              fontWeight: 600 as any,
             }}
           >
-            {subtitle}
+            Нападающий
           </Text>
         </View>
-      </View>
-
-      <View style={{ padding: 4 }}>
-        <Text
-          style={{
-            color: c.text,
-            opacity: 0.85,
-            fontSize: 12,
-          }}
-        >
-          Нападающий
-        </Text>
       </View>
     </View>
   );

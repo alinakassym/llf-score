@@ -56,12 +56,12 @@ export const TopBar: React.FC = () => {
         </View>
       </View>
       <View style={styles.right}>
+        <IconButton icon="search" color={c.white} />
         <IconButton
-          icon="search"
+          icon="notifications"
           color={c.white}
           onPress={handleProfilePress}
         />
-        <IconButton icon="notifications" color={c.white} />
         <IconButton
           icon="person"
           color={c.white}
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   right: {
     paddingHorizontal: 8,
     flexDirection: "row",
-    alignItems: "center",
+    justifyContent: "center",
     gap: 8,
   },
   btn: {

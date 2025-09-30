@@ -87,7 +87,7 @@ export const LeagueList: FC<Props> = ({ cityId, onLeaguePress }) => {
           style={[
             styles.leagueItem,
             {
-              backgroundColor: c.card,
+              backgroundColor: c.background,
               borderColor: c.border,
             },
             index === cityLeagues.length - 1 && styles.lastItem,
