@@ -1,7 +1,6 @@
 import { Accordion } from "@/components/Accordion";
 import { Colors } from "@/constants/theme";
-import { LeagueTable } from "@/features/league/LeagueTable";
-import { leagueMock } from "@/features/league/mocks";
+import { LeagueAccordionList } from "@/features/LeagueAccordionList";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import {
   fetchCities,
@@ -98,11 +97,10 @@ export const CityAccordionList: FC = () => {
       );
     }
 
-    // Пока используем моковые данные для таблицы
-    // В будущем здесь можно будет получать данные таблицы лиги по leagueId
+    // Показываем список лиг для данного города
     return (
-      <View style={styles.tableContainer}>
-        <LeagueTable rows={leagueMock} />
+      <View style={styles.leagueContainer}>
+        <LeagueAccordionList cityId={cityId} />
       </View>
     );
   };
@@ -176,8 +174,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
   },
-  tableContainer: {
-    paddingBottom: 16,
+  leagueContainer: {
+    paddingBottom: 8,
   },
   loadingContainer: {
     flexDirection: "row",
