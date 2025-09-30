@@ -26,8 +26,6 @@ export default function PlayerPosition({ title, subtitle, logo }: Props) {
           paddingVertical: 8,
           backgroundColor: c.bgOpacity,
           borderRadius: 8,
-          // borderTopLeftRadius: 8,
-          // borderTopRightRadius: 8,
         }}
       >
         <Image

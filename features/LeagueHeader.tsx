@@ -48,8 +48,8 @@ export default function LeagueHeader({
         alignItems: "center",
         gap: 12,
         paddingTop: Platform.OS === "ios" ? 16 : 52,
-        paddingHorizontal: 16,
-        paddingBottom: 16,
+        paddingHorizontal: 8,
+        paddingBottom: 46,
       }}
     >
       <Image

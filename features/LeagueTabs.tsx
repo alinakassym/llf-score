@@ -2,7 +2,6 @@
 import Tabs from "@/components/Tabs";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 
@@ -20,22 +19,16 @@ export default function LeagueTabs() {
   const [active, setActive] = useState<TabKey>("table");
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ marginTop: -46, flex: 1 }}>
       {/* Верхняя панель табов */}
-      <LinearGradient
-        colors={c.gradient}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      >
-        <Tabs
-          tabs={TABS}
-          value={active}
-          onChange={setActive}
-          variant="solid"
-          stretch
-          size={12}
-        />
-      </LinearGradient>
+      <Tabs
+        tabs={TABS}
+        value={active}
+        onChange={setActive}
+        variant="solid"
+        stretch
+        size={12}
+      />
 
       {/* Контент вкладок */}
       <ScrollView style={{ paddingBottom: 80 }}>

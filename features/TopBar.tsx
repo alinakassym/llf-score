@@ -57,11 +57,7 @@ export const TopBar: React.FC = () => {
       </View>
       <View style={styles.right}>
         <IconButton icon="search" color={c.white} />
-        <IconButton
-          icon="notifications"
-          color={c.white}
-          onPress={handleProfilePress}
-        />
+        <IconButton icon="notifications" color={c.white} />
         <IconButton
           icon="person"
           color={c.white}
