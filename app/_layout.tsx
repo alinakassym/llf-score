@@ -28,6 +28,16 @@ export default function RootLayout() {
               gestureEnabled: true,
             }}
           />
+          <Stack.Screen
+            name="league"
+            options={{
+              headerShown: false,
+              presentation:
+                Platform.OS === "android" ? "transparentModal" : "modal",
+              animation: Platform.OS === "android" ? "fade" : "default",
+              gestureEnabled: true,
+            }}
+          />
         </Stack>
       </SafeAreaProvider>
     </Provider>

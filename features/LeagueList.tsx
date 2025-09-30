@@ -4,9 +4,10 @@ import { useAppSelector } from "@/store/hooks";
 import {
   League,
   selectLeaguesByCity,
-  selectLeaguesLoadingForCity,
   selectLeaguesErrorForCity,
+  selectLeaguesLoadingForCity,
 } from "@/store/leagues.slice";
+import { router } from "expo-router";
 import React, { FC } from "react";
 import {
   ActivityIndicator,
@@ -28,6 +29,22 @@ export const LeagueList: FC<Props> = ({ cityId, onLeaguePress }) => {
   const cityLeagues = useAppSelector(selectLeaguesByCity(cityId));
   const isLoading = useAppSelector(selectLeaguesLoadingForCity(cityId));
   const error = useAppSelector(selectLeaguesErrorForCity(cityId));
+
+  // Функция для навигации к странице лиги
+  const handleLeaguePress = (league: League) => {
+    // Вызываем пользовательский обработчик если он есть
+    onLeaguePress?.(league);
+
+    // Навигация к странице лиги
+    router.push({
+      pathname: "/league",
+      params: {
+        leagueId: league.id,
+        leagueName: league.name,
+        cityId: cityId,
+      },
+    });
+  };
 
   if (isLoading) {
     return (
@@ -66,7 +83,7 @@ export const LeagueList: FC<Props> = ({ cityId, onLeaguePress }) => {
         <TouchableOpacity
           key={league.id}
           activeOpacity={0.7}
-          onPress={() => onLeaguePress?.(league)}
+          onPress={() => handleLeaguePress(league)}
           style={[
             styles.leagueItem,
             {

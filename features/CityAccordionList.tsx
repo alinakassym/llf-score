@@ -26,10 +26,10 @@ export const CityAccordionList: FC = () => {
   const [loadedCities, setLoadedCities] = useState<Set<string>>(new Set());
   const [openCities, setOpenCities] = useState<Set<string>>(new Set());
 
-  // Обработчик нажатия на лигу
+  // Обработчик нажатия на лигу (дополнительная логика если нужна)
   const handleLeaguePress = useCallback((league: League) => {
-    console.log("Выбрана лига:", league.name);
-    // Здесь можно добавить навигацию к таблице лиги или другие действия
+    // Здесь можно добавить дополнительную логику при выборе лиги
+    // Например, аналитику, логирование, обновление состояния и т.д.
   }, []);
 
   // Функция для загрузки лиг при открытии аккордиона
@@ -50,7 +50,7 @@ export const CityAccordionList: FC = () => {
         return newSet;
       });
     },
-    [dispatch, loadedCities]
+    [dispatch, loadedCities],
   );
 
   useEffect(() => {
