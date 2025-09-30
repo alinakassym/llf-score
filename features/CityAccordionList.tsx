@@ -10,8 +10,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   fetchLeaguesByCityId,
-  selectLeagues,
-  selectLeaguesStatus,
+  selectLeaguesLoadingForCity,
 } from "@/store/leagues.slice";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
@@ -22,8 +21,6 @@ export const CityAccordionList: FC = () => {
   const dispatch = useAppDispatch();
   const cities = useAppSelector(selectCities);
   const citiesStatus = useAppSelector(selectCitiesStatus);
-  const leagues = useAppSelector(selectLeagues);
-  const leaguesStatus = useAppSelector(selectLeaguesStatus);
 
   // Состояние для отслеживания загруженных лиг по городам
   const [loadedCities, setLoadedCities] = useState<Set<string>>(new Set());
@@ -83,21 +80,8 @@ export const CityAccordionList: FC = () => {
 
   // Компонент для отображения контента аккордиона
   const renderAccordionContent = (cityId: string) => {
-    const isOpen = openCities.has(cityId);
-    const isLoading = isOpen && leaguesStatus === "loading" && loadedCities.has(cityId);
-
-    if (isLoading) {
-      return (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="small" color={c.primary} />
-          <Text style={[styles.loadingText, { color: c.textMuted }]}>
-            Загрузка лиг...
-          </Text>
-        </View>
-      );
-    }
-
     // Показываем список лиг для данного города
+    // LeagueAccordionList теперь сам обрабатывает состояния загрузки
     return (
       <View style={styles.leagueContainer}>
         <LeagueAccordionList cityId={cityId} />

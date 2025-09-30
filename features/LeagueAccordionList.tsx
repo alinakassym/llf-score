@@ -6,8 +6,9 @@ import { useThemeMode } from "@/hooks/use-theme-mode";
 import { useAppSelector } from "@/store/hooks";
 import {
   League,
-  selectLeagues,
-  selectLeaguesStatus,
+  selectLeaguesByCity,
+  selectLeaguesLoadingForCity,
+  selectLeaguesErrorForCity,
 } from "@/store/leagues.slice";
 import React, { FC } from "react";
 import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
@@ -19,13 +20,11 @@ type Props = {
 export const LeagueAccordionList: FC<Props> = ({ cityId }) => {
   const scheme = useThemeMode();
   const c = Colors[scheme];
-  const leagues = useAppSelector(selectLeagues);
-  const leaguesStatus = useAppSelector(selectLeaguesStatus);
+  const cityLeagues = useAppSelector(selectLeaguesByCity(cityId));
+  const isLoading = useAppSelector(selectLeaguesLoadingForCity(cityId));
+  const error = useAppSelector(selectLeaguesErrorForCity(cityId));
 
-  // Фильтруем лиги для конкретного города
-  const cityLeagues = leagues;
-
-  if (leaguesStatus === "loading") {
+  if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="small" color={c.primary} />
@@ -36,7 +35,7 @@ export const LeagueAccordionList: FC<Props> = ({ cityId }) => {
     );
   }
 
-  if (leaguesStatus === "failed") {
+  if (error) {
     return (
       <View style={styles.centerContainer}>
         <Text style={[styles.errorText, { color: c.error }]}>

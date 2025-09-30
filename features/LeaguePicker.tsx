@@ -4,8 +4,8 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   League,
   fetchLeaguesByCityId,
-  selectLeagues,
-  selectLeaguesStatus,
+  selectLeaguesByCity,
+  selectLeaguesLoadingForCity,
 } from "@/store/leagues.slice";
 import React, { FC, useEffect, useState } from "react";
 
@@ -23,16 +23,18 @@ export const LeaguePicker: FC<Props> = ({
   color = "#000",
 }) => {
   const dispatch = useAppDispatch();
-  const leagues: League[] = useAppSelector(selectLeagues);
-  const status = useAppSelector(selectLeaguesStatus);
   const cityId: number | string = useAppSelector(selectCityId) ?? "";
+  const leagues: League[] = useAppSelector(selectLeaguesByCity(String(cityId)));
+  const isLoading = useAppSelector(selectLeaguesLoadingForCity(String(cityId)));
   const [items, setItems] = useState<Option[]>([]);
+  const [hasLoaded, setHasLoaded] = useState(false);
 
   useEffect(() => {
-    if (cityId && status === "idle") {
-      dispatch(fetchLeaguesByCityId(cityId));
+    if (cityId && !hasLoaded && !isLoading && leagues.length === 0) {
+      dispatch(fetchLeaguesByCityId(String(cityId)));
+      setHasLoaded(true);
     }
-  }, [dispatch, cityId, status]);
+  }, [dispatch, cityId, hasLoaded, isLoading, leagues.length]);
 
   useEffect(() => {
     if (leagues.length) {
