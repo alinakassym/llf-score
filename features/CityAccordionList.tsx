@@ -57,12 +57,6 @@ export const CityAccordionList: FC = () => {
     if (citiesStatus === "idle") dispatch(fetchCities());
   }, [dispatch, citiesStatus]);
 
-  // Загрузка лиг для первого города (открыт по умолчанию)
-  useEffect(() => {
-    if (cities.length > 0 && !loadedCities.has(cities[0].id)) {
-      handleAccordionToggle(cities[0].id, true);
-    }
-  }, [cities, loadedCities, handleAccordionToggle]);
 
   if (citiesStatus === "loading") {
     return (
@@ -115,7 +109,7 @@ export const CityAccordionList: FC = () => {
                 </Text>
               </View>
             }
-            defaultOpen={index === 0}
+            defaultOpen={false}
             onToggle={(isOpen) => handleAccordionToggle(city.id, isOpen)}
           >
             {renderAccordionContent(city.id)}
