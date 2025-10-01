@@ -4,6 +4,7 @@ export type TeamRatingRow = {
   teamName: string;
   cityName: string;
   league: string;
+  positionChange: "up" | "down";
   season1: number;
   season2: number;
   season3: number;

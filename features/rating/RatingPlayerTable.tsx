@@ -1,6 +1,7 @@
 // features/rating/RatingPlayerTable.tsx
 import { Column, Table } from "@/components/Table";
 import TableCell from "@/components/TableCell";
+import TableRatingCell from "@/components/TableRatingCell";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import React, { useMemo } from "react";
@@ -45,7 +46,9 @@ export function RatingPlayerTable({ rows }: Props) {
       title: "#",
       width: 28,
       align: "center",
-      render: (r) => <PosCell n={r._pos} />,
+      render: (r) => (
+        <TableRatingCell text={String(r._pos)} position={r.positionChange} />
+      ),
     },
     {
       key: "playerName",
