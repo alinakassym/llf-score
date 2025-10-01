@@ -4,7 +4,6 @@ import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import React, { useMemo } from "react";
 import { Image, Text, View } from "react-native";
-// Приведи путь при необходимости: "./types" или "@/features/rating/types"
 import type { TeamRatingRow } from "./types";
 
 type Props = {
@@ -34,7 +33,6 @@ export function RatingFCTable({ rows }: Props) {
   const scheme = useThemeMode();
   const c = Colors[scheme];
 
-  // Отсортируем и пронумеруем (1..N). При равенстве total — стабильный порядок.
   const ranked = useMemo(() => {
     const sorted = [...rows].sort((a, b) => b.total - a.total);
     return sorted.map((r, idx) => ({ ...r, _pos: idx + 1 }));
@@ -44,7 +42,7 @@ export function RatingFCTable({ rows }: Props) {
     {
       key: "pos",
       title: "#",
-      width: 40,
+      width: 28,
       align: "center",
       render: (r) => <PosCell n={r._pos} />,
     },
@@ -53,7 +51,7 @@ export function RatingFCTable({ rows }: Props) {
       title: "Команда",
       flex: 2,
       align: "left",
-      width: 150,
+      width: 168,
       render: (r) => (
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
           {r.image ? (
@@ -63,7 +61,7 @@ export function RatingFCTable({ rows }: Props) {
                 width: 24,
                 height: 24,
                 borderRadius: 4,
-                backgroundColor: c.muted,
+                backgroundColor: c.surface,
               }}
             />
           ) : (
@@ -89,12 +87,9 @@ export function RatingFCTable({ rows }: Props) {
             >
               {r.teamName}
             </Text>
-            <View style={{ flexDirection: "row", gap: 6, marginTop: 2 }}>
-              <Text style={{ color: c.surface, fontSize: 10 }}>
-                {r.cityName}
-              </Text>
-              <Text style={{ color: c.surface, fontSize: 10 }}>
-                • {r.league}
+            <View style={{ flexDirection: "column", gap: 0, marginTop: 2 }}>
+              <Text style={{ color: c.textMuted, fontSize: 10 }}>
+                {r.cityName} • {r.league}
               </Text>
             </View>
           </View>
@@ -135,8 +130,8 @@ export function RatingFCTable({ rows }: Props) {
     },
     {
       key: "total",
-      title: "Итого",
-      width: 60,
+      title: "Очки",
+      width: 52,
       align: "center",
       accessor: (r) => r.total,
       textStyle: { fontWeight: "800", fontSize: 11, color: c.text },
@@ -151,6 +146,7 @@ export function RatingFCTable({ rows }: Props) {
       headerStyle={{ height: 36 }}
       rowStyle={{ minHeight: 44 }}
       separator
+      horizontalScroll
     />
   );
 }
