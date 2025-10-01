@@ -112,7 +112,9 @@ export const Select: FC<Props> = ({
         onRequestClose={() => setOpen(false)}
       >
         <TouchableWithoutFeedback onPress={() => setOpen(false)}>
-          <Animated.View style={[styles.backdrop, animatedBackdropStyle]} />
+          <Animated.View
+            style={[styles.backdrop, animatedBackdropStyle, { top: top - 49 }]}
+          />
         </TouchableWithoutFeedback>
 
         <Animated.View
@@ -192,7 +194,6 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     position: "absolute",
-    top: 124,
     right: 0,
     bottom: 0,
     left: 0,

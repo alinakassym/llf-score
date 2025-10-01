@@ -35,6 +35,19 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "e2edc847-7457-44fd-b0bf-a879d551e4cd"
+      }
+    },
+    "owner": "alinakassym",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/e2edc847-7457-44fd-b0bf-a879d551e4cd"
     }
   }
 }

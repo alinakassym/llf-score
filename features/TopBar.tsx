@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 
 export const TopBar: React.FC = () => {
   const scheme = useThemeMode();
@@ -40,7 +40,7 @@ export const TopBar: React.FC = () => {
         <View style={[styles.btn, { backgroundColor: c.darkOpacity }]}>
           <CityPicker
             color={c.white}
-            top={175}
+            top={Platform.OS === "android" ? 143 : 175}
             value={cityId}
             onChange={(id) => dispatch(setCityId(id))}
           />
@@ -49,7 +49,7 @@ export const TopBar: React.FC = () => {
         <View style={[styles.btn, { backgroundColor: c.darkOpacity }]}>
           <LeaguePicker
             color={c.white}
-            top={175}
+            top={Platform.OS === "android" ? 143 : 175}
             value={leagueId}
             onChange={(id) => dispatch(setLeagueId(id))}
           />
