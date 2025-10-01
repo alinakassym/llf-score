@@ -1,9 +1,10 @@
 // features/rating/RatingFCTable.tsx
 import { Column, Table } from "@/components/Table";
+import TableCell from "@/components/TableCell";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import React, { useMemo } from "react";
-import { Image, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import type { TeamRatingRow } from "./types";
 
 type Props = {
@@ -53,47 +54,11 @@ export function RatingFCTable({ rows }: Props) {
       align: "left",
       width: 168,
       render: (r) => (
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-          {r.image ? (
-            <Image
-              source={r.image}
-              style={{
-                width: 24,
-                height: 24,
-                borderRadius: 4,
-                backgroundColor: c.surface,
-              }}
-            />
-          ) : (
-            <View
-              style={{
-                width: 24,
-                height: 24,
-                borderRadius: 4,
-                backgroundColor: c.card,
-                borderWidth: 1,
-                borderColor: c.border,
-              }}
-            />
-          )}
-          <View style={{ flexShrink: 1 }}>
-            <Text
-              style={{
-                color: c.text,
-                fontSize: 11,
-                fontWeight: "700",
-                flexShrink: 1,
-              }}
-            >
-              {r.teamName}
-            </Text>
-            <View style={{ flexDirection: "column", gap: 0, marginTop: 2 }}>
-              <Text style={{ color: c.textMuted, fontSize: 10 }}>
-                {r.cityName} • {r.league}
-              </Text>
-            </View>
-          </View>
-        </View>
+        <TableCell
+          text={r.teamName}
+          image={r.image}
+          subtext={`${r.cityName} • ${r.league}`}
+        />
       ),
     },
     {

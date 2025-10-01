@@ -1,10 +1,9 @@
-// features/transfers/PlayerCell.tsx
+// components/TableCell.tsx
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { Image, ImageSourcePropType, Text, View } from "react-native";
 
 export type PlayerCellProps = {
-  index: number;
   text: string;
   subtext?: string;
   image?: ImageSourcePropType; // эмблема/фото
@@ -12,7 +11,7 @@ export type PlayerCellProps = {
   right?: React.ReactNode; // опционально элемент справа (иконка статуса)
 };
 
-export default function PlayerCell({
+export default function TableCell({
   text,
   subtext,
   image,

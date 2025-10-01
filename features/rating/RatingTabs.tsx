@@ -28,11 +28,7 @@ export const RatingTabs: FC<Props> = ({ defaultTab = "clubs" }) => {
       case "clubs":
         return <RatingFCTable rows={teamRatingRows} />;
       case "players":
-        return (
-          <View style={styles.content}>
-            <RatingPlayerTable rows={playersRatingRows} />
-          </View>
-        );
+        return <RatingPlayerTable rows={playersRatingRows} />;
       default:
         return null;
     }
@@ -47,7 +43,6 @@ export const RatingTabs: FC<Props> = ({ defaultTab = "clubs" }) => {
         variant="outline"
         stretch
         size={12}
-        style={styles.tabs}
       />
       <ScrollView>{renderContent()}</ScrollView>
     </View>
@@ -57,10 +52,5 @@ export const RatingTabs: FC<Props> = ({ defaultTab = "clubs" }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  tabs: {},
-  content: {
-    flex: 1,
-    paddingHorizontal: 16,
   },
 });

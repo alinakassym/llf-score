@@ -1,10 +1,10 @@
 // features/rating/RatingPlayerTable.tsx
 import { Column, Table } from "@/components/Table";
+import TableCell from "@/components/TableCell";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import React, { useMemo } from "react";
 import { Text, View } from "react-native";
-import PlayerCell from "./PlayerCell";
 import type { PlayerRatingRow } from "./types";
 
 type Props = {
@@ -53,12 +53,10 @@ export function RatingPlayerTable({ rows }: Props) {
       flex: 2,
       align: "left",
       render: (r, index) => (
-        <PlayerCell
-          index={index}
-          name={r.playerName}
+        <TableCell
+          text={r.playerName}
           subtext={`${r.cityName},  ${r.league},  ${r.teamName}`}
-          position={r.positionChange}
-          avatar={r.image}
+          image={r.image}
         />
       ),
     },
@@ -88,7 +86,6 @@ export function RatingPlayerTable({ rows }: Props) {
       headerStyle={{ height: 36 }}
       rowStyle={{ minHeight: 44 }}
       separator
-      horizontalScroll
     />
   );
 }
