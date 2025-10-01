@@ -2,7 +2,7 @@ import Tabs from "@/components/Tabs";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import React, { FC, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { RatingFCTable } from "./RatingFCTable";
 import { teamRatingRows } from "./mocks";
 
@@ -48,7 +48,7 @@ export const RatingTabs: FC<Props> = ({ defaultTab = "clubs" }) => {
         size={12}
         style={styles.tabs}
       />
-      {renderContent()}
+      <ScrollView>{renderContent()}</ScrollView>
     </View>
   );
 };
