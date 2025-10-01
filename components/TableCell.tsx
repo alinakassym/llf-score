@@ -22,7 +22,14 @@ export default function TableCell({
   const c = Colors[scheme];
 
   return (
-    <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+    <View
+      style={{
+        paddingVertical: 4,
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 10,
+      }}
+    >
       {image && (
         <Image
           source={image}
