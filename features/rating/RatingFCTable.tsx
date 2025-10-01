@@ -99,7 +99,7 @@ export function RatingFCTable({ rows }: Props) {
     {
       key: "s1",
       title: "Сезон 1",
-      width: 52,
+      width: 60,
       align: "center",
       accessor: (r) => r.season1,
       textStyle: { fontSize: 11, fontWeight: "600", color: c.text },
@@ -107,7 +107,7 @@ export function RatingFCTable({ rows }: Props) {
     {
       key: "s2",
       title: "Сезон 2",
-      width: 52,
+      width: 60,
       align: "center",
       accessor: (r) => r.season2,
       textStyle: { fontSize: 11, fontWeight: "600", color: c.text },
@@ -115,7 +115,7 @@ export function RatingFCTable({ rows }: Props) {
     {
       key: "s3",
       title: "Сезон 3",
-      width: 52,
+      width: 60,
       align: "center",
       accessor: (r) => r.season3,
       textStyle: { fontSize: 11, fontWeight: "600", color: c.text },
@@ -123,7 +123,7 @@ export function RatingFCTable({ rows }: Props) {
     {
       key: "s4",
       title: "Сезон 4",
-      width: 52,
+      width: 60,
       align: "center",
       accessor: (r) => r.season4,
       textStyle: { fontSize: 11, fontWeight: "600", color: c.text },
