@@ -4,6 +4,7 @@ import { useThemeMode } from "@/hooks/use-theme-mode";
 import React, { ReactNode } from "react";
 import {
   FlatList,
+  ScrollView,
   StyleSheet,
   Text,
   TextStyle,
@@ -39,6 +40,7 @@ export type TableProps<T> = {
   headerStyle?: ViewStyle;
   rowStyle?: ViewStyle;
   separator?: boolean; // показывать разделители строк (по умолчанию true)
+  horizontalScroll?: boolean; // включить горизонтальный скролл (по умолчанию false)
 };
 
 export function Table<T>({
@@ -48,6 +50,7 @@ export function Table<T>({
   headerStyle,
   rowStyle,
   separator = true,
+  horizontalScroll = false,
 }: TableProps<T>) {
   const scheme = useThemeMode();
   const c = Colors[scheme];
@@ -116,12 +119,8 @@ export function Table<T>({
     </View>
   );
 
-  return (
-    <View
-      style={{
-        overflow: "hidden",
-      }}
-    >
+  const content = (
+    <>
       {renderHeader()}
       <FlatList
         data={data}
@@ -130,6 +129,22 @@ export function Table<T>({
         scrollEnabled={false}
         contentContainerStyle={{ backgroundColor: c.background }}
       />
+    </>
+  );
+
+  return (
+    <View
+      style={{
+        overflow: "hidden",
+      }}
+    >
+      {horizontalScroll ? (
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View>{content}</View>
+        </ScrollView>
+      ) : (
+        content
+      )}
     </View>
   );
 }
