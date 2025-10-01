@@ -2,9 +2,10 @@ import Tabs from "@/components/Tabs";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import React, { FC, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { RatingFCTable } from "./RatingFCTable";
-import { teamRatingRows } from "./mocks";
+import { RatingPlayerTable } from "./RatingPlayerTable";
+import { playersRatingRows, teamRatingRows } from "./mocks";
 
 type TabKey = "clubs" | "players";
 
@@ -29,7 +30,7 @@ export const RatingTabs: FC<Props> = ({ defaultTab = "clubs" }) => {
       case "players":
         return (
           <View style={styles.content}>
-            <Text>Table</Text>
+            <RatingPlayerTable rows={playersRatingRows} />
           </View>
         );
       default:
