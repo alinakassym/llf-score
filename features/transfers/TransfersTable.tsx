@@ -4,6 +4,7 @@ import TableCell from "@/components/TableCell";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import React from "react";
+import { TransferStatus } from "./TransferStatus";
 import { TransferRow } from "./types";
 
 type Props = {
@@ -18,7 +19,7 @@ export function TransfersTable({ rows }: Props) {
     {
       key: "playerName",
       title: "Игрок",
-      flex: 2,
+      width: 160,
       align: "left",
       render: (r) => (
         <TableCell
@@ -27,6 +28,14 @@ export function TransfersTable({ rows }: Props) {
           image={r.image}
         />
       ),
+    },
+    {
+      key: "status",
+      title: "Статус",
+      width: 46,
+      align: "center",
+      accessor: (r) => r.status,
+      render: (r) => <TransferStatus name={r.status} />,
     },
     {
       key: "age",
@@ -62,6 +71,7 @@ export function TransfersTable({ rows }: Props) {
       headerStyle={{ height: 36 }}
       rowStyle={{ minHeight: 44 }}
       separator
+      horizontalScroll
     />
   );
 }

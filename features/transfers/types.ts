@@ -1,3 +1,4 @@
+export type TransferStatusType = "contract" | "free" | "transfer";
 export type TransferRow = {
   id: number;
   player: string;
@@ -5,7 +6,7 @@ export type TransferRow = {
   team: string;
   position: string;
   league?: string;
-  status: string;
+  status: TransferStatusType;
   cost: string;
   salary: string;
   image?: any;
