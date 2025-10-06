@@ -1,14 +1,16 @@
-import { Screen } from "@/components/Screen";
-import { Colors } from "@/constants/theme";
+import HelpFaqAccordion from "@/features/help/HelpFaqAccordion";
+import { faqItems } from "@/features/help/mocks";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { StyleSheet, Text } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 export default function TabHelpScreen() {
   const scheme = useThemeMode();
   return (
-    <Screen style={styles.container}>
-      <Text style={[styles.title, { color: Colors[scheme].text }]}>Help</Text>
-    </Screen>
+    <View style={{ flex: 1 }}>
+      <ScrollView>
+        <HelpFaqAccordion items={faqItems} />
+      </ScrollView>
+    </View>
   );
 }
 
