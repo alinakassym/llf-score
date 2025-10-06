@@ -36,11 +36,12 @@ export const HelpFeedbackForm: FC<Props> = () => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    paddingHorizontal: 8,
+    paddingTop: 16,
   },
   title: {
-    fontSize: 20,
-    fontWeight: "700",
+    fontSize: 16,
+    fontWeight: "600",
     marginBottom: 16,
   },
   input: {
