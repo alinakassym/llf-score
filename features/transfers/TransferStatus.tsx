@@ -22,24 +22,29 @@ export const TransferStatus: FC<Props> = ({ name, label, style }) => {
     <View
       style={[
         {
-          height: 16,
-          width: 16,
           flexDirection: "row",
           alignItems: "center",
-          justifyContent: "center",
-          gap: 6,
-          borderRadius: 12,
-          backgroundColor: color,
+          gap: 4,
         },
         style,
       ]}
     >
-      <Ionicons name={icon} size={12} color={c.white} />
-      {label && (
-        <Text style={{ fontSize: 12, color: c.text, fontWeight: "500" }}>
-          {label}
-        </Text>
-      )}
+      <View
+        style={[
+          {
+            height: 16,
+            width: 16,
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 12,
+            backgroundColor: color,
+          },
+          style,
+        ]}
+      >
+        <Ionicons name={icon} size={12} color={c.white} />
+      </View>
+      {label && <Text style={{ fontSize: 11, color: c.text }}>{label}</Text>}
     </View>
   );
 };
