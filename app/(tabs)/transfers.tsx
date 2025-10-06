@@ -1,32 +1,13 @@
-import { Screen } from "@/components/Screen";
-import { Colors } from "@/constants/theme";
-import { useThemeMode } from "@/hooks/use-theme-mode";
-import { StyleSheet, Text } from "react-native";
+import { transferRows } from "@/features/transfers/mocks";
+import TransfersTable from "@/features/transfers/TransfersTable";
+import { ScrollView, View } from "react-native";
 
 export default function TabTransfersScreen() {
-  const scheme = useThemeMode();
   return (
-    <Screen style={styles.container}>
-      <Text style={[styles.title, { color: Colors[scheme].text }]}>
-        Transfers
-      </Text>
-    </Screen>
+    <View style={{ flex: 1 }}>
+      <ScrollView>
+        <TransfersTable rows={transferRows} />
+      </ScrollView>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});
