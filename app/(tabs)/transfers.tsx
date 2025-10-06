@@ -22,7 +22,7 @@ export default function TabTransfersScreen() {
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
-        <View style={{ padding: 16 }}>
+        <View style={{ paddingHorizontal: 8, paddingVertical: 16 }}>
           <TextInput
             value={searchQuery}
             onChangeText={setSearchQuery}
