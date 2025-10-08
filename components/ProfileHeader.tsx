@@ -37,7 +37,7 @@ export default function ProfileHeader({ title, year, logo, onClose }: Props) {
         alignItems: "flex-start",
         gap: 12,
         paddingTop: Platform.OS === "ios" ? 16 : 52,
-        paddingHorizontal: 16,
+        paddingHorizontal: 8,
         paddingBottom: 8,
 
         // backgroundColor: c.bgOpacity,
@@ -125,10 +125,8 @@ export default function ProfileHeader({ title, year, logo, onClose }: Props) {
 
       {/* Кнопка закрытия */}
       <TouchableOpacity
+        activeOpacity={0.7}
         onPress={handleClose}
-        accessibilityRole="button"
-        accessibilityLabel="Закрыть"
-        hitSlop={10}
         style={{ padding: 4 }}
       >
         <Ionicons name="close" size={24} color={"#FFFFFF"} />

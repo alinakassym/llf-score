@@ -11,6 +11,7 @@ import {
   Platform,
   Pressable,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -45,7 +46,7 @@ export default function LeagueHeader({
       end={{ x: 1, y: 1 }}
       style={{
         flexDirection: "row",
-        alignItems: "center",
+        alignItems: "flex-start",
         gap: 12,
         paddingTop: Platform.OS === "ios" ? 16 : 52,
         paddingHorizontal: 8,
@@ -101,15 +102,13 @@ export default function LeagueHeader({
       </View>
 
       {/* Кнопка закрытия */}
-      <Pressable
+      <TouchableOpacity
+        activeOpacity={0.7}
         onPress={handleClose}
-        accessibilityRole="button"
-        accessibilityLabel="Закрыть"
-        hitSlop={10}
         style={{ padding: 4 }}
       >
         <Ionicons name="close" size={24} color="#FFFFFF" />
-      </Pressable>
+      </TouchableOpacity>
     </LinearGradient>
   );
 }

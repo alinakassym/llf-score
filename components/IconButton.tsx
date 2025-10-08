@@ -45,7 +45,7 @@ export default function IconButton({
   };
   return (
     <TouchableOpacity
-      activeOpacity={0.5}
+      activeOpacity={0.7}
       onPress={onPress}
       style={{
         ...getSizeParams(),

@@ -1,6 +1,5 @@
 // app/profile.tsx
 import ProfileHeader from "@/components/ProfileHeader";
-import { Screen } from "@/components/Screen";
 import { Colors } from "@/constants/theme";
 import PlayerPosition from "@/features/PlayerPosition";
 import PlayerTabs from "@/features/PlayerTabs";
@@ -24,22 +23,23 @@ export default function ProfileScreen() {
       : {};
 
   return (
-    <Screen>
-      <Container style={{ flex: 1 }} {...containerProps}>
-        <LinearGradient
-          colors={c.gradient}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-        >
-          <ProfileHeader title={"Ермек А."} year={dateOfBirth} logo={logo} />
-          <PlayerPosition
-            title={"Кайрат (Алматы)"}
-            subtitle={"Конец контракта: 31.12.2025"}
-            logo={logo}
-          />
-        </LinearGradient>
-        <PlayerTabs />
-      </Container>
-    </Screen>
+    <Container
+      style={{ flex: 1, backgroundColor: c.surface }}
+      {...containerProps}
+    >
+      <LinearGradient
+        colors={c.gradient}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
+        <ProfileHeader title={"Ермек А."} year={dateOfBirth} logo={logo} />
+        <PlayerPosition
+          title={"Кайрат (Алматы)"}
+          subtitle={"Конец контракта: 31.12.2025"}
+          logo={logo}
+        />
+      </LinearGradient>
+      <PlayerTabs />
+    </Container>
   );
 }

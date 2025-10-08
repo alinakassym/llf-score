@@ -15,7 +15,7 @@ export default function MenuButton({ icon, label, onPress }: Props) {
 
   return (
     <TouchableOpacity
-      activeOpacity={0.5}
+      activeOpacity={0.7}
       onPress={onPress}
       style={{
         paddingVertical: 8,

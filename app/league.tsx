@@ -1,5 +1,4 @@
 // app/league.tsx
-import { Screen } from "@/components/Screen";
 import { Colors } from "@/constants/theme";
 import LeagueHeader from "@/features/LeagueHeader";
 import LeagueTabs from "@/features/LeagueTabs";
@@ -26,18 +25,19 @@ export default function LeagueScreen() {
       : {};
 
   return (
-    <Screen>
-      <Container style={{ flex: 1, paddingBottom: 32 }} {...containerProps}>
-        <LeagueHeader
-          title={title}
-          year={year}
-          logo={logo}
-          onPressYear={() => {
-            console.log("open year picker for league:", leagueId);
-          }}
-        />
-        <LeagueTabs />
-      </Container>
-    </Screen>
+    <Container
+      style={{ flex: 1, paddingBottom: 32, backgroundColor: c.surface }}
+      {...containerProps}
+    >
+      <LeagueHeader
+        title={title}
+        year={year}
+        logo={logo}
+        onPressYear={() => {
+          console.log("open year picker for league:", leagueId);
+        }}
+      />
+      <LeagueTabs />
+    </Container>
   );
 }

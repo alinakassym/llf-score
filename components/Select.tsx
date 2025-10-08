@@ -92,7 +92,7 @@ export const Select: FC<Props> = ({
   return (
     <>
       <TouchableOpacity
-        activeOpacity={0.5}
+        activeOpacity={0.7}
         onPress={() => setOpen(true)}
         style={[styles.button]}
       >
