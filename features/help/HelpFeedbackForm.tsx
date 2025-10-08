@@ -1,15 +1,9 @@
+import GradientButton from "@/components/GradientButton";
+import Textarea from "@/components/Textarea";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { LinearGradient } from "expo-linear-gradient";
 import React, { FC, useState } from "react";
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 type Props = {
   title?: string;
@@ -27,7 +21,6 @@ export const HelpFeedbackForm: FC<Props> = ({
   const scheme = useThemeMode();
   const c = Colors[scheme];
   const [value, setValue] = useState("");
-  const gradient: any = [c.primary, c.secondary, c.tertiary];
 
   const disabled = submitting || value.trim().length === 0;
 
@@ -39,57 +32,19 @@ export const HelpFeedbackForm: FC<Props> = ({
   return (
     <View style={styles.container}>
       <Text style={[styles.title, { color: c.text }]}>{title}</Text>
-      <TextInput
+      <Textarea
         value={value}
         onChangeText={setValue}
         placeholder={placeholder}
-        placeholderTextColor={c.muted}
-        multiline
-        numberOfLines={6}
-        textAlignVertical="top"
-        style={[
-          styles.input,
-          {
-            color: c.text,
-            backgroundColor: c.card,
-            borderColor: c.border,
-          },
-        ]}
+        style={{ marginBottom: 12 }}
       />
-      <Pressable
+      <GradientButton
+        title="Отправить"
         onPress={handlePress}
         disabled={disabled}
-        accessibilityRole="button"
+        loading={submitting}
         accessibilityLabel="Отправить отзыв"
-        style={{
-          borderRadius: 8,
-          overflow: "hidden",
-          opacity: disabled ? 0.7 : 1,
-        }}
-      >
-        <LinearGradient
-          colors={gradient}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 3 }}
-          style={{
-            flex: 1,
-            padding: 16,
-            borderRadius: 8,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {submitting ? (
-            <ActivityIndicator color="#FFF" />
-          ) : (
-            <Text
-              style={{ color: "#FFF", fontSize: 16, fontWeight: 600 as any }}
-            >
-              Отправить
-            </Text>
-          )}
-        </LinearGradient>
-      </Pressable>
+      />
     </View>
   );
 };
@@ -103,15 +58,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     marginBottom: 16,
-  },
-  input: {
-    marginBottom: 12,
-    minHeight: 120,
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    fontSize: 14,
   },
 });
 
