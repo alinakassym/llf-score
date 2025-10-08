@@ -1,4 +1,6 @@
 // app/_layout.tsx
+import { LoadingScreen } from "@/components/LoadingScreen";
+import { SessionProvider, useSession } from "@/contexts/auth-context";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { store } from "@/store/store";
 import { Stack } from "expo-router";
@@ -7,8 +9,34 @@ import { Platform } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 
-export default function RootLayout() {
+function RootLayoutNav() {
   const scheme = useThemeMode();
+  const { session, isLoading } = useSession();
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
+  if (!session) {
+    <Provider store={store}>
+      <SafeAreaProvider>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen
+            name="login"
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack>
+        ;
+      </SafeAreaProvider>
+    </Provider>;
+  }
+
   return (
     <Provider store={store}>
       <SafeAreaProvider>
@@ -29,12 +57,6 @@ export default function RootLayout() {
             }}
           />
           <Stack.Screen
-            name="login"
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
             name="league"
             options={{
               headerShown: false,
@@ -47,5 +69,13 @@ export default function RootLayout() {
         </Stack>
       </SafeAreaProvider>
     </Provider>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <SessionProvider>
+      <RootLayoutNav />
+    </SessionProvider>
   );
 }

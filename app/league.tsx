@@ -7,6 +7,7 @@ import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { Platform, View } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LeagueScreen() {
   const scheme = useThemeMode();
@@ -25,19 +26,24 @@ export default function LeagueScreen() {
       : {};
 
   return (
-    <Container
-      style={{ flex: 1, paddingBottom: 32, backgroundColor: c.surface }}
-      {...containerProps}
+    <SafeAreaView
+      edges={["top"]}
+      style={[{ flex: 1, backgroundColor: Colors[scheme].surface }]}
     >
-      <LeagueHeader
-        title={title}
-        year={year}
-        logo={logo}
-        onPressYear={() => {
-          console.log("open year picker for league:", leagueId);
-        }}
-      />
-      <LeagueTabs />
-    </Container>
+      <Container
+        style={{ flex: 1, paddingBottom: 32, backgroundColor: c.surface }}
+        {...containerProps}
+      >
+        <LeagueHeader
+          title={title}
+          year={year}
+          logo={logo}
+          onPressYear={() => {
+            console.log("open year picker for league:", leagueId);
+          }}
+        />
+        <LeagueTabs />
+      </Container>
+    </SafeAreaView>
   );
 }
