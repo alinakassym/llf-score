@@ -40,6 +40,8 @@ export const GradientButton: FC<Props> = ({
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel || title}
       style={{
+        height: 54,
+        justifyContent: "center",
         borderRadius: 8,
         overflow: "hidden",
         opacity: isDisabled ? 0.7 : 1,
