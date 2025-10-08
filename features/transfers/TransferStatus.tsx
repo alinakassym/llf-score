@@ -36,7 +36,7 @@ export const TransferStatus: FC<Props> = ({ name, label, style }) => {
             width: 16,
             alignItems: "center",
             justifyContent: "center",
-            borderRadius: 12,
+            borderRadius: 8,
             backgroundColor: color,
           },
           style,

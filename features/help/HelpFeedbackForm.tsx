@@ -62,7 +62,7 @@ export const HelpFeedbackForm: FC<Props> = ({
         accessibilityRole="button"
         accessibilityLabel="Отправить отзыв"
         style={{
-          borderRadius: 12,
+          borderRadius: 8,
           overflow: "hidden",
           opacity: disabled ? 0.7 : 1,
         }}
@@ -74,7 +74,7 @@ export const HelpFeedbackForm: FC<Props> = ({
           style={{
             flex: 1,
             padding: 16,
-            borderRadius: 12,
+            borderRadius: 8,
             alignItems: "center",
             justifyContent: "center",
           }}
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     minHeight: 120,
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 12,
     fontSize: 14,

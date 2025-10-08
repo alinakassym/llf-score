@@ -48,7 +48,7 @@ export const HelpFaqAccordion: FC<Props> = ({ items }) => {
 const styles = StyleSheet.create({
   accordionContainer: {
     marginVertical: 4,
-    borderRadius: 12,
+    borderRadius: 8,
     borderWidth: 1,
     overflow: "hidden",
   },

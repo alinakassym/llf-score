@@ -167,7 +167,7 @@ export default function MatchCard({ match, onPress }: Props) {
                   backgroundColor: c.error,
                   paddingHorizontal: 8,
                   paddingVertical: 4,
-                  borderRadius: 12,
+                  borderRadius: 8,
                 }}
               >
                 <Text

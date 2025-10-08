@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   leagueIcon: {
     width: 32,
     height: 32,
-    borderRadius: 6,
+    borderRadius: 4,
     marginRight: 12,
   },
   leagueInfo: {

@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   },
   accordionContainer: {
     marginVertical: 4,
-    borderRadius: 12,
+    borderRadius: 8,
     borderWidth: 1,
     overflow: "hidden",
   },
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   cityIcon: {
     width: 32,
     height: 32,
-    borderRadius: 6,
+    borderRadius: 4,
   },
   cityName: {
     fontSize: 14,
