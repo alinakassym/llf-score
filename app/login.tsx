@@ -1,4 +1,6 @@
 // app/login.tsx
+import FacebookButton from "@/components/FacebookButton";
+import GoogleButton from "@/components/GoogleButton";
 import GradientButton from "@/components/GradientButton";
 import LinkButton from "@/components/LinkButton";
 import LoginHeader from "@/components/LoginHeader";
@@ -47,7 +49,23 @@ export default function LoginScreen() {
           style={{ marginBottom: 32 }}
         />
         <View style={{ flexDirection: "row", justifyContent: "center" }}>
-          <Text>или</Text>
+          <Text style={{ color: c.text }}>или</Text>
+        </View>
+        <View
+          style={{
+            marginTop: 32,
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "nowrap",
+            justifyContent: "space-between",
+          }}
+        >
+          <View style={{ width: "48%" }}>
+            <FacebookButton />
+          </View>
+          <View style={{ width: "48%" }}>
+            <GoogleButton />
+          </View>
         </View>
       </ScrollView>
     </View>
