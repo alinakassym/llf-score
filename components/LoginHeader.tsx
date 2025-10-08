@@ -16,7 +16,7 @@ export default function LoginHeader({ title, text }: Props) {
     <View
       style={{
         position: "relative",
-        minHeight: 240,
+        minHeight: 280,
         marginBottom: 8,
         overflow: "hidden",
       }}
@@ -40,8 +40,10 @@ export default function LoginHeader({ title, text }: Props) {
           right: 0,
           bottom: 0,
           paddingTop: Platform.OS === "ios" ? 60 : 80,
-          paddingHorizontal: 32,
-          paddingBottom: 32,
+          paddingHorizontal: 16,
+          paddingBottom: 16,
+          flexDirection: "column",
+          justifyContent: "flex-end",
           backgroundColor: "rgba(255, 255, 255, 0.8)",
           zIndex: 0,
         }}
