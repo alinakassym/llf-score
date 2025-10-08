@@ -25,6 +25,7 @@ type Palette = {
   button: string;
   opacity: string;
   bgOpacity: string;
+  overlayOpacity: string;
 };
 
 const baseColors = {
@@ -57,6 +58,7 @@ export const Colors: Record<ThemeName, Palette> = {
     button: "#F2F3F5",
     opacity: "rgba(0, 0, 0, 0.2)",
     bgOpacity: "rgba(255, 255, 255, 0.4)",
+    overlayOpacity: "rgba(255, 255, 255, 0.8)",
   },
   dark: {
     ...baseColors,
@@ -73,5 +75,6 @@ export const Colors: Record<ThemeName, Palette> = {
     button: "rgba(255,255,255,0.08)",
     opacity: "rgba(255, 255, 255, 0.2)",
     bgOpacity: "rgba(39, 27, 56, 0.4)",
+    overlayOpacity: "rgba(39, 27, 56, 0.8)",
   },
 };

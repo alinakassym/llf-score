@@ -44,13 +44,13 @@ export default function LoginHeader({ title, text }: Props) {
           paddingBottom: 16,
           flexDirection: "column",
           justifyContent: "flex-end",
-          backgroundColor: "rgba(255, 255, 255, 0.8)",
+          backgroundColor: c.overlayOpacity,
           zIndex: 0,
         }}
       >
         <Text
           style={{
-            color: c.dark,
+            color: c.text,
             fontSize: 32,
             fontWeight: "700",
             lineHeight: 40,
@@ -73,7 +73,7 @@ export default function LoginHeader({ title, text }: Props) {
 
         <Text
           style={{
-            color: c.dark,
+            color: c.text,
             fontSize: 16,
             fontWeight: "400",
             lineHeight: 24,
