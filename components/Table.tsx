@@ -86,8 +86,8 @@ export function Table<T>({
       style={[
         styles.row,
         {
-          borderBottomColor:
-            index < columns.length - 1 ? c.border : "transparent",
+          borderBottomColor: index < data.length - 1 ? c.border : "transparent",
+          backgroundColor: index % 2 === 0 ? c.background : c.card,
         },
         rowStyle,
         separator && styles.rowWithSeparator,
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   row: {
-    minHeight: 42,
+    minHeight: 46,
     paddingHorizontal: 8,
     flexDirection: "row",
     alignItems: "center",

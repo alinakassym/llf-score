@@ -19,7 +19,7 @@ export function TransfersTable({ rows }: Props) {
     {
       key: "playerName",
       title: "Игрок",
-      width: 160,
+      width: 180,
       align: "left",
       render: (r) => (
         <TableCell
@@ -32,7 +32,7 @@ export function TransfersTable({ rows }: Props) {
     {
       key: "status",
       title: "Статус",
-      width: 46,
+      width: 60,
       align: "center",
       accessor: (r) => r.status,
       render: (r) => <TransferStatus name={r.status} />,
