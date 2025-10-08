@@ -29,6 +29,12 @@ export default function RootLayout() {
             }}
           />
           <Stack.Screen
+            name="login"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="league"
             options={{
               headerShown: false,

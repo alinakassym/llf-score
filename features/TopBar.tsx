@@ -24,6 +24,10 @@ export const TopBar: React.FC = () => {
   const cityId = useAppSelector(selectCityId);
   const leagueId = useAppSelector(selectLeagueId);
 
+  const handleLoginPress = () => {
+    router.push("/login");
+  };
+
   // Функция для открытия страницы профиля
   const handleProfilePress = () => {
     router.push("/profile");
@@ -56,7 +60,7 @@ export const TopBar: React.FC = () => {
         </View>
       </View>
       <View style={styles.right}>
-        <IconButton icon="search" color={c.white} />
+        <IconButton icon="search" color={c.white} onPress={handleLoginPress} />
         <IconButton icon="notifications" color={c.white} />
         <IconButton
           icon="person"
