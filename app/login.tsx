@@ -1,4 +1,6 @@
 // app/login.tsx
+import GradientButton from "@/components/GradientButton";
+import LinkButton from "@/components/LinkButton";
 import LoginHeader from "@/components/LoginHeader";
 import TextField from "@/components/TextField";
 import { Colors } from "@/constants/theme";
@@ -13,7 +15,7 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
 
   return (
-    <View style={{ backgroundColor: c.surface }}>
+    <View style={{ backgroundColor: c.background }}>
       <LoginHeader
         title="Добро пожаловать"
         text="Для входа в приложение введите свой номер мобильного телефона и пароль"
@@ -31,9 +33,22 @@ export default function LoginScreen() {
           value={password}
           onChangeText={setPassword}
           placeholder="Введите пароль"
-          style={{ marginBottom: 16 }}
+          style={{ marginBottom: 24 }}
         />
-        <Text style={{ color: c.textMuted }}>Форма входа будет здесь</Text>
+
+        <LinkButton
+          href="/"
+          title="Забыли пароль?"
+          style={{ marginBottom: 28 }}
+        />
+        <GradientButton
+          title="Войти"
+          onPress={() => {}}
+          style={{ marginBottom: 32 }}
+        />
+        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+          <Text>или</Text>
+        </View>
       </ScrollView>
     </View>
   );

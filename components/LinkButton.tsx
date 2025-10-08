@@ -2,12 +2,12 @@ import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { Link } from "expo-router";
 import React, { FC } from "react";
-import { StyleProp, Text, ViewStyle } from "react-native";
+import { StyleProp, Text, TextStyle } from "react-native";
 
 type Props = {
   href: string;
   title: string;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<TextStyle>;
   color?: string;
 };
 

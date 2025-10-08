@@ -2,7 +2,13 @@ import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { FC } from "react";
-import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
+import {
+  ActivityIndicator,
+  StyleProp,
+  Text,
+  TouchableOpacity,
+  ViewStyle,
+} from "react-native";
 
 type Props = {
   title: string;
@@ -10,6 +16,7 @@ type Props = {
   disabled?: boolean;
   loading?: boolean;
   accessibilityLabel?: string;
+  style?: StyleProp<ViewStyle>;
 };
 
 export const GradientButton: FC<Props> = ({
@@ -18,6 +25,7 @@ export const GradientButton: FC<Props> = ({
   disabled = false,
   loading = false,
   accessibilityLabel,
+  style,
 }) => {
   const scheme = useThemeMode();
   const c = Colors[scheme];
@@ -35,6 +43,7 @@ export const GradientButton: FC<Props> = ({
         borderRadius: 8,
         overflow: "hidden",
         opacity: isDisabled ? 0.7 : 1,
+        ...(style as object),
       }}
     >
       <LinearGradient
