@@ -3,6 +3,7 @@ export type ThemeName = "light" | "dark";
 type Palette = {
   primary: string;
   secondary: string;
+  tertiary: string;
   gradient: any;
   lightOpacity: string;
   darkOpacity: string;
@@ -29,6 +30,7 @@ type Palette = {
 const baseColors = {
   primary: "#5060D8",
   secondary: "#8450D8",
+  tertiary: "#50A4D8",
   gradient: ["#5060D8", "#5060D8", "#8450D8", "#50A4D8"],
   lightOpacity: "rgba(255, 255, 255, 0.4)",
   darkOpacity: "rgba(0, 0, 0, 0.2)",
