@@ -44,7 +44,11 @@ export default function LoginScreen() {
       const auth = getAuth(app);
 
       // Вход в Firebase
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       console.log("Login Page res: ", userCredential);
 
       // Сохранение сессии
@@ -54,18 +58,43 @@ export default function LoginScreen() {
       router.replace("/(tabs)");
     } catch (error: any) {
       console.error("Login failed:", error);
+      console.error("Error code:", error.code);
+      console.error("Error message:", error.message);
 
       // Показываем ошибки Firebase
-      if (error.code === "auth/user-not-found") {
-        setErrors({ ...errors, email: "Пользователь не найден" });
-      } else if (error.code === "auth/wrong-password") {
-        setErrors({ ...errors, password: "Неверный пароль" });
-      } else if (error.code === "auth/invalid-email") {
-        setErrors({ ...errors, email: "Некорректный email" });
-      } else if (error.code === "auth/invalid-credential") {
-        setErrors({ ...errors, email: "Неверный email или пароль" });
+      const errorCode = error.code || "";
+      const errorMessage = error.message || "";
+
+      if (
+        errorCode === "auth/user-not-found" ||
+        errorMessage.includes("USER_NOT_FOUND")
+      ) {
+        setErrors({ email: "Пользователь не найден", password: "" });
+      } else if (
+        errorCode === "auth/wrong-password" ||
+        errorMessage.includes("INVALID_PASSWORD")
+      ) {
+        setErrors({ email: "", password: "Неверный пароль" });
+      } else if (
+        errorCode === "auth/invalid-email" ||
+        errorMessage.includes("INVALID_EMAIL")
+      ) {
+        setErrors({ email: "Некорректный email", password: "" });
+      } else if (
+        errorCode === "auth/invalid-credential" ||
+        errorMessage.includes("INVALID_LOGIN_CREDENTIALS")
+      ) {
+        setErrors({ email: "Неверный email или пароль", password: "" });
+      } else if (errorMessage.includes("TOO_MANY_ATTEMPTS_TRY_LATER")) {
+        setErrors({
+          email: "Слишком много попыток. Попробуйте позже",
+          password: "",
+        });
       } else {
-        setErrors({ ...errors, email: "Ошибка входа. Попробуйте позже" });
+        setErrors({
+          email: `Ошибка входа: ${errorMessage}`,
+          password: "",
+        });
       }
     }
   };
