@@ -1,7 +1,6 @@
 // app/_layout.tsx
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { SessionProvider, useSession } from "@/contexts/auth-context";
-import { useThemeMode } from "@/hooks/use-theme-mode";
 import { store } from "@/store/store";
 import { Stack } from "expo-router";
 import React from "react";
@@ -10,7 +9,6 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 
 function RootLayoutNav() {
-  const scheme = useThemeMode();
   const { session, isLoading } = useSession();
 
   if (isLoading) {
@@ -18,23 +16,24 @@ function RootLayoutNav() {
   }
 
   if (!session) {
-    <Provider store={store}>
-      <SafeAreaProvider>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen
-            name="login"
-            options={{
+    return (
+      <Provider store={store}>
+        <SafeAreaProvider>
+          <Stack
+            screenOptions={{
               headerShown: false,
             }}
-          />
-        </Stack>
-        ;
-      </SafeAreaProvider>
-    </Provider>;
+          >
+            <Stack.Screen
+              name="login"
+              options={{
+                headerShown: false,
+              }}
+            />
+          </Stack>
+        </SafeAreaProvider>
+      </Provider>
+    );
   }
 
   return (
