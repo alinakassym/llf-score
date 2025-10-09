@@ -62,6 +62,7 @@ export default function signUpScreen() {
   };
 
   const handleSignUp = async (email: string, password: string) => {
+    // Валидация формы
     if (!validateForm()) {
       return;
     }
@@ -69,15 +70,29 @@ export default function signUpScreen() {
     try {
       console.log("SignUp attempt:", email);
       const auth = getAuth(app);
-      const res = createUserWithEmailAndPassword(auth, email, password)
-        .then((res) => console.log("SignUp Page res: ", res))
-        .catch((err) => console.log("SignUp Page err: ", err));
-      // TODO: показывать сообщение об успешной регистрации или ошибке
-      await signIn(email, password); // выполнить вход после успешной регистрации
-      router.replace("/(tabs)"); // перенаправить на главную страницу после успешной регистрации
-      console.log("SignUp res:", res);
-    } catch (error) {
+
+      // Регистрация в Firebase
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      console.log("SignUp Page res: ", userCredential);
+
+      // Вход после успешной регистрации
+      await signIn(email, password);
+
+      // Перенаправление на главную страницу
+      router.replace("/(tabs)");
+    } catch (error: any) {
       console.error("SignUp failed:", error);
+
+      // Показываем ошибки Firebase
+      if (error.code === "auth/email-already-in-use") {
+        setErrors({ ...errors, email: "Этот email уже используется" });
+      } else if (error.code === "auth/invalid-email") {
+        setErrors({ ...errors, email: "Некорректный email" });
+      } else if (error.code === "auth/weak-password") {
+        setErrors({ ...errors, password: "Слишком слабый пароль" });
+      } else {
+        setErrors({ ...errors, email: "Ошибка регистрации. Попробуйте позже" });
+      }
     }
   };
 
