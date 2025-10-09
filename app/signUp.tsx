@@ -72,8 +72,9 @@ export default function signUpScreen() {
       const res = createUserWithEmailAndPassword(auth, email, password)
         .then((res) => console.log("SignUp Page res: ", res))
         .catch((err) => console.log("SignUp Page err: ", err));
-      // await signIn(email, password);
-      // router.replace("/(tabs)");
+      // TODO: показывать сообщение об успешной регистрации или ошибке
+      await signIn(email, password); // выполнить вход после успешной регистрации
+      router.replace("/(tabs)"); // перенаправить на главную страницу после успешной регистрации
       console.log("SignUp res:", res);
     } catch (error) {
       console.error("SignUp failed:", error);

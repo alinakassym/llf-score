@@ -44,7 +44,9 @@ export const TextField: FC<Props> = ({
         ]}
         {...props}
       />
-      {error && <Text style={[styles.error, { color: c.error }]}>{error}</Text>}
+      {!!error && (
+        <Text style={[styles.error, { color: c.error }]}>{error}</Text>
+      )}
     </View>
   );
 };
