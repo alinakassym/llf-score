@@ -17,20 +17,64 @@ export default function signUpScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatedPassword, setRepeatedPassword] = useState("");
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    repeatedPassword: "",
+  });
   const router = useRouter();
   const { signIn, session } = useSession();
 
   if (session) return <Redirect href="/(tabs)" />;
 
+  const validateForm = (): boolean => {
+    const newErrors = {
+      email: "",
+      password: "",
+      repeatedPassword: "",
+    };
+
+    // Валидация email
+    if (!email.trim()) {
+      newErrors.email = "Email обязателен";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Введите корректный email";
+    }
+
+    // Валидация пароля
+    if (!password.trim()) {
+      newErrors.password = "Пароль обязателен";
+    } else if (password.length < 6) {
+      newErrors.password = "Пароль должен содержать минимум 6 символов";
+    }
+
+    // Валидация повторного пароля
+    if (!repeatedPassword.trim()) {
+      newErrors.repeatedPassword = "Повторите пароль";
+    } else if (password !== repeatedPassword) {
+      newErrors.repeatedPassword = "Пароли не совпадают";
+    }
+
+    setErrors(newErrors);
+    return (
+      !newErrors.email && !newErrors.password && !newErrors.repeatedPassword
+    );
+  };
+
   const handleSignUp = async (email: string, password: string) => {
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       console.log("SignUp attempt:", email);
       const auth = getAuth(app);
-      createUserWithEmailAndPassword(auth, email, password)
+      const res = createUserWithEmailAndPassword(auth, email, password)
         .then((res) => console.log("SignUp Page res: ", res))
         .catch((err) => console.log("SignUp Page err: ", err));
-      await signIn(email, password);
-      router.replace("/(tabs)");
+      // await signIn(email, password);
+      // router.replace("/(tabs)");
+      console.log("SignUp res:", res);
     } catch (error) {
       console.error("SignUp failed:", error);
     }
@@ -46,28 +90,43 @@ export default function signUpScreen() {
         <TextField
           label="Электронная почта"
           value={email}
-          onChangeText={setEmail}
+          onChangeText={(text) => {
+            setEmail(text);
+            if (errors.email) setErrors({ ...errors, email: "" });
+          }}
           placeholder="Введите email"
+          error={errors.email}
           style={{ marginBottom: 16 }}
         />
         <TextField
           label="Придумайте пароль"
           value={password}
-          onChangeText={setPassword}
+          onChangeText={(text) => {
+            setPassword(text);
+            if (errors.password) setErrors({ ...errors, password: "" });
+          }}
           placeholder="Введите пароль"
-          style={{ marginBottom: 24 }}
+          secureTextEntry
+          error={errors.password}
+          style={{ marginBottom: 16 }}
         />
 
         <TextField
           label="Повторите пароль"
           value={repeatedPassword}
-          onChangeText={setRepeatedPassword}
+          onChangeText={(text) => {
+            setRepeatedPassword(text);
+            if (errors.repeatedPassword)
+              setErrors({ ...errors, repeatedPassword: "" });
+          }}
           placeholder="Введите пароль повторно"
+          secureTextEntry
+          error={errors.repeatedPassword}
           style={{ marginBottom: 24 }}
         />
 
         <GradientButton
-          title="Войти"
+          title="Зарегистрироваться"
           onPress={() => handleSignUp(email, password)}
           style={{ marginBottom: 32 }}
         />

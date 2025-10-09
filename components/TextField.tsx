@@ -3,21 +3,26 @@ import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import React, { FC } from "react";
 import {
+  StyleProp,
   StyleSheet,
   Text,
   TextInput,
   TextInputProps,
   View,
+  ViewStyle,
 } from "react-native";
 
 type Props = TextInputProps & {
   label?: string;
   numberOfLines?: number;
+  error?: string;
+  style: StyleProp<ViewStyle>;
 };
 
 export const TextField: FC<Props> = ({
   label,
   numberOfLines = 6,
+  error,
   style,
   ...props
 }) => {
@@ -25,7 +30,7 @@ export const TextField: FC<Props> = ({
   const c = Colors[scheme];
 
   return (
-    <View style={styles.textField}>
+    <View style={[styles.textField, style]}>
       {label && <Text style={[styles.label, { color: c.text }]}>{label}</Text>}
       <TextInput
         placeholderTextColor={c.muted}
@@ -34,12 +39,12 @@ export const TextField: FC<Props> = ({
           {
             color: c.text,
             backgroundColor: c.card,
-            borderColor: c.border,
+            borderColor: error ? c.error : c.border,
           },
-          style,
         ]}
         {...props}
       />
+      {error && <Text style={[styles.error, { color: c.error }]}>{error}</Text>}
     </View>
   );
 };
@@ -60,6 +65,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     fontSize: 14,
+  },
+  error: {
+    marginTop: 4,
+    fontSize: 12,
+    fontWeight: "400",
   },
 });
 
