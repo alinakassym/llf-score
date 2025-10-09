@@ -1,16 +1,16 @@
 // app/login.tsx
-import FacebookButton from "@/components/FacebookButton";
-import GoogleButton from "@/components/GoogleButton";
 import GradientButton from "@/components/GradientButton";
 import LinkButton from "@/components/LinkButton";
 import LoginHeader from "@/components/LoginHeader";
 import TextField from "@/components/TextField";
 import { Colors } from "@/constants/theme";
 import { useSession } from "@/contexts/auth-context";
+import { app } from "@/firebaseConfig.js";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { Redirect, useRouter } from "expo-router";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import React, { useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, View } from "react-native";
 
 export default function LoginScreen() {
   const scheme = useThemeMode();
@@ -25,6 +25,10 @@ export default function LoginScreen() {
   const handleLogin = async (email: string, password: string) => {
     try {
       console.log("Login attempt:", email);
+      const auth = getAuth(app);
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((res) => console.log("login Page res: ", res))
+        .catch((err) => console.log("login Page err: ", err));
       await signIn(email, password);
       router.replace("/(tabs)");
     } catch (error) {
@@ -64,7 +68,7 @@ export default function LoginScreen() {
           onPress={() => handleLogin(email, password)}
           style={{ marginBottom: 32 }}
         />
-        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+        {/* <View style={{ flexDirection: "row", justifyContent: "center" }}>
           <Text style={{ color: c.text }}>или</Text>
         </View>
         <View
@@ -82,7 +86,7 @@ export default function LoginScreen() {
           <View style={{ width: "48%" }}>
             <GoogleButton />
           </View>
-        </View>
+        </View> */}
       </ScrollView>
     </View>
   );
