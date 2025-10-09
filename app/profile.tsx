@@ -5,9 +5,11 @@ import { Colors } from "@/constants/theme";
 import { useSession } from "@/contexts/auth-context";
 import PlayerPosition from "@/features/PlayerPosition";
 import PlayerTabs from "@/features/PlayerTabs";
+import { app } from "@/firebaseConfig.js";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
+import { signOut as firebaseSignOut, getAuth } from "firebase/auth";
 import React from "react";
 import { Platform, View } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
@@ -30,10 +32,12 @@ export default function ProfileScreen() {
   const handleSignOut = async () => {
     try {
       console.log("Logout profile");
+      const auth = getAuth(app);
+      await firebaseSignOut(auth);
       await signOut();
       router.replace("/login");
     } catch (error) {
-      console.error("Login failed:", error);
+      console.error("Logout failed:", error);
     }
   };
 
