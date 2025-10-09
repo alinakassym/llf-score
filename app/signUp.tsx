@@ -1,6 +1,5 @@
-// app/login.tsx
+// app/signUp.tsx
 import GradientButton from "@/components/GradientButton";
-import LinkButton from "@/components/LinkButton";
 import LoginHeader from "@/components/LoginHeader";
 import TextField from "@/components/TextField";
 import { Colors } from "@/constants/theme";
@@ -10,37 +9,38 @@ import { useThemeMode } from "@/hooks/use-theme-mode";
 import { Redirect, useRouter } from "expo-router";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import React, { useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, View } from "react-native";
 
-export default function LoginScreen() {
+export default function signUpScreen() {
   const scheme = useThemeMode();
   const c = Colors[scheme];
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatedPassword, setRepeatedPassword] = useState("");
   const router = useRouter();
   const { signIn, session } = useSession();
 
   if (session) return <Redirect href="/(tabs)" />;
 
-  const handleLogin = async (email: string, password: string) => {
+  const handleSignUp = async (email: string, password: string) => {
     try {
-      console.log("Login attempt:", email);
+      console.log("SignUp attempt:", email);
       const auth = getAuth(app);
       createUserWithEmailAndPassword(auth, email, password)
-        .then((res) => console.log("login Page res: ", res))
-        .catch((err) => console.log("login Page err: ", err));
+        .then((res) => console.log("SignUp Page res: ", res))
+        .catch((err) => console.log("SignUp Page err: ", err));
       await signIn(email, password);
       router.replace("/(tabs)");
     } catch (error) {
-      console.error("Login failed:", error);
+      console.error("SignUp failed:", error);
     }
   };
 
   return (
     <View style={{ backgroundColor: c.background }}>
       <LoginHeader
-        title="Добро пожаловать"
-        text="Для входа в приложение введите свой номер мобильного телефона и пароль"
+        title="Регистрация"
+        text="Для регистрации введите свой адрес электронной почты и пароль"
       />
       <ScrollView style={{ padding: 16, height: "100%" }}>
         <TextField
@@ -51,35 +51,26 @@ export default function LoginScreen() {
           style={{ marginBottom: 16 }}
         />
         <TextField
-          label="Пароль"
+          label="Придумайте пароль"
           value={password}
           onChangeText={setPassword}
           placeholder="Введите пароль"
           style={{ marginBottom: 24 }}
         />
 
-        <LinkButton
-          href="/"
-          title="Забыли пароль?"
-          style={{ marginBottom: 28 }}
+        <TextField
+          label="Повторите пароль"
+          value={repeatedPassword}
+          onChangeText={setRepeatedPassword}
+          placeholder="Введите пароль повторно"
+          style={{ marginBottom: 24 }}
         />
+
         <GradientButton
           title="Войти"
-          onPress={() => handleLogin(email, password)}
+          onPress={() => handleSignUp(email, password)}
           style={{ marginBottom: 32 }}
         />
-
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ color: c.textMuted }}>Нет аккаунта? </Text>
-          <LinkButton href="/signUp" title="Зарегистрироваться" />
-        </View>
-
         {/* <View style={{ flexDirection: "row", justifyContent: "center" }}>
           <Text style={{ color: c.text }}>или</Text>
         </View>
