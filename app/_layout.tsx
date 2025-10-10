@@ -75,6 +75,16 @@ function RootLayoutNav() {
               gestureEnabled: true,
             }}
           />
+          <Stack.Screen
+            name="competition-plan"
+            options={{
+              headerShown: false,
+              presentation:
+                Platform.OS === "android" ? "transparentModal" : "modal",
+              animation: Platform.OS === "android" ? "fade" : "default",
+              gestureEnabled: true,
+            }}
+          />
         </Stack>
       </SafeAreaProvider>
     </Provider>
