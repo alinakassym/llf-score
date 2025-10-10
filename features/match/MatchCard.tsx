@@ -71,6 +71,7 @@ export default function MatchCard({ match, onPress }: Props) {
       <View
         style={{
           height: 113,
+          gap: 16,
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
@@ -78,7 +79,7 @@ export default function MatchCard({ match, onPress }: Props) {
       >
         {/* Home team */}
         <View style={{ alignItems: "center", flex: 1 }}>
-          <ShirtIcon color1={c.warning} color2={c.warning} />
+          <ShirtIcon size={60} color1={c.warning} color2={c.warning} />
           <Text
             style={{
               color: c.text,
@@ -162,14 +163,14 @@ export default function MatchCard({ match, onPress }: Props) {
                   Live
                 </Text>
               </View>
-              <LLFLogo height={12} color={c.text} />
+              <LLFLogo height={12} width={84} color={c.text} />
             </View>
           )}
         </View>
 
         {/* Away team */}
         <View style={{ alignItems: "center", flex: 1 }}>
-          <ShirtIcon color1={c.red} color2={c.primary} />
+          <ShirtIcon size={60} color1={c.red} color2={c.primary} />
           <Text
             style={{
               color: c.text,
