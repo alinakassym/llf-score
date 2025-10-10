@@ -95,6 +95,16 @@ function RootLayoutNav() {
               gestureEnabled: true,
             }}
           />
+          <Stack.Screen
+            name="contacts"
+            options={{
+              headerShown: false,
+              presentation:
+                Platform.OS === "android" ? "transparentModal" : "modal",
+              animation: Platform.OS === "android" ? "fade" : "default",
+              gestureEnabled: true,
+            }}
+          />
         </Stack>
       </SafeAreaProvider>
     </Provider>
