@@ -1,5 +1,6 @@
 // features/match/MatchCard.tsx
 import { LLFLogo } from "@/components/icons/LLFLogo";
+import { ShirtIcon } from "@/components/icons/shirt-icon";
 import { Colors } from "@/constants/theme";
 import { Match } from "@/features/match/types";
 import { useThemeMode } from "@/hooks/use-theme-mode";
@@ -77,26 +78,7 @@ export default function MatchCard({ match, onPress }: Props) {
       >
         {/* Home team */}
         <View style={{ alignItems: "center", flex: 1 }}>
-          <View
-            style={{
-              width: 60,
-              height: 60,
-              backgroundColor: c.primary,
-              borderRadius: 8,
-              alignItems: "center",
-              justifyContent: "center",
-              marginBottom: 8,
-            }}
-          >
-            <View
-              style={{
-                width: 40,
-                height: 40,
-                backgroundColor: c.secondary,
-                borderRadius: 4,
-              }}
-            />
-          </View>
+          <ShirtIcon color1={c.warning} color2={c.warning} />
           <Text
             style={{
               color: c.text,
@@ -187,26 +169,7 @@ export default function MatchCard({ match, onPress }: Props) {
 
         {/* Away team */}
         <View style={{ alignItems: "center", flex: 1 }}>
-          <View
-            style={{
-              width: 60,
-              height: 60,
-              backgroundColor: c.primary,
-              borderRadius: 8,
-              alignItems: "center",
-              justifyContent: "center",
-              marginBottom: 8,
-            }}
-          >
-            <View
-              style={{
-                width: 40,
-                height: 40,
-                backgroundColor: c.secondary,
-                borderRadius: 4,
-              }}
-            />
-          </View>
+          <ShirtIcon color1={c.red} color2={c.primary} />
           <Text
             style={{
               color: c.text,
