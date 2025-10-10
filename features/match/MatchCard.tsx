@@ -83,6 +83,7 @@ export default function MatchCard({ match, onPress }: Props) {
             size={60}
             color1={match.homeTeam.color1}
             color2={match.homeTeam.color2}
+            strokeColor={c.dark}
           />
           <Text
             style={{
@@ -178,6 +179,7 @@ export default function MatchCard({ match, onPress }: Props) {
             size={60}
             color1={match.awayTeam.color1}
             color2={match.awayTeam.color2}
+            strokeColor={c.dark}
           />
           <Text
             style={{
