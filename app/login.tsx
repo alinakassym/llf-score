@@ -51,8 +51,16 @@ export default function LoginScreen() {
       );
       console.log("Login Page res: ", userCredential);
 
-      // Сохранение сессии
-      await signIn(email, password);
+      // Подготовка данных пользователя
+      const userData = {
+        uid: userCredential.user.uid,
+        email: userCredential.user.email || email,
+        displayName: userCredential.user.displayName || undefined,
+        photoURL: userCredential.user.photoURL || undefined,
+      };
+
+      // Сохранение сессии и данных пользователя
+      await signIn(email, password, userData);
 
       // Перенаправление на главную страницу
       router.replace("/(tabs)");

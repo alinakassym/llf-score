@@ -72,11 +72,23 @@ export default function signUpScreen() {
       const auth = getAuth(app);
 
       // Регистрация в Firebase
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       console.log("SignUp Page res: ", userCredential);
 
+      // Подготовка данных пользователя
+      const userData = {
+        uid: userCredential.user.uid,
+        email: userCredential.user.email || email,
+        displayName: userCredential.user.displayName || undefined,
+        photoURL: userCredential.user.photoURL || undefined,
+      };
+
       // Вход после успешной регистрации
-      await signIn(email, password);
+      await signIn(email, password, userData);
 
       // Перенаправление на главную страницу
       router.replace("/(tabs)");

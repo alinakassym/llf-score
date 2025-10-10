@@ -17,10 +17,14 @@ import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 export default function ProfileScreen() {
   const scheme = useThemeMode();
   const c = Colors[scheme];
-  const { signOut } = useSession();
+  const { signOut, user } = useSession();
   const router = useRouter();
-  const dateOfBirth = "19.08.2005";
   const logo = require("@/assets/images/adaptive-icon.png");
+
+  // Используем данные пользователя или значения по умолчанию
+  const displayName =
+    user?.displayName || user?.email?.split("@")[0] || "Пользователь";
+  const userEmail = user?.email || "email@example.com";
 
   // выбираем правильный контейнер
   const Container: any = Platform.OS === "android" ? Animated.View : View;
@@ -51,10 +55,10 @@ export default function ProfileScreen() {
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
       >
-        <ProfileHeader title={"Ермек А."} year={dateOfBirth} logo={logo} />
+        <ProfileHeader title={displayName} year={userEmail} logo={logo} />
         <PlayerPosition
-          title={"Кайрат (Алматы)"}
-          subtitle={"Конец контракта: 31.12.2025"}
+          title={"User ID: " + (user?.uid?.slice(0, 8) || "N/A")}
+          subtitle={"Email: " + userEmail}
           logo={logo}
         />
       </LinearGradient>

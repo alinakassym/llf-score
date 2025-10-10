@@ -3,14 +3,23 @@ import * as SecureStore from "expo-secure-store";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Platform } from "react-native";
 
+export interface User {
+  uid: string;
+  email: string;
+  displayName?: string;
+  photoURL?: string;
+}
+
 interface AuthContextType {
-  signIn: (email: string, password: string) => Promise<void>;
+  signIn: (email: string, password: string, user?: User) => Promise<void>;
   signOut: () => void;
   session?: string;
+  user?: User;
   isLoading: boolean;
 }
 
 const AUTH_STORAGE_KEY = "user_session";
+const USER_STORAGE_KEY = "user_data";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -40,6 +49,7 @@ const storage = {
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<string | undefined>(undefined);
+  const [user, setUser] = useState<User | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -49,8 +59,14 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   const loadStoredSession = async () => {
     try {
       const storedSession = await storage.getItem(AUTH_STORAGE_KEY);
+      const storedUser = await storage.getItem(USER_STORAGE_KEY);
+
       if (storedSession) {
         setSession(storedSession);
+      }
+
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
       }
     } catch (error) {
       console.error("Failed to load session:", error);
@@ -60,19 +76,22 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    console.log("Session state:", { session, isLoading });
-  }, [session, isLoading]);
+    console.log("Session state:", { session, user, isLoading });
+  }, [session, user, isLoading]);
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (email: string, password: string, userData?: User) => {
     try {
       console.log("Signing in with:", email, password);
 
-      // TODO: Replace with real API call
-      // For now, we just store the email as the session token
       const sessionToken = `authenticated_${email}_${Date.now()}`;
 
       await storage.setItem(AUTH_STORAGE_KEY, sessionToken);
       setSession(sessionToken);
+
+      if (userData) {
+        await storage.setItem(USER_STORAGE_KEY, JSON.stringify(userData));
+        setUser(userData);
+      }
     } catch (error) {
       console.error("Failed to sign in:", error);
       throw error;
@@ -83,14 +102,18 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     try {
       console.log("Signing out");
       await storage.removeItem(AUTH_STORAGE_KEY);
+      await storage.removeItem(USER_STORAGE_KEY);
       setSession(undefined);
+      setUser(undefined);
     } catch (error) {
       console.error("Failed to sign out:", error);
     }
   };
 
   return (
-    <AuthContext.Provider value={{ signIn, signOut, session, isLoading }}>
+    <AuthContext.Provider
+      value={{ signIn, signOut, session, user, isLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );
