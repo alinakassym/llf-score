@@ -1,9 +1,11 @@
 // app/competition-plan.tsx
 import { Screen } from "@/components/Screen";
+import { WebViewHeader } from "@/components/WebViewHeader";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import React from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
+import WebView from "react-native-webview";
 
 export default function CompetitionPlanScreen() {
   const scheme = useThemeMode();
@@ -11,30 +13,26 @@ export default function CompetitionPlanScreen() {
 
   return (
     <Screen style={{ backgroundColor: c.background }}>
-      <ScrollView style={{ flex: 1, padding: 16 }}>
-        <Text
-          style={{
-            fontSize: 24,
-            fontWeight: "700",
-            color: c.text,
-            marginBottom: 16,
-          }}
-        >
-          План соревнований
-        </Text>
-
-        <View style={{ marginBottom: 24 }}>
-          <Text
+      <WebViewHeader title="План соревнований" />
+      <WebView
+        source={{
+          uri: "https://llf-ast.kz/plan-sorevnovanij/17-plan-sorevnovanij.html?tmpl=component&print=1&layout=default&page=",
+        }}
+        style={{ flex: 1 }}
+        startInLoadingState={true}
+        renderLoading={() => (
+          <View
             style={{
-              fontSize: 16,
-              color: c.textMuted,
-              lineHeight: 24,
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: c.background,
             }}
           >
-            Здесь будет отображаться план соревнований
-          </Text>
-        </View>
-      </ScrollView>
+            <ActivityIndicator size="large" color={c.primary} />
+          </View>
+        )}
+      />
     </Screen>
   );
 }
