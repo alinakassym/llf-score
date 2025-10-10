@@ -55,10 +55,10 @@ export default function ProfileScreen() {
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
       >
-        <ProfileHeader title={displayName} year={userEmail} logo={logo} />
+        <ProfileHeader title={displayName} year={"11.12.2000"} logo={logo} />
         <PlayerPosition
-          title={"User ID: " + (user?.uid?.slice(0, 8) || "N/A")}
-          subtitle={"Email: " + userEmail}
+          title={"Кайрат (Алматы)"}
+          subtitle={"30.12.2025"}
           logo={logo}
         />
       </LinearGradient>
