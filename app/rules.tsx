@@ -1,9 +1,10 @@
 // app/rules.tsx
 import { Screen } from "@/components/Screen";
+import { WebViewHeader } from "@/components/WebViewHeader";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import React from "react";
-import { ActivityIndicator, Text, View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { WebView } from "react-native-webview";
 
 export default function RulesScreen() {
@@ -12,18 +13,7 @@ export default function RulesScreen() {
 
   return (
     <Screen style={{ backgroundColor: c.background }}>
-      <Text
-        style={{
-          padding: 16,
-          fontSize: 24,
-          fontWeight: "700",
-          color: c.text,
-          borderBottomWidth: 1,
-          borderBottomColor: c.border,
-        }}
-      >
-        Правила ЛЛФ
-      </Text>
+      <WebViewHeader title="Правила ЛЛФ" />
       <WebView
         source={{
           uri: "https://llf-ast.kz/pravila/307-pravila-llf-2.html?tmpl=component&print=1&layout=default&page=",
