@@ -79,7 +79,11 @@ export default function MatchCard({ match, onPress }: Props) {
       >
         {/* Home team */}
         <View style={{ alignItems: "center", flex: 1 }}>
-          <ShirtIcon size={60} color1={c.warning} color2={c.warning} />
+          <ShirtIcon
+            size={60}
+            color1={match.homeTeam.color1}
+            color2={match.homeTeam.color2}
+          />
           <Text
             style={{
               color: c.text,
@@ -170,7 +174,11 @@ export default function MatchCard({ match, onPress }: Props) {
 
         {/* Away team */}
         <View style={{ alignItems: "center", flex: 1 }}>
-          <ShirtIcon size={60} color1={c.red} color2={c.primary} />
+          <ShirtIcon
+            size={60}
+            color1={match.awayTeam.color1}
+            color2={match.awayTeam.color2}
+          />
           <Text
             style={{
               color: c.text,

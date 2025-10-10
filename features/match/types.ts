@@ -7,6 +7,8 @@ export type Team = {
   name: string;
   city?: string;
   logo?: ImageSourcePropType;
+  color1?: string;
+  color2?: string;
 };
 
 export type Match = {
