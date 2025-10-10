@@ -41,7 +41,7 @@ function RootLayoutNav() {
       <SafeAreaProvider>
         <Stack
           screenOptions={{
-            headerShown: false,
+            headerShown: true,
           }}
         >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
