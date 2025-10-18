@@ -17,104 +17,100 @@ function RootLayoutNav() {
 
   if (!session) {
     return (
-      <Provider store={store}>
-        <SafeAreaProvider>
-          <Stack
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
-            <Stack.Screen
-              name="login"
-              options={{
-                headerShown: false,
-              }}
-            />
-          </Stack>
-        </SafeAreaProvider>
-      </Provider>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen
+          name="login"
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack>
     );
   }
 
   return (
-    <Provider store={store}>
-      <SafeAreaProvider>
-        <Stack
-          screenOptions={{
-            headerShown: true,
-          }}
-        >
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="profile"
-            options={{
-              headerShown: false,
-              presentation:
-                Platform.OS === "android" ? "transparentModal" : "modal",
-              animation: Platform.OS === "android" ? "fade" : "default",
-              gestureEnabled: true,
-            }}
-          />
-          <Stack.Screen
-            name="league"
-            options={{
-              headerShown: false,
-              presentation:
-                Platform.OS === "android" ? "transparentModal" : "modal",
-              animation: Platform.OS === "android" ? "fade" : "default",
-              gestureEnabled: true,
-            }}
-          />
-          <Stack.Screen
-            name="regulations"
-            options={{
-              headerShown: false,
-              presentation:
-                Platform.OS === "android" ? "transparentModal" : "modal",
-              animation: Platform.OS === "android" ? "fade" : "default",
-              gestureEnabled: true,
-            }}
-          />
-          <Stack.Screen
-            name="competition-plan"
-            options={{
-              headerShown: false,
-              presentation:
-                Platform.OS === "android" ? "transparentModal" : "modal",
-              animation: Platform.OS === "android" ? "fade" : "default",
-              gestureEnabled: true,
-            }}
-          />
-          <Stack.Screen
-            name="rules"
-            options={{
-              headerShown: false,
-              presentation:
-                Platform.OS === "android" ? "transparentModal" : "modal",
-              animation: Platform.OS === "android" ? "fade" : "default",
-              gestureEnabled: true,
-            }}
-          />
-          <Stack.Screen
-            name="contacts"
-            options={{
-              headerShown: false,
-              presentation:
-                Platform.OS === "android" ? "transparentModal" : "modal",
-              animation: Platform.OS === "android" ? "fade" : "default",
-              gestureEnabled: true,
-            }}
-          />
-        </Stack>
-      </SafeAreaProvider>
-    </Provider>
+    <Stack
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="profile"
+        options={{
+          headerShown: false,
+          presentation:
+            Platform.OS === "android" ? "transparentModal" : "modal",
+          animation: Platform.OS === "android" ? "fade" : "default",
+          gestureEnabled: true,
+        }}
+      />
+      <Stack.Screen
+        name="league"
+        options={{
+          headerShown: false,
+          presentation:
+            Platform.OS === "android" ? "transparentModal" : "modal",
+          animation: Platform.OS === "android" ? "fade" : "default",
+          gestureEnabled: true,
+        }}
+      />
+      <Stack.Screen
+        name="regulations"
+        options={{
+          headerShown: false,
+          presentation:
+            Platform.OS === "android" ? "transparentModal" : "modal",
+          animation: Platform.OS === "android" ? "fade" : "default",
+          gestureEnabled: true,
+        }}
+      />
+      <Stack.Screen
+        name="competition-plan"
+        options={{
+          headerShown: false,
+          presentation:
+            Platform.OS === "android" ? "transparentModal" : "modal",
+          animation: Platform.OS === "android" ? "fade" : "default",
+          gestureEnabled: true,
+        }}
+      />
+      <Stack.Screen
+        name="rules"
+        options={{
+          headerShown: false,
+          presentation:
+            Platform.OS === "android" ? "transparentModal" : "modal",
+          animation: Platform.OS === "android" ? "fade" : "default",
+          gestureEnabled: true,
+        }}
+      />
+      <Stack.Screen
+        name="contacts"
+        options={{
+          headerShown: false,
+          presentation:
+            Platform.OS === "android" ? "transparentModal" : "modal",
+          animation: Platform.OS === "android" ? "fade" : "default",
+          gestureEnabled: true,
+        }}
+      />
+    </Stack>
   );
 }
 
 export default function RootLayout() {
   return (
     <SessionProvider>
-      <RootLayoutNav />
+      <Provider store={store}>
+        <SafeAreaProvider>
+          <RootLayoutNav />
+        </SafeAreaProvider>
+      </Provider>
     </SessionProvider>
   );
 }

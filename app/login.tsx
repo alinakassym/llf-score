@@ -157,7 +157,7 @@ export default function LoginScreen() {
           }}
         >
           <Text style={{ color: c.textMuted }}>Нет аккаунта? </Text>
-          <LinkButton href="/signUp" title="Зарегистрироваться" />
+          <LinkButton href="/sign-up" title="Зарегистрироваться" />
         </View>
 
         {/* <View style={{ flexDirection: "row", justifyContent: "center" }}>
