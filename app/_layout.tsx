@@ -26,6 +26,7 @@ function RootLayoutNav() {
           name="login"
           options={{
             headerShown: false,
+            gestureEnabled: false,
           }}
         />
       </Stack>
