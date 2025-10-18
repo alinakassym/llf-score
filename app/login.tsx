@@ -42,14 +42,17 @@ export default function LoginScreen() {
     try {
       console.log("Login attempt:", email);
       const auth = getAuth(app);
+      console.log("auth: ", auth);
 
       // Вход в Firebase
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
       );
       console.log("Login Page res: ", userCredential);
+      const idToken = await userCredential.user.getIdToken();
+      console.log("getIdToken idToken: ", idToken);
 
       // Подготовка данных пользователя
       const userData = {
@@ -60,7 +63,7 @@ export default function LoginScreen() {
       };
 
       // Сохранение сессии и данных пользователя
-      await signIn(email, password, userData);
+      await signIn(email, password, userData, idToken);
 
       // Перенаправление на главную страницу
       router.replace("/(tabs)");
