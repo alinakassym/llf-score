@@ -16,7 +16,7 @@ export default function CompetitionPlanScreen() {
       <WebViewHeader title="План соревнований" />
       <WebView
         source={{
-          uri: "https://llf-ast.kz/plan-sorevnovanij/17-plan-sorevnovanij.html?tmpl=component&print=1&layout=default&page=",
+          uri: "https://llf-webview.vercel.app/competition-plan",
         }}
         style={{ flex: 1 }}
         startInLoadingState={true}
