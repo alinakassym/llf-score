@@ -1,7 +1,6 @@
 // contexts/auth-context.tsx
-import * as SecureStore from "expo-secure-store";
+import { storage } from "@/utils/storage";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { Platform } from "react-native";
 
 export interface User {
   uid: string;
@@ -29,30 +28,6 @@ const USER_STORAGE_KEY = "user_data";
 const ID_TOKEN_STORAGE_KEY = "id_token";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-// Storage helper для работы на всех платформах
-const storage = {
-  getItem: async (key: string): Promise<string | null> => {
-    if (Platform.OS === "web") {
-      return localStorage.getItem(key);
-    }
-    return await SecureStore.getItemAsync(key);
-  },
-  setItem: async (key: string, value: string): Promise<void> => {
-    if (Platform.OS === "web") {
-      localStorage.setItem(key, value);
-      return;
-    }
-    await SecureStore.setItemAsync(key, value);
-  },
-  removeItem: async (key: string): Promise<void> => {
-    if (Platform.OS === "web") {
-      localStorage.removeItem(key);
-      return;
-    }
-    await SecureStore.deleteItemAsync(key);
-  },
-};
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<string | undefined>(undefined);

@@ -1,15 +1,11 @@
 import { API_BASE_URL, API_TIMEOUT } from "@/config/env";
-import * as SecureStore from "expo-secure-store";
-import { Platform } from "react-native";
+import { storage } from "@/utils/storage";
 
 const ID_TOKEN_STORAGE_KEY = "id_token";
 
 async function getStoredIdToken(): Promise<string | null> {
   try {
-    if (Platform.OS === "web") {
-      return localStorage.getItem(ID_TOKEN_STORAGE_KEY);
-    }
-    return await SecureStore.getItemAsync(ID_TOKEN_STORAGE_KEY);
+    return await storage.getItem(ID_TOKEN_STORAGE_KEY);
   } catch (error) {
     console.error("Failed to get idToken from storage:", error);
     return null;
