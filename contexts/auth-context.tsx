@@ -10,17 +10,13 @@ export interface User {
 }
 
 interface AuthContextType {
-  signIn: (
-    email: string,
-    password: string,
-    user?: User,
-    idToken?: string,
-  ) => Promise<void>;
+  signIn: (email: string, password: string, user?: User) => Promise<void>;
   signOut: () => void;
   session?: string;
   user?: User;
   isLoading: boolean;
   getIdToken: () => Promise<string | null>;
+  setIdToken: (idToken: string) => Promise<void>;
 }
 
 const AUTH_STORAGE_KEY = "user_session";
@@ -61,14 +57,19 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     console.log("Session state:", { session, user, isLoading });
   }, [session, user, isLoading]);
 
-  const signIn = async (
-    email: string,
-    password: string,
-    userData?: User,
-    idToken?: string,
-  ) => {
+  const setIdToken = async (idToken: string): Promise<void> => {
     try {
-      console.log("Signing in with:", email, password, idToken);
+      await storage.setItem(ID_TOKEN_STORAGE_KEY, idToken);
+      console.log("idToken saved to storage");
+    } catch (error) {
+      console.error("Failed to save idToken:", error);
+      throw error;
+    }
+  };
+
+  const signIn = async (email: string, password: string, userData?: User) => {
+    try {
+      console.log("Signing in with:", email, password);
 
       const sessionToken = `authenticated_${email}_${Date.now()}`;
 
@@ -78,10 +79,6 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
       if (userData) {
         await storage.setItem(USER_STORAGE_KEY, JSON.stringify(userData));
         setUser(userData);
-      }
-
-      if (idToken) {
-        await storage.setItem(ID_TOKEN_STORAGE_KEY, idToken);
       }
     } catch (error) {
       console.error("Failed to sign in:", error);
@@ -113,7 +110,15 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ signIn, signOut, session, user, isLoading, getIdToken }}
+      value={{
+        signIn,
+        signOut,
+        session,
+        user,
+        isLoading,
+        getIdToken,
+        setIdToken,
+      }}
     >
       {children}
     </AuthContext.Provider>

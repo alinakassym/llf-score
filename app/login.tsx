@@ -7,6 +7,7 @@ import { Colors } from "@/constants/theme";
 import { useSession } from "@/contexts/auth-context";
 import { app } from "@/firebaseConfig.js";
 import { useThemeMode } from "@/hooks/use-theme-mode";
+import { httpGet } from "@/services/http";
 import { Redirect, useRouter } from "expo-router";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
@@ -22,7 +23,7 @@ export default function LoginScreen() {
     password: "",
   });
   const router = useRouter();
-  const { signIn, session } = useSession();
+  const { signIn, setIdToken, session } = useSession();
 
   if (session) return <Redirect href="/(tabs)" />;
 
@@ -54,6 +55,9 @@ export default function LoginScreen() {
       const idToken = await userCredential.user.getIdToken();
       console.log("getIdToken idToken: ", idToken);
 
+      // Сохранение idToken в storage (нужен для /auth/me запроса)
+      await setIdToken(idToken);
+
       // Подготовка данных пользователя
       const userData = {
         uid: userCredential.user.uid,
@@ -62,8 +66,21 @@ export default function LoginScreen() {
         photoURL: userCredential.user.photoURL || undefined,
       };
 
+      // Проверка пользователя на backend
+      try {
+        const meResponse = await httpGet("/api/auth/me");
+        console.log("Auth me response:", meResponse);
+      } catch (meError: any) {
+        console.error("Auth me failed:", meError);
+        setErrors({
+          email: "Ошибка авторизации на сервере",
+          password: "",
+        });
+        return;
+      }
+
       // Сохранение сессии и данных пользователя
-      await signIn(email, password, userData, idToken);
+      await signIn(email, password, userData);
 
       // Перенаправление на главную страницу
       router.replace("/(tabs)");

@@ -25,7 +25,7 @@ export async function httpGet<T>(path: string, init?: RequestInit): Promise<T> {
     headers: {
       Accept: "application/json",
       ...(init?.headers ?? {}),
-      Authentication: `Bearer ${idToken || ""}`,
+      Authorization: `Bearer ${idToken || ""}`,
     },
     signal: controller.signal,
     ...init,
