@@ -2,8 +2,9 @@ import { configureStore } from "@reduxjs/toolkit";
 import cities from "./cities.slice";
 import general from "./general.slice";
 import leagues from "./leagues.slice";
+import seasons from "./seasons.slice";
 export const store = configureStore({
-  reducer: { general, cities, leagues },
+  reducer: { general, cities, leagues, seasons },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
