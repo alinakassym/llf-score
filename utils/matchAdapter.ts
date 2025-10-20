@@ -45,6 +45,7 @@ const MONTH_NAMES_SHORT = [
 
 /**
  * Форматирует дату и время для отображения
+ * Использует UTC время из API без конвертации в локальное время
  */
 function formatMatchTime(
   dateTime: string,
@@ -53,21 +54,33 @@ function formatMatchTime(
   const matchDate = new Date(dateTime);
   const now = new Date();
 
-  // Время всегда в формате HH:MM
-  const timeStr = matchDate.toLocaleTimeString("ru-RU", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  // Время всегда в формате HH:MM (используем UTC время)
+  const hours = matchDate.getUTCHours().toString().padStart(2, "0");
+  const minutes = matchDate.getUTCMinutes().toString().padStart(2, "0");
+  const timeStr = `${hours}:${minutes}`;
 
   // Если матч идет сейчас
   if (isLive) {
     return { date: "Сейчас", time: timeStr };
   }
 
-  const isToday = matchDate.toDateString() === now.toDateString();
-  const isTomorrow =
-    matchDate.toDateString() ===
-    new Date(now.getTime() + 24 * 60 * 60 * 1000).toDateString();
+  // Сравниваем даты в UTC
+  const matchUTCDate = new Date(
+    Date.UTC(
+      matchDate.getUTCFullYear(),
+      matchDate.getUTCMonth(),
+      matchDate.getUTCDate(),
+    ),
+  );
+  const todayUTCDate = new Date(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()),
+  );
+  const tomorrowUTCDate = new Date(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1),
+  );
+
+  const isToday = matchUTCDate.getTime() === todayUTCDate.getTime();
+  const isTomorrow = matchUTCDate.getTime() === tomorrowUTCDate.getTime();
 
   // Если сегодня
   if (isToday) {
@@ -80,8 +93,8 @@ function formatMatchTime(
   }
 
   // Другой день - формат "15 авг"
-  const day = matchDate.getDate();
-  const month = MONTH_NAMES_SHORT[matchDate.getMonth()];
+  const day = matchDate.getUTCDate();
+  const month = MONTH_NAMES_SHORT[matchDate.getUTCMonth()];
   const dateStr = `${day} ${month}`;
 
   return { date: dateStr, time: timeStr };
