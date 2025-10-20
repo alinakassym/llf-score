@@ -2,28 +2,45 @@ import { httpGet } from "@/services/http";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type Match = {
-  id: string;
-  homeTeam: string;
-  awayTeam: string;
-  homeScore?: number;
-  awayScore?: number;
-  date: string;
-  status: string;
+  id: number;
+  dateTime: string;
+  location: string;
+  team1Id: number;
+  team1Name: string;
+  team2Id: number;
+  team2Name: string;
+  team1Score: number;
+  team2Score: number;
+  tourId: number;
 };
 
-export type Season = {
-  id: string;
-  leagueId: string;
+export type Tour = {
+  id: number;
+  number: number;
   name: string;
   startDate: string;
   endDate: string;
+  seasonId: number;
   matches: Match[];
 };
 
+export type Season = {
+  id: number;
+  name: string;
+  date: string;
+  leagueId: number;
+  leagueName: string;
+  cityId: number;
+  cityName: string;
+  leagueGroupId: number;
+  leagueGroupName: string;
+  tours: Tour[];
+};
+
 type SeasonsState = {
-  itemsByLeagueId: Record<string, Season>; // Последний сезон по leagueId
-  loadingLeagues: string[]; // Какие лиги сейчас загружаются
-  errorByLeagueId: Record<string, string | null>; // Ошибки по лигам
+  itemsByLeagueId: Record<number, Season>; // Последний сезон по leagueId
+  loadingLeagues: number[]; // Какие лиги сейчас загружаются
+  errorByLeagueId: Record<number, string | null>; // Ошибки по лигам
 };
 
 const initialState: SeasonsState = {
@@ -34,9 +51,9 @@ const initialState: SeasonsState = {
 
 // thunk для загрузки последнего сезона по leagueId
 export const fetchLastSeasonByLeagueId = createAsyncThunk<
-  { leagueId: string; season: Season },
-  string
->("seasons/fetchLastSeasonByLeagueId", async (leagueId: string) => {
+  { leagueId: number; season: Season },
+  number
+>("seasons/fetchLastSeasonByLeagueId", async (leagueId: number) => {
   const season = await httpGet<Season>(
     `/api/leagues/${leagueId}/seasons/last`,
   );
@@ -49,7 +66,7 @@ const seasonsSlice = createSlice({
   reducers: {
     setSeasonForLeague: (
       s,
-      a: PayloadAction<{ leagueId: string; season: Season }>
+      a: PayloadAction<{ leagueId: number; season: Season }>
     ) => {
       s.itemsByLeagueId[a.payload.leagueId] = a.payload.season;
     },
@@ -58,7 +75,7 @@ const seasonsSlice = createSlice({
       s.loadingLeagues = [];
       s.errorByLeagueId = {};
     },
-    clearSeasonForLeague: (s, a: PayloadAction<string>) => {
+    clearSeasonForLeague: (s, a: PayloadAction<number>) => {
       delete s.itemsByLeagueId[a.payload];
       s.loadingLeagues = s.loadingLeagues.filter(
         (leagueId) => leagueId !== a.payload,
@@ -101,11 +118,11 @@ export default seasonsSlice.reducer;
 
 // селекторы
 export type RootState = { seasons: SeasonsState }; // переопределится настоящим RootState из store.ts
-export const selectSeasonByLeague = (leagueId: string) => (s: RootState) =>
+export const selectSeasonByLeague = (leagueId: number) => (s: RootState) =>
   s.seasons.itemsByLeagueId[leagueId] || null;
 export const selectSeasonLoadingForLeague =
-  (leagueId: string) => (s: RootState) =>
+  (leagueId: number) => (s: RootState) =>
     s.seasons.loadingLeagues.includes(leagueId);
 export const selectSeasonErrorForLeague =
-  (leagueId: string) => (s: RootState) =>
+  (leagueId: number) => (s: RootState) =>
     s.seasons.errorByLeagueId[leagueId] || null;
