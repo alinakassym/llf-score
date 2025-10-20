@@ -143,43 +143,52 @@ export function adaptToursMatchesToUI(tours: Tour[]): UIMatch[] {
 
   const now = Date.now();
 
-  // Сортируем матчи: сначала текущие/ближайшие, потом будущие
-  const sortedMatches = allMatches.sort((a, b) => {
-    const timeA = new Date(a.dateTime).getTime();
-    const timeB = new Date(b.dateTime).getTime();
+  // Разделяем матчи на категории
+  const liveMatches: APIMatch[] = [];
+  const upcomingMatches: APIMatch[] = [];
+  const finishedMatches: APIMatch[] = [];
 
-    // Приоритет: матчи которые идут сейчас или скоро начнутся
-    // Сортируем по возрастанию времени от текущего момента
-    if (timeA >= now && timeB >= now) {
-      return timeA - timeB; // Оба в будущем - сортируем по возрастанию
+  allMatches.forEach((match) => {
+    const matchTime = new Date(match.dateTime).getTime();
+    const timeDiff = now - matchTime;
+
+    // Live матчи (начались и идут меньше 2 часов)
+    if (timeDiff >= 0 && timeDiff < MATCH_DURATION_MS) {
+      liveMatches.push(match);
     }
-
-    if (timeA < now && timeB < now) {
-      // Оба в прошлом
-      // Проверяем, идут ли они сейчас
-      const aIsLive = Math.abs(timeA - now) < MATCH_DURATION_MS;
-      const bIsLive = Math.abs(timeB - now) < MATCH_DURATION_MS;
-
-      if (aIsLive && !bIsLive) return -1;
-      if (!aIsLive && bIsLive) return 1;
-
-      return timeB - timeA; // Оба завершились - новее сначала
+    // Будущие матчи
+    else if (matchTime > now) {
+      upcomingMatches.push(match);
     }
-
-    // Один в будущем, другой в прошлом
-    if (timeA >= now) {
-      // A в будущем, B в прошлом
-      const bIsLive = Math.abs(timeB - now) < MATCH_DURATION_MS;
-      if (bIsLive) return 1; // Live матч приоритетнее будущего
-      return -1; // Будущий матч приоритетнее завершенного
-    } else {
-      // B в будущем, A в прошлом
-      const aIsLive = Math.abs(timeA - now) < MATCH_DURATION_MS;
-      if (aIsLive) return -1; // Live матч приоритетнее будущего
-      return 1; // Будущий матч приоритетнее завершенного
+    // Завершенные матчи
+    else {
+      finishedMatches.push(match);
     }
   });
 
+  // Сортируем каждую категорию
+  liveMatches.sort(
+    (a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime(),
+  );
+  upcomingMatches.sort(
+    (a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime(),
+  );
+  finishedMatches.sort(
+    (a, b) => new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime(),
+  ); // Завершенные - от новых к старым
+
+  // Объединяем: сначала live, потом upcoming, потом finished
+  console.log("liveMatches: ", liveMatches);
+  console.log("upcomingMatches: ", upcomingMatches);
+  console.log("finishedMatches: ", finishedMatches);
+  const sortedMatches = [
+    ...liveMatches,
+    ...upcomingMatches,
+    ...finishedMatches,
+  ];
+
   // Берем первые 10 матчей и конвертируем в UI формат
-  return sortedMatches.slice(0, 10).map(adaptAPIMatchToUI);
+  const sortedResult = sortedMatches.slice(0, 10).map(adaptAPIMatchToUI);
+  console.log("sortedResult: ", sortedResult);
+  return sortedResult;
 }
