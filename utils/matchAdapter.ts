@@ -1,4 +1,4 @@
-import { Match as UIMatch, MatchStatus } from "@/features/match/types";
+import { MatchStatus, Match as UIMatch } from "@/features/match/types";
 import { Match as APIMatch, Tour } from "@/store/seasons.slice";
 
 const MATCH_DURATION_MS = 2 * 60 * 60 * 1000; // 2 часа (матч + запас)
@@ -28,40 +28,63 @@ function getMatchStatus(dateTime: string): {
   return { status: "finished", isLive: false };
 }
 
-/**
- * Форматирует время для отображения
- */
-function formatMatchTime(dateTime: string, isLive: boolean): string {
-  if (isLive) {
-    return "Сейчас";
-  }
+const MONTH_NAMES_SHORT = [
+  "янв",
+  "фев",
+  "мар",
+  "апр",
+  "май",
+  "июн",
+  "июл",
+  "авг",
+  "сен",
+  "окт",
+  "ноя",
+  "дек",
+];
 
+/**
+ * Форматирует дату и время для отображения
+ */
+function formatMatchTime(
+  dateTime: string,
+  isLive: boolean,
+): { date: string; time: string } {
   const matchDate = new Date(dateTime);
   const now = new Date();
-  const isToday = matchDate.toDateString() === now.toDateString();
-  const isTomorrow =
-    matchDate.toDateString() ===
-    new Date(now.getTime() + 24 * 60 * 60 * 1000).toDateString();
 
+  // Время всегда в формате HH:MM
   const timeStr = matchDate.toLocaleTimeString("ru-RU", {
     hour: "2-digit",
     minute: "2-digit",
   });
 
+  // Если матч идет сейчас
+  if (isLive) {
+    return { date: "Сейчас", time: timeStr };
+  }
+
+  const isToday = matchDate.toDateString() === now.toDateString();
+  const isTomorrow =
+    matchDate.toDateString() ===
+    new Date(now.getTime() + 24 * 60 * 60 * 1000).toDateString();
+
+  // Если сегодня
   if (isToday) {
-    return timeStr;
+    return { date: "Сегодня", time: timeStr };
   }
 
+  // Если завтра
   if (isTomorrow) {
-    return `Завтра ${timeStr}`;
+    return { date: "Завтра", time: timeStr };
   }
 
-  const dateStr = matchDate.toLocaleDateString("ru-RU", {
-    day: "2-digit",
-    month: "2-digit",
-  });
+  // Другой день - формат "15 авг"
+  const day = matchDate.getDate();
+  const month = MONTH_NAMES_SHORT[matchDate.getMonth()];
+  const dateStr = `${day} ${month}`;
 
-  return `${dateStr} ${timeStr}`;
+  return { date: dateStr, time: timeStr };
 }
 
 /**
@@ -69,6 +92,7 @@ function formatMatchTime(dateTime: string, isLive: boolean): string {
  */
 export function adaptAPIMatchToUI(apiMatch: APIMatch): UIMatch {
   const { status, isLive } = getMatchStatus(apiMatch.dateTime);
+  const { date, time } = formatMatchTime(apiMatch.dateTime, isLive);
 
   return {
     id: String(apiMatch.id),
@@ -81,7 +105,9 @@ export function adaptAPIMatchToUI(apiMatch: APIMatch): UIMatch {
     homeScore: apiMatch.team1Score,
     awayScore: apiMatch.team2Score,
     status,
-    time: formatMatchTime(apiMatch.dateTime, isLive),
+    date,
+    time,
+    dateTime: apiMatch.dateTime,
     tournament: apiMatch.location,
     round: `Тур ${apiMatch.tourId}`,
     isLive,

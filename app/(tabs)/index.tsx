@@ -44,7 +44,9 @@ export default function TabOneScreen() {
   // Конвертируем матчи из API формата в UI формат
   const matches = useMemo(() => {
     if (!season || !season.tours) return [];
-    return adaptToursMatchesToUI(season.tours);
+    const res = adaptToursMatchesToUI(season.tours);
+    console.log("index res: ", res);
+    return res;
   }, [season]);
 
   return (

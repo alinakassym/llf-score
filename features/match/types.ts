@@ -18,7 +18,9 @@ export type Match = {
   homeScore?: number;
   awayScore?: number;
   status: MatchStatus;
-  time: string; // "15:00" или "Сейчас" для live
+  dateTime: any;
+  date: string; // "Сейчас" | "Сегодня" | "Завтра" | "15 авг"
+  time: string; // "15:00"
   tournament: string; // "40+ жас санатындағы IX чемпионаты"
   round?: string; // "Группа A, 1 - тур"
   isLive: boolean;

@@ -215,7 +215,9 @@ export default function MatchCard({ match, onPress }: Props) {
             paddingTop: 12,
             borderTopWidth: 1,
             borderTopColor: c.border,
+            flexDirection: "row",
             alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
           <Text
@@ -225,7 +227,25 @@ export default function MatchCard({ match, onPress }: Props) {
               textAlign: "center",
             }}
           >
+            {match.date}
+          </Text>
+          <Text
+            style={{
+              color: c.textMuted,
+              fontSize: 12,
+              textAlign: "center",
+            }}
+          >
             {match.round}
+          </Text>
+          <Text
+            style={{
+              color: c.textMuted,
+              fontSize: 12,
+              textAlign: "center",
+            }}
+          >
+            {match.time}
           </Text>
         </View>
       )}
