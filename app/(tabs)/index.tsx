@@ -10,6 +10,7 @@ import { mockNews } from "@/features/news/mocks";
 import NewsList from "@/features/news/NewsList";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { selectLeagueId } from "@/store/general.slice";
 import {
   fetchLastSeasonByLeagueId,
   selectSeasonByLeague,
@@ -30,16 +31,18 @@ export default function TabOneScreen() {
     "https://picsum.photos/400/200?random=4",
   ];
 
-  // TODO: Получать leagueId динамически из настроек или контекста
-  const LEAGUE_ID = 1;
+  // Получаем текущий leagueId из Redux store
+  const leagueId = useAppSelector(selectLeagueId);
 
-  const season = useAppSelector(selectSeasonByLeague(LEAGUE_ID));
-  const isLoading = useAppSelector(selectSeasonLoadingForLeague(LEAGUE_ID));
+  const season = useAppSelector(selectSeasonByLeague(leagueId));
+  const isLoading = useAppSelector(selectSeasonLoadingForLeague(leagueId));
 
-  // Загрузка данных сезона при монтировании
+  // Загрузка данных сезона при монтировании или изменении leagueId
   useEffect(() => {
-    dispatch(fetchLastSeasonByLeagueId(LEAGUE_ID));
-  }, [dispatch]);
+    if (leagueId) {
+      dispatch(fetchLastSeasonByLeagueId(leagueId));
+    }
+  }, [dispatch, leagueId]);
 
   // Конвертируем матчи из API формата в UI формат
   const matches = useMemo(() => {

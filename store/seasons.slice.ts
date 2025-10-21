@@ -28,7 +28,7 @@ export type Season = {
   id: number;
   name: string;
   date: string;
-  leagueId: number;
+  leagueId: string;
   leagueName: string;
   cityId: number;
   cityName: string;
@@ -38,9 +38,9 @@ export type Season = {
 };
 
 type SeasonsState = {
-  itemsByLeagueId: Record<number, Season>; // Последний сезон по leagueId
-  loadingLeagues: number[]; // Какие лиги сейчас загружаются
-  errorByLeagueId: Record<number, string | null>; // Ошибки по лигам
+  itemsByLeagueId: Record<string, Season>; // Последний сезон по leagueId
+  loadingLeagues: string[]; // Какие лиги сейчас загружаются
+  errorByLeagueId: Record<string, string | null>; // Ошибки по лигам
 };
 
 const initialState: SeasonsState = {
@@ -51,9 +51,9 @@ const initialState: SeasonsState = {
 
 // thunk для загрузки последнего сезона по leagueId
 export const fetchLastSeasonByLeagueId = createAsyncThunk<
-  { leagueId: number; season: Season },
-  number
->("seasons/fetchLastSeasonByLeagueId", async (leagueId: number) => {
+  { leagueId: string; season: Season },
+  string
+>("seasons/fetchLastSeasonByLeagueId", async (leagueId: string) => {
   const season = await httpGet<Season>(
     `/api/leagues/${leagueId}/seasons/last`,
   );
@@ -66,7 +66,7 @@ const seasonsSlice = createSlice({
   reducers: {
     setSeasonForLeague: (
       s,
-      a: PayloadAction<{ leagueId: number; season: Season }>
+      a: PayloadAction<{ leagueId: string; season: Season }>
     ) => {
       s.itemsByLeagueId[a.payload.leagueId] = a.payload.season;
     },
@@ -75,7 +75,7 @@ const seasonsSlice = createSlice({
       s.loadingLeagues = [];
       s.errorByLeagueId = {};
     },
-    clearSeasonForLeague: (s, a: PayloadAction<number>) => {
+    clearSeasonForLeague: (s, a: PayloadAction<string>) => {
       delete s.itemsByLeagueId[a.payload];
       s.loadingLeagues = s.loadingLeagues.filter(
         (leagueId) => leagueId !== a.payload,
@@ -118,11 +118,11 @@ export default seasonsSlice.reducer;
 
 // селекторы
 export type RootState = { seasons: SeasonsState }; // переопределится настоящим RootState из store.ts
-export const selectSeasonByLeague = (leagueId: number) => (s: RootState) =>
+export const selectSeasonByLeague = (leagueId: string) => (s: RootState) =>
   s.seasons.itemsByLeagueId[leagueId] || null;
 export const selectSeasonLoadingForLeague =
-  (leagueId: number) => (s: RootState) =>
+  (leagueId: string) => (s: RootState) =>
     s.seasons.loadingLeagues.includes(leagueId);
 export const selectSeasonErrorForLeague =
-  (leagueId: number) => (s: RootState) =>
+  (leagueId: string) => (s: RootState) =>
     s.seasons.errorByLeagueId[leagueId] || null;
