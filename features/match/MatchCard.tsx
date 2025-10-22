@@ -148,8 +148,8 @@ export default function MatchCard({ match, onPress }: Props) {
               {match.awayScore ?? "—"}
             </Text>
           </View>
-          {match.isLive && (
-            <View style={{ gap: 4, alignItems: "center" }}>
+          <View style={{ gap: 4, alignItems: "center" }}>
+            {match.isLive && (
               <View
                 style={{
                   backgroundColor: c.error,
@@ -168,9 +168,10 @@ export default function MatchCard({ match, onPress }: Props) {
                   Live
                 </Text>
               </View>
-              <LLFLogo height={12} width={84} color={c.text} />
-            </View>
-          )}
+            )}
+
+            <LLFLogo height={12} width={84} color={c.text} />
+          </View>
         </View>
 
         {/* Away team */}
