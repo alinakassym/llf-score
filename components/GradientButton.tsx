@@ -35,6 +35,7 @@ export const GradientButton: FC<Props> = ({
 
   return (
     <TouchableOpacity
+      activeOpacity={0.7}
       onPress={onPress}
       disabled={isDisabled}
       accessibilityRole="button"
