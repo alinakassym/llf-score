@@ -9,7 +9,7 @@ export type UserProfile = {
   firebaseUid: string;
   email: string;
   emailVerified: boolean;
-  role: "admin" | "user";
+  role: "admin" | "orgadmin" | "teamadmin" | "player" | "user";
 };
 
 export type UserState = {
