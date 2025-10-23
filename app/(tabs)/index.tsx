@@ -9,8 +9,8 @@ import MenuGrid from "@/features/MenuGrid";
 import { mockNews } from "@/features/news/mocks";
 import NewsList from "@/features/news/NewsList";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { selectLeagueId } from "@/store/general.slice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   fetchLastSeasonByLeagueId,
   selectSeasonByLeague,
