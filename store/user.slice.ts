@@ -1,5 +1,5 @@
 import { app } from "@/firebaseConfig.js";
-import { httpGet } from "@/services/http";
+import { httpGet, httpPost } from "@/services/http";
 import { storage } from "@/utils/storage";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -15,11 +15,20 @@ export type UserProfile = {
 export type UserFullProfile = {
   id: string;
   firebaseUid: string;
-  firstName?: string;
-  lastName?: string;
-  dateOfBirth?: string;
+  firstName: string;
+  lastName: string;
+  middleName?: string;
+  identificationNumber: string;
+  dateOfBirth: string;
   phoneNumber?: string;
-  // добавим другие поля по мере необходимости
+};
+
+export type CreateProfileData = {
+  firstName: string;
+  lastName: string;
+  middleName?: string;
+  identificationNumber: string;
+  dateOfBirth: string;
 };
 
 export type UserState = {
@@ -182,6 +191,28 @@ export const fetchUserFullProfile = createAsyncThunk<
   }
 });
 
+// Async thunk для создания профиля пользователя
+export const createUserProfile = createAsyncThunk<
+  UserFullProfile,
+  CreateProfileData,
+  { rejectValue: string }
+>("user/createUserProfile", async (profileData, { rejectWithValue }) => {
+  try {
+    console.log("Creating user profile:", profileData);
+    const response = await httpPost<UserFullProfile>(
+      "/api/users/me",
+      profileData,
+    );
+    console.log("Created user profile:", response);
+    return response;
+  } catch (error: any) {
+    console.error("Failed to create user profile:", error);
+    return rejectWithValue(
+      error.message || "Ошибка создания профиля пользователя",
+    );
+  }
+});
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -237,6 +268,21 @@ const userSlice = createSlice({
         s.error = null;
       })
       .addCase(fetchUserFullProfile.rejected, (s, a) => {
+        s.loading = false;
+        s.error = a.payload || "Неизвестная ошибка";
+      })
+      // createUserProfile
+      .addCase(createUserProfile.pending, (s) => {
+        s.loading = true;
+        s.error = null;
+      })
+      .addCase(createUserProfile.fulfilled, (s, a) => {
+        s.loading = false;
+        s.fullProfile = a.payload;
+        s.hasProfile = true;
+        s.error = null;
+      })
+      .addCase(createUserProfile.rejected, (s, a) => {
         s.loading = false;
         s.error = a.payload || "Неизвестная ошибка";
       });

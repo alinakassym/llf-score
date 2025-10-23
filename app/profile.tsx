@@ -87,8 +87,7 @@ export default function ProfileScreen() {
             <GradientButton
               title="Заполнить профиль"
               onPress={() => {
-                // TODO: Добавить навигацию на страницу заполнения профиля
-                console.log("Navigating to profile creation");
+                router.push("/create-profile");
               }}
               style={{ marginTop: 12 }}
             />
