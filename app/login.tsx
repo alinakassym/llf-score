@@ -5,11 +5,10 @@ import LoginHeader from "@/components/LoginHeader";
 import TextField from "@/components/TextField";
 import { Colors } from "@/constants/theme";
 import { useSession } from "@/contexts/auth-context";
-import { app } from "@/firebaseConfig.js";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { httpGet } from "@/services/http";
+import { useAppDispatch } from "@/store/hooks";
+import { loginUser } from "@/store/user.slice";
 import { Redirect, useRouter } from "expo-router";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 
@@ -23,7 +22,8 @@ export default function LoginScreen() {
     password: "",
   });
   const router = useRouter();
-  const { signIn, setIdToken, session } = useSession();
+  const { session, signIn } = useSession();
+  const dispatch = useAppDispatch();
 
   if (session) return <Redirect href="/(tabs)" />;
 
@@ -41,88 +41,29 @@ export default function LoginScreen() {
     }
 
     try {
-      console.log("Login attempt:", email);
-      const auth = getAuth(app);
-      console.log("auth: ", auth);
+      // Вызываем thunk для логина (Firebase + /api/auth/me)
+      const result = await dispatch(loginUser({ email, password })).unwrap();
 
-      // Вход в Firebase
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password,
-      );
-      console.log("Login Page res: ", userCredential);
-      const idToken = await userCredential.user.getIdToken();
-      console.log("getIdToken idToken: ", idToken);
+      // Сохраняем сессию в auth-context
+      await signIn(email, password, result.userData);
 
-      // Сохранение idToken в storage (нужен для /auth/me запроса)
-      await setIdToken(idToken);
-
-      // Подготовка данных пользователя
-      const userData = {
-        uid: userCredential.user.uid,
-        email: userCredential.user.email || email,
-        displayName: userCredential.user.displayName || undefined,
-        photoURL: userCredential.user.photoURL || undefined,
-      };
-
-      // Проверка пользователя на backend
-      try {
-        const meResponse = await httpGet("/api/auth/me");
-        console.log("Auth me response:", meResponse);
-      } catch (meError: any) {
-        console.error("Auth me failed:", meError);
-        setErrors({
-          email: "Ошибка авторизации на сервере",
-          password: "",
-        });
-        return;
-      }
-
-      // Сохранение сессии и данных пользователя
-      await signIn(email, password, userData);
-
-      // Перенаправление на главную страницу
+      // Если успешно - перенаправляем на главную
+      console.log("Login successful:", result.profile);
       router.replace("/(tabs)");
     } catch (error: any) {
-      console.error("Login failed:", error);
-      console.error("Error code:", error.code);
-      console.error("Error message:", error.message);
+      console.error("Login failed from thunk:", error);
 
-      // Показываем ошибки Firebase
-      const errorCode = error.code || "";
-      const errorMessage = error.message || "";
+      // Обработка ошибок
+      const errorMessage = error || "Неизвестная ошибка";
 
-      if (
-        errorCode === "auth/user-not-found" ||
-        errorMessage.includes("USER_NOT_FOUND")
-      ) {
-        setErrors({ email: "Пользователь не найден", password: "" });
-      } else if (
-        errorCode === "auth/wrong-password" ||
-        errorMessage.includes("INVALID_PASSWORD")
-      ) {
-        setErrors({ email: "", password: "Неверный пароль" });
-      } else if (
-        errorCode === "auth/invalid-email" ||
-        errorMessage.includes("INVALID_EMAIL")
-      ) {
-        setErrors({ email: "Некорректный email", password: "" });
-      } else if (
-        errorCode === "auth/invalid-credential" ||
-        errorMessage.includes("INVALID_LOGIN_CREDENTIALS")
-      ) {
-        setErrors({ email: "Неверный email или пароль", password: "" });
-      } else if (errorMessage.includes("TOO_MANY_ATTEMPTS_TRY_LATER")) {
-        setErrors({
-          email: "Слишком много попыток. Попробуйте позже",
-          password: "",
-        });
+      if (errorMessage.includes("не найден")) {
+        setErrors({ email: errorMessage, password: "" });
+      } else if (errorMessage.includes("пароль")) {
+        setErrors({ email: "", password: errorMessage });
+      } else if (errorMessage.includes("email")) {
+        setErrors({ email: errorMessage, password: "" });
       } else {
-        setErrors({
-          email: `Ошибка входа: ${errorMessage}`,
-          password: "",
-        });
+        setErrors({ email: errorMessage, password: "" });
       }
     }
   };
