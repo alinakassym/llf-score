@@ -11,6 +11,7 @@ import {
   setLeagueId,
 } from "@/store/general.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { selectUserHasProfile } from "@/store/user.slice";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React from "react";
@@ -23,6 +24,7 @@ export const TopBar: React.FC = () => {
   const dispatch = useAppDispatch();
   const cityId = useAppSelector(selectCityId);
   const leagueId = useAppSelector(selectLeagueId);
+  const hasProfile = useAppSelector(selectUserHasProfile);
 
   const handleLoginPress = () => {
     router.push("/login");
@@ -66,6 +68,7 @@ export const TopBar: React.FC = () => {
           icon="person"
           color={c.white}
           onPress={handleProfilePress}
+          showDot={!hasProfile}
         />
       </View>
     </LinearGradient>

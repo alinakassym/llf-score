@@ -7,7 +7,7 @@ import { Colors } from "@/constants/theme";
 import { useSession } from "@/contexts/auth-context";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { useAppDispatch } from "@/store/hooks";
-import { loginUser } from "@/store/user.slice";
+import { fetchUserFullProfile, loginUser } from "@/store/user.slice";
 import { Redirect, useRouter } from "expo-router";
 import React, { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
@@ -46,6 +46,9 @@ export default function LoginScreen() {
 
       // Сохраняем сессию в auth-context
       await signIn(email, password, result.userData);
+
+      // Проверяем наличие полного профиля пользователя
+      await dispatch(fetchUserFullProfile());
 
       // Если успешно - перенаправляем на главную
       console.log("Login successful:", result.profile);

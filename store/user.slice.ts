@@ -12,8 +12,20 @@ export type UserProfile = {
   role: "admin" | "orgadmin" | "teamadmin" | "player" | "user";
 };
 
+export type UserFullProfile = {
+  id: string;
+  firebaseUid: string;
+  firstName?: string;
+  lastName?: string;
+  dateOfBirth?: string;
+  phoneNumber?: string;
+  // добавим другие поля по мере необходимости
+};
+
 export type UserState = {
   profile: UserProfile | null;
+  fullProfile: UserFullProfile | null;
+  hasProfile: boolean;
   loading: boolean;
   error: string | null;
 };
@@ -31,6 +43,8 @@ export type LoginResult = {
 
 const initialState: UserState = {
   profile: null,
+  fullProfile: null,
+  hasProfile: false,
   loading: false,
   error: null,
 };
@@ -140,6 +154,34 @@ export const fetchUserProfile = createAsyncThunk<
   }
 });
 
+// Async thunk для получения полного профиля пользователя из /api/users/me
+export const fetchUserFullProfile = createAsyncThunk<
+  { fullProfile: UserFullProfile | null; hasProfile: boolean },
+  void,
+  { rejectValue: string }
+>("user/fetchUserFullProfile", async (_, { rejectWithValue }) => {
+  try {
+    const response = await httpGet<UserFullProfile>("/api/users/me");
+    console.log("Fetched user full profile:", response);
+    return { fullProfile: response, hasProfile: true };
+  } catch (error: any) {
+    console.error("Failed to fetch user full profile:", error);
+
+    // Проверяем 404 с сообщением об отсутствии профиля
+    if (
+      error.status === 404 ||
+      error.message?.includes("User profile not found")
+    ) {
+      console.log("User profile not found - needs to create profile");
+      return { fullProfile: null, hasProfile: false };
+    }
+
+    return rejectWithValue(
+      error.message || "Ошибка получения полного профиля пользователя",
+    );
+  }
+});
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -182,6 +224,21 @@ const userSlice = createSlice({
       .addCase(fetchUserProfile.rejected, (s, a) => {
         s.loading = false;
         s.error = a.payload || "Неизвестная ошибка";
+      })
+      // fetchUserFullProfile
+      .addCase(fetchUserFullProfile.pending, (s) => {
+        s.loading = true;
+        s.error = null;
+      })
+      .addCase(fetchUserFullProfile.fulfilled, (s, a) => {
+        s.loading = false;
+        s.fullProfile = a.payload.fullProfile;
+        s.hasProfile = a.payload.hasProfile;
+        s.error = null;
+      })
+      .addCase(fetchUserFullProfile.rejected, (s, a) => {
+        s.loading = false;
+        s.error = a.payload || "Неизвестная ошибка";
       });
   },
 });
@@ -192,5 +249,7 @@ export default userSlice.reducer;
 // Селекторы
 export type RootState = { user: UserState };
 export const selectUserProfile = (s: RootState) => s.user.profile;
+export const selectUserFullProfile = (s: RootState) => s.user.fullProfile;
+export const selectUserHasProfile = (s: RootState) => s.user.hasProfile;
 export const selectUserLoading = (s: RootState) => s.user.loading;
 export const selectUserError = (s: RootState) => s.user.error;
