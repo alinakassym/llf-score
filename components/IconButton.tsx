@@ -1,11 +1,14 @@
+import { Colors } from "@/constants/theme";
+import { useThemeMode } from "@/hooks/use-theme-mode";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { FlatIcon } from "./icons";
 
 type Props = {
   icon: keyof typeof Ionicons.glyphMap;
   color?: string;
   size?: "sm" | "md" | "lg";
+  showDot?: boolean;
   onPress?: () => void;
 };
 
@@ -13,6 +16,7 @@ export default function IconButton({
   icon,
   size = "md",
   color = "#FFFFFF",
+  showDot = false,
   onPress,
 }: Props) {
   const getSizeParams = () => {
@@ -43,12 +47,15 @@ export default function IconButton({
         };
     }
   };
+  const scheme = useThemeMode();
+  const c = Colors[scheme];
   return (
     <TouchableOpacity
       activeOpacity={0.7}
       onPress={onPress}
       style={{
         ...getSizeParams(),
+        position: "relative",
         alignItems: "center",
         justifyContent: "center",
         flex: 1,
@@ -62,6 +69,19 @@ export default function IconButton({
           name={icon}
           size={icon === "person-circle-outline" ? 22 : 20}
           color={color}
+        />
+      )}
+      {showDot && (
+        <View
+          style={{
+            position: "absolute",
+            top: 6,
+            right: 6,
+            height: 6,
+            width: 6,
+            borderRadius: 4,
+            backgroundColor: c.error,
+          }}
         />
       )}
     </TouchableOpacity>
