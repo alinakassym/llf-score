@@ -47,7 +47,7 @@ function RootLayoutNav() {
           presentation:
             Platform.OS === "android" ? "transparentModal" : "modal",
           animation: Platform.OS === "android" ? "fade" : "default",
-          gestureEnabled: true,
+          gestureEnabled: false,
         }}
       />
       <Stack.Screen
