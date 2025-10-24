@@ -9,7 +9,7 @@ import { useAppDispatch } from "@/store/hooks";
 import { createUserProfile } from "@/store/user.slice";
 import { validateIIN } from "@/utils/validateIIN";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Stack, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import React, { useRef, useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -135,19 +135,13 @@ export default function CreateProfileScreen() {
   };
 
   return (
-    <>
-      <Stack.Screen
-        options={{
-          gestureEnabled: false,
-        }}
-      />
-      <View
-        style={{
-          position: "relative",
-          backgroundColor: c.background,
-          flex: 1,
-        }}
-      >
+    <View
+      style={{
+        position: "relative",
+        backgroundColor: c.background,
+        flex: 1,
+      }}
+    >
       <View
         style={{
           position: "absolute",
@@ -281,6 +275,5 @@ export default function CreateProfileScreen() {
         </ScrollView>
       </KeyboardAvoidingView>
     </View>
-    </>
   );
 }
