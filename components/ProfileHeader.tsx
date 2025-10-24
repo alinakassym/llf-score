@@ -96,6 +96,7 @@ export default function ProfileHeader({ title, year, logo, onClose }: Props) {
           </View>
           <TouchableOpacity
             activeOpacity={0.7}
+            onPress={() => router.push("/create-profile")}
             style={{
               paddingVertical: 4,
               paddingHorizontal: 8,
@@ -108,7 +109,7 @@ export default function ProfileHeader({ title, year, logo, onClose }: Props) {
               backgroundColor: c.opacity,
             }}
             accessibilityRole="button"
-            accessibilityLabel="Выбрать сезон"
+            accessibilityLabel="Редактировать профиль"
           >
             <Ionicons name="pencil" size={12} color={"#FFFFFF"} />
             <Text
