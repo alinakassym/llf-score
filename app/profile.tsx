@@ -8,7 +8,7 @@ import PlayerTabs from "@/features/PlayerTabs";
 import { app } from "@/firebaseConfig.js";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { useAppSelector } from "@/store/hooks";
-import { selectUserHasProfile } from "@/store/user.slice";
+import { selectUserFullProfile, selectUserHasProfile } from "@/store/user.slice";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { signOut as firebaseSignOut, getAuth } from "firebase/auth";
@@ -23,6 +23,7 @@ export default function ProfileScreen() {
   const router = useRouter();
   const logo = require("@/assets/images/adaptive-icon.png");
   const hasProfile = useAppSelector(selectUserHasProfile);
+  const fullProfile = useAppSelector(selectUserFullProfile);
 
   // Состояние для показа/скрытия блока предупреждения
   const [showWarning, setShowWarning] = useState(true);
@@ -32,9 +33,11 @@ export default function ProfileScreen() {
     setShowWarning(true);
   }, []);
 
-  // Используем данные пользователя или значения по умолчанию
-  const displayName = user?.displayName || user?.email || "Пользователь";
-  const userEmail = user?.email || "email@example.com";
+  // Используем данные из fullProfile если есть, иначе из user
+  const displayName = fullProfile
+    ? `${fullProfile.firstName} ${fullProfile.lastName}`
+    : user?.displayName || user?.email || "Пользователь";
+  const birthDate = fullProfile?.dateOfBirth || "Дата не указана";
 
   // выбираем правильный контейнер
   const Container: any = Platform.OS === "android" ? Animated.View : View;
@@ -70,7 +73,7 @@ export default function ProfileScreen() {
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
       >
-        <ProfileHeader title={displayName} year={"birthdate"} logo={logo} />
+        <ProfileHeader title={displayName} year={birthDate} logo={logo} />
         <PlayerPosition
           title={"Кайрат (Алматы)"}
           subtitle={"30.12.2025"}

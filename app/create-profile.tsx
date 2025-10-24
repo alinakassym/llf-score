@@ -4,6 +4,7 @@ import GradientButton from "@/components/GradientButton";
 import LoginHeader from "@/components/LoginHeader";
 import TextField from "@/components/TextField";
 import { Colors } from "@/constants/theme";
+import { useSession } from "@/contexts/auth-context";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { useAppDispatch } from "@/store/hooks";
 import { createUserProfile } from "@/store/user.slice";
@@ -24,6 +25,7 @@ export default function CreateProfileScreen() {
   const c = Colors[scheme];
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const { updateUserDisplayName } = useSession();
 
   const scrollViewRef = useRef<ScrollView>(null);
   const fieldRefs = useRef<{ [key: string]: number }>({});
@@ -110,6 +112,10 @@ export default function CreateProfileScreen() {
 
       // Отправка данных на сервер
       await dispatch(createUserProfile(profileData)).unwrap();
+
+      // Обновление displayName в localStorage
+      const displayName = `${profileData.firstName} ${profileData.lastName}`;
+      await updateUserDisplayName(displayName);
 
       // Перенаправление на страницу профиля
       console.log("Profile created successfully");

@@ -1,15 +1,25 @@
 // app/_layout.tsx
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { SessionProvider, useSession } from "@/contexts/auth-context";
+import { useAppDispatch } from "@/store/hooks";
 import { store } from "@/store/store";
+import { fetchUserFullProfile } from "@/store/user.slice";
 import { Stack } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 import { Platform } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 
 function RootLayoutNav() {
   const { session, isLoading } = useSession();
+  const dispatch = useAppDispatch();
+
+  // Загружаем профиль пользователя при старте приложения если есть сессия
+  useEffect(() => {
+    if (session && !isLoading) {
+      dispatch(fetchUserFullProfile());
+    }
+  }, [session, isLoading, dispatch]);
 
   if (isLoading) {
     return <LoadingScreen />;

@@ -11,12 +11,13 @@ export interface User {
 
 interface AuthContextType {
   signIn: (email: string, password: string, user?: User) => Promise<void>;
-  signOut: () => void;
+  signOut: () => Promise<void>;
   session?: string;
   user?: User;
   isLoading: boolean;
   getIdToken: () => Promise<string | null>;
   setIdToken: (idToken: string) => Promise<void>;
+  updateUserDisplayName: (displayName: string) => Promise<void>;
 }
 
 const AUTH_STORAGE_KEY = "user_session";
@@ -108,6 +109,20 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const updateUserDisplayName = async (displayName: string): Promise<void> => {
+    try {
+      if (user) {
+        const updatedUser = { ...user, displayName };
+        await storage.setItem(USER_STORAGE_KEY, JSON.stringify(updatedUser));
+        setUser(updatedUser);
+        console.log("Updated user displayName:", displayName);
+      }
+    } catch (error) {
+      console.error("Failed to update user displayName:", error);
+      throw error;
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -118,6 +133,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
         isLoading,
         getIdToken,
         setIdToken,
+        updateUserDisplayName,
       }}
     >
       {children}
