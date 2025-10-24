@@ -199,10 +199,7 @@ export const createUserProfile = createAsyncThunk<
 >("user/createUserProfile", async (profileData, { rejectWithValue }) => {
   try {
     console.log("Creating user profile:", profileData);
-    const response = await httpPost<UserFullProfile>(
-      "/api/users/me",
-      profileData,
-    );
+    const response = await httpPost<UserFullProfile>("/api/users", profileData);
     console.log("Created user profile:", response);
     return response;
   } catch (error: any) {
