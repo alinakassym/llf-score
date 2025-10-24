@@ -14,7 +14,6 @@
 function validateBirthDate(iin: string): boolean {
   if (iin.length !== 12) return false;
 
-  const year = parseInt(iin.substring(0, 2), 10);
   const month = parseInt(iin.substring(2, 4), 10);
   const day = parseInt(iin.substring(4, 6), 10);
 
@@ -102,19 +101,19 @@ export function validateIIN(iin: string): {
 
   // Вспомогательная проверка: дата рождения
   if (!validateBirthDate(cleanIIN)) {
-    return { isValid: false, error: "Некорректная дата рождения в ИИН" };
+    return { isValid: false, error: "Некорректный ИИН" };
   }
 
   // Вспомогательная проверка: 7-й разряд (век и пол)
   if (!validateCenturyGender(cleanIIN)) {
-    return { isValid: false, error: "Некорректный разряд века/пола в ИИН" };
+    return { isValid: false, error: "Некорректный ИИН" };
   }
 
   // Основная проверка: контрольная сумма
   const checksum = calculateChecksum(cleanIIN);
 
   if (checksum === null) {
-    return { isValid: false, error: "Некорректная контрольная сумма ИИН" };
+    return { isValid: false, error: "Некорректный ИИН" };
   }
 
   const controlDigit = parseInt(cleanIIN[11], 10);
@@ -122,7 +121,7 @@ export function validateIIN(iin: string): {
   if (checksum !== controlDigit) {
     return {
       isValid: false,
-      error: "Контрольная цифра ИИН не совпадает",
+      error: "Некорректный ИИН",
     };
   }
 

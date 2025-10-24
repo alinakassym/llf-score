@@ -1,4 +1,5 @@
 // app/create-profile.tsx
+import DatePickerField from "@/components/DatePickerField";
 import GradientButton from "@/components/GradientButton";
 import LoginHeader from "@/components/LoginHeader";
 import TextField from "@/components/TextField";
@@ -143,7 +144,14 @@ export default function CreateProfileScreen() {
         title="Заполнение профиля"
         text="Пожалуйста, заполните все обязательные поля для создания вашего профиля"
       />
-      <ScrollView style={{ padding: 16, height: "100%" }}>
+      <ScrollView
+        style={{
+          paddingHorizontal: 16,
+          paddingTop: 16,
+          paddingBottom: 1100,
+          minHeight: "100%",
+        }}
+      >
         <TextField
           label="Имя *"
           value={formData.firstName}
@@ -195,14 +203,13 @@ export default function CreateProfileScreen() {
           style={{ marginBottom: 16 }}
         />
 
-        <TextField
+        <DatePickerField
           label="Дата рождения *"
           value={formData.dateOfBirth}
-          onChangeText={(text) => {
-            setFormData({ ...formData, dateOfBirth: text });
+          onChangeDate={(date) => {
+            setFormData({ ...formData, dateOfBirth: date });
             if (errors.dateOfBirth) setErrors({ ...errors, dateOfBirth: "" });
           }}
-          placeholder="YYYY-MM-DD (например, 1990-01-15)"
           error={errors.dateOfBirth}
           style={{ marginBottom: 24 }}
         />
