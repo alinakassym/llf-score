@@ -65,14 +65,18 @@ export default function ProfileScreen() {
         />
       </LinearGradient>
       <PlayerTabs />
-      <View style={{ flex: 1, paddingHorizontal: 16, marginBottom: 24 }}>
+      <View
+        style={{
+          paddingTop: 16,
+          paddingHorizontal: 16,
+        }}
+      >
         {!hasProfile && (
           <View
             style={[
               styles.warningBlock,
               {
-                backgroundColor:
-                  scheme === "light" ? "#FEF3C7" : "rgba(251, 191, 36, 0.1)",
+                backgroundColor: c.bgOpacity,
                 borderColor: c.warning,
               },
             ]}
@@ -108,7 +112,7 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 12,
     borderWidth: 1,
-    marginBottom: 24,
+    marginBottom: 16,
   },
   warningTitle: {
     fontSize: 18,
