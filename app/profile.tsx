@@ -12,8 +12,8 @@ import { selectUserHasProfile } from "@/store/user.slice";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { signOut as firebaseSignOut, getAuth } from "firebase/auth";
-import React from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 export default function ProfileScreen() {
@@ -23,6 +23,14 @@ export default function ProfileScreen() {
   const router = useRouter();
   const logo = require("@/assets/images/adaptive-icon.png");
   const hasProfile = useAppSelector(selectUserHasProfile);
+
+  // Состояние для показа/скрытия блока предупреждения
+  const [showWarning, setShowWarning] = useState(true);
+
+  // Сбрасываем состояние при монтировании компонента (при новом заходе)
+  useEffect(() => {
+    setShowWarning(true);
+  }, []);
 
   // Используем данные пользователя или значения по умолчанию
   const displayName = user?.displayName || user?.email || "Пользователь";
@@ -45,6 +53,11 @@ export default function ProfileScreen() {
     } catch (error) {
       console.error("Logout failed:", error);
     }
+  };
+
+  const handleRemindLater = () => {
+    console.log("Remind later clicked");
+    setShowWarning(false);
   };
 
   return (
@@ -71,7 +84,7 @@ export default function ProfileScreen() {
           paddingHorizontal: 16,
         }}
       >
-        {!hasProfile && (
+        {!hasProfile && showWarning && (
           <View
             style={[
               styles.warningBlock,
@@ -95,6 +108,14 @@ export default function ProfileScreen() {
               }}
               style={{ marginTop: 12 }}
             />
+            <TouchableOpacity
+              onPress={handleRemindLater}
+              style={styles.remindLaterButton}
+            >
+              <Text style={[styles.remindLaterText, { color: c.textMuted }]}>
+                Напомнить позже
+              </Text>
+            </TouchableOpacity>
           </View>
         )}
         <GradientButton
@@ -122,5 +143,14 @@ const styles = StyleSheet.create({
   warningText: {
     fontSize: 14,
     lineHeight: 20,
+  },
+  remindLaterButton: {
+    marginTop: 12,
+    paddingVertical: 8,
+    alignItems: "center",
+  },
+  remindLaterText: {
+    fontSize: 14,
+    fontWeight: "400",
   },
 });
