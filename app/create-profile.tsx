@@ -6,6 +6,7 @@ import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { useAppDispatch } from "@/store/hooks";
 import { createUserProfile } from "@/store/user.slice";
+import { validateIIN } from "@/utils/validateIIN";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -55,8 +56,12 @@ export default function CreateProfileScreen() {
     // Валидация ИИН
     if (!formData.identificationNumber.trim()) {
       newErrors.identificationNumber = "ИИН обязателен";
-    } else if (formData.identificationNumber.length !== 12) {
-      newErrors.identificationNumber = "ИИН должен содержать 12 цифр";
+    } else {
+      const iinValidation = validateIIN(formData.identificationNumber);
+      if (!iinValidation.isValid) {
+        newErrors.identificationNumber =
+          iinValidation.error || "Некорректный ИИН";
+      }
     }
 
     // Валидация даты рождения
