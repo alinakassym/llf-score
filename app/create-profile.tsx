@@ -6,9 +6,10 @@ import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { useAppDispatch } from "@/store/hooks";
 import { createUserProfile } from "@/store/user.slice";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { ScrollView, View } from "react-native";
+import { Platform, ScrollView, TouchableOpacity, View } from "react-native";
 
 export default function CreateProfileScreen() {
   const scheme = useThemeMode();
@@ -107,8 +108,32 @@ export default function CreateProfileScreen() {
     }
   };
 
+  const handleClose = () => {
+    router.back();
+  };
+
   return (
-    <View style={{ backgroundColor: c.background, flex: 1 }}>
+    <View
+      style={{ position: "relative", backgroundColor: c.background, flex: 1 }}
+    >
+      <View
+        style={{
+          position: "absolute",
+          right: 0,
+          paddingTop: Platform.OS === "ios" ? 16 : 52,
+          paddingHorizontal: 8,
+          paddingBottom: 8,
+          zIndex: 99,
+        }}
+      >
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={handleClose}
+          style={{ padding: 4 }}
+        >
+          <Ionicons name="close" size={24} color={"#FFFFFF"} />
+        </TouchableOpacity>
+      </View>
       <LoginHeader
         title="Заполнение профиля"
         text="Пожалуйста, заполните все обязательные поля для создания вашего профиля"
