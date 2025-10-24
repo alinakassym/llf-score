@@ -17,7 +17,6 @@ export default function LoginHeader({ title, text }: Props) {
       style={{
         position: "relative",
         minHeight: 280,
-        marginBottom: 8,
         overflow: "hidden",
       }}
     >

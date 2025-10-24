@@ -10,14 +10,23 @@ import { createUserProfile } from "@/store/user.slice";
 import { validateIIN } from "@/utils/validateIIN";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
-import { Platform, ScrollView, TouchableOpacity, View } from "react-native";
+import React, { useRef, useState } from "react";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function CreateProfileScreen() {
   const scheme = useThemeMode();
   const c = Colors[scheme];
   const dispatch = useAppDispatch();
   const router = useRouter();
+
+  const scrollViewRef = useRef<ScrollView>(null);
+  const fieldRefs = useRef<{ [key: string]: number }>({});
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -118,9 +127,20 @@ export default function CreateProfileScreen() {
     router.back();
   };
 
+  const handleFocus = (fieldName: string) => {
+    const yOffset = fieldRefs.current[fieldName];
+    if (yOffset !== undefined && scrollViewRef.current) {
+      scrollViewRef.current.scrollTo({ y: yOffset - 100, animated: true });
+    }
+  };
+
   return (
     <View
-      style={{ position: "relative", backgroundColor: c.background, flex: 1 }}
+      style={{
+        position: "relative",
+        backgroundColor: c.background,
+        flex: 1,
+      }}
     >
       <View
         style={{
@@ -140,86 +160,120 @@ export default function CreateProfileScreen() {
           <Ionicons name="close" size={24} color={"#FFFFFF"} />
         </TouchableOpacity>
       </View>
-      <LoginHeader
-        title="Заполнение профиля"
-        text="Пожалуйста, заполните все обязательные поля для создания вашего профиля"
-      />
-      <ScrollView
-        style={{
-          paddingHorizontal: 16,
-          paddingTop: 16,
-          paddingBottom: 1100,
-          minHeight: "100%",
-        }}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
       >
-        <TextField
-          label="Имя *"
-          value={formData.firstName}
-          onChangeText={(text) => {
-            setFormData({ ...formData, firstName: text });
-            if (errors.firstName) setErrors({ ...errors, firstName: "" });
-          }}
-          placeholder="Введите имя"
-          error={errors.firstName}
-          style={{ marginBottom: 16 }}
+        <LoginHeader
+          title="Заполнение профиля"
+          text="Пожалуйста, заполните все обязательные поля для создания вашего профиля"
         />
+        <ScrollView
+          ref={scrollViewRef}
+          style={{ paddingHorizontal: 16, paddingBottom: 110, paddingTop: 16 }}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View
+            onLayout={(event) => {
+              fieldRefs.current.firstName = event.nativeEvent.layout.y;
+            }}
+          >
+            <TextField
+              label="Имя *"
+              value={formData.firstName}
+              onChangeText={(text) => {
+                setFormData({ ...formData, firstName: text });
+                if (errors.firstName) setErrors({ ...errors, firstName: "" });
+              }}
+              onFocus={() => handleFocus("firstName")}
+              placeholder="Введите имя"
+              error={errors.firstName}
+              style={{ marginBottom: 16 }}
+            />
+          </View>
 
-        <TextField
-          label="Фамилия *"
-          value={formData.lastName}
-          onChangeText={(text) => {
-            setFormData({ ...formData, lastName: text });
-            if (errors.lastName) setErrors({ ...errors, lastName: "" });
-          }}
-          placeholder="Введите фамилию"
-          error={errors.lastName}
-          style={{ marginBottom: 16 }}
-        />
+          <View
+            onLayout={(event) => {
+              fieldRefs.current.lastName = event.nativeEvent.layout.y;
+            }}
+          >
+            <TextField
+              label="Фамилия *"
+              value={formData.lastName}
+              onChangeText={(text) => {
+                setFormData({ ...formData, lastName: text });
+                if (errors.lastName) setErrors({ ...errors, lastName: "" });
+              }}
+              onFocus={() => handleFocus("lastName")}
+              placeholder="Введите фамилию"
+              error={errors.lastName}
+              style={{ marginBottom: 16 }}
+            />
+          </View>
 
-        <TextField
-          label="Отчество"
-          value={formData.middleName}
-          onChangeText={(text) => {
-            setFormData({ ...formData, middleName: text });
-            if (errors.middleName) setErrors({ ...errors, middleName: "" });
-          }}
-          placeholder="Введите отчество (необязательно)"
-          error={errors.middleName}
-          style={{ marginBottom: 16 }}
-        />
+          <View
+            onLayout={(event) => {
+              fieldRefs.current.middleName = event.nativeEvent.layout.y;
+            }}
+          >
+            <TextField
+              label="Отчество"
+              value={formData.middleName}
+              onChangeText={(text) => {
+                setFormData({ ...formData, middleName: text });
+                if (errors.middleName) setErrors({ ...errors, middleName: "" });
+              }}
+              onFocus={() => handleFocus("middleName")}
+              placeholder="Введите отчество (необязательно)"
+              error={errors.middleName}
+              style={{ marginBottom: 16 }}
+            />
+          </View>
 
-        <TextField
-          label="ИИН *"
-          value={formData.identificationNumber}
-          onChangeText={(text) => {
-            setFormData({ ...formData, identificationNumber: text });
-            if (errors.identificationNumber)
-              setErrors({ ...errors, identificationNumber: "" });
-          }}
-          placeholder="Введите ИИН (12 цифр)"
-          keyboardType="numeric"
-          maxLength={12}
-          error={errors.identificationNumber}
-          style={{ marginBottom: 16 }}
-        />
+          <View
+            onLayout={(event) => {
+              fieldRefs.current.identificationNumber =
+                event.nativeEvent.layout.y;
+            }}
+          >
+            <TextField
+              label="ИИН *"
+              value={formData.identificationNumber}
+              onChangeText={(text) => {
+                setFormData({ ...formData, identificationNumber: text });
+                if (errors.identificationNumber)
+                  setErrors({ ...errors, identificationNumber: "" });
+              }}
+              onFocus={() => handleFocus("identificationNumber")}
+              placeholder="Введите ИИН (12 цифр)"
+              keyboardType="numeric"
+              maxLength={12}
+              error={errors.identificationNumber}
+              style={{ marginBottom: 16 }}
+            />
+          </View>
 
-        <DatePickerField
-          label="Дата рождения *"
-          value={formData.dateOfBirth}
-          onChangeDate={(date) => {
-            setFormData({ ...formData, dateOfBirth: date });
-            if (errors.dateOfBirth) setErrors({ ...errors, dateOfBirth: "" });
-          }}
-          error={errors.dateOfBirth}
-          style={{ marginBottom: 24 }}
-        />
+          <DatePickerField
+            label="Дата рождения *"
+            value={formData.dateOfBirth}
+            onChangeDate={(date) => {
+              setFormData({ ...formData, dateOfBirth: date });
+              if (errors.dateOfBirth) setErrors({ ...errors, dateOfBirth: "" });
+            }}
+            error={errors.dateOfBirth}
+            style={{ marginBottom: 24 }}
+          />
 
-        <GradientButton
-          title="Создать профиль"
-          onPress={handleCreateProfile}
-          style={{ marginBottom: 32 }}
-        />
-      </ScrollView>
+          <GradientButton
+            title="Создать профиль"
+            onPress={handleCreateProfile}
+            style={{ marginBottom: 32 }}
+          />
+
+          {/* <View style={{ height: 210 }} /> */}
+        </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 }
