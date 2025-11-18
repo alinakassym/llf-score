@@ -4,6 +4,8 @@ import { Colors } from "@/constants/theme";
 import SponsorsRow from "@/features/SponsorsRow";
 import { TopBar } from "@/features/TopBar";
 import { useThemeMode } from "@/hooks/use-theme-mode";
+import { useAppSelector } from "@/store/hooks";
+import { selectUserProfile } from "@/store/user.slice";
 import { Tabs } from "expo-router";
 import React from "react";
 import { Platform, View } from "react-native";
@@ -11,6 +13,11 @@ import { Platform, View } from "react-native";
 export default function TabLayout() {
   const scheme = useThemeMode();
   const c = Colors[scheme];
+  const userProfile = useAppSelector(selectUserProfile);
+  console.log("userProfile: ", userProfile);
+  const isAdmin = userProfile?.role === "admin";
+  console.log("isAdmin: ", isAdmin);
+
   return (
     <View style={{ flex: 1 }}>
       <SponsorsRow />
@@ -72,13 +79,32 @@ export default function TabLayout() {
             ),
           }}
         />
+        {isAdmin ? (
+          <Tabs.Screen
+            name="management"
+            options={{
+              title: "Управление",
+              tabBarIcon: ({ color, size }) => (
+                <TabIcon name="docgear" size={size} color={color} />
+              ),
+            }}
+          />
+        ) : (
+          <Tabs.Screen
+            name="help"
+            options={{
+              title: "Отзыв",
+              tabBarIcon: ({ color, size }) => (
+                <TabIcon name="comment" size={size} color={color} />
+              ),
+            }}
+          />
+        )}
+        {/* Скрываем противоположный таб */}
         <Tabs.Screen
-          name="help"
+          name={isAdmin ? "help" : "management"}
           options={{
-            title: "Отзыв",
-            tabBarIcon: ({ color, size }) => (
-              <TabIcon name="comment" size={size} color={color} />
-            ),
+            href: null,
           }}
         />
       </Tabs>

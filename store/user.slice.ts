@@ -174,7 +174,7 @@ export const fetchUserFullProfile = createAsyncThunk<
     console.log("Fetched user full profile:", response);
     return { fullProfile: response, hasProfile: true };
   } catch (error: any) {
-    console.error("Failed to fetch user full profile:", error);
+    // console.error("Failed to fetch user full profile:", error);
 
     // Проверяем 404 с сообщением об отсутствии профиля
     if (
@@ -290,9 +290,10 @@ export const { clearUserProfile, clearUserError } = userSlice.actions;
 export default userSlice.reducer;
 
 // Селекторы
-export type RootState = { user: UserState };
-export const selectUserProfile = (s: RootState) => s.user.profile;
-export const selectUserFullProfile = (s: RootState) => s.user.fullProfile;
-export const selectUserHasProfile = (s: RootState) => s.user.hasProfile;
-export const selectUserLoading = (s: RootState) => s.user.loading;
-export const selectUserError = (s: RootState) => s.user.error;
+export const selectUserProfile = (s: { user: UserState }) => s.user.profile;
+export const selectUserFullProfile = (s: { user: UserState }) =>
+  s.user.fullProfile;
+export const selectUserHasProfile = (s: { user: UserState }) =>
+  s.user.hasProfile;
+export const selectUserLoading = (s: { user: UserState }) => s.user.loading;
+export const selectUserError = (s: { user: UserState }) => s.user.error;

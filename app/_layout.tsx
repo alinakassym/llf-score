@@ -3,7 +3,7 @@ import { LoadingScreen } from "@/components/LoadingScreen";
 import { SessionProvider, useSession } from "@/contexts/auth-context";
 import { useAppDispatch } from "@/store/hooks";
 import { store } from "@/store/store";
-import { fetchUserFullProfile } from "@/store/user.slice";
+import { fetchUserFullProfile, fetchUserProfile } from "@/store/user.slice";
 import { Stack } from "expo-router";
 import React, { useEffect } from "react";
 import { Platform } from "react-native";
@@ -17,6 +17,15 @@ function RootLayoutNav() {
   // Загружаем профиль пользователя при старте приложения если есть сессия
   useEffect(() => {
     if (session && !isLoading) {
+      console.log("Loading user profiles...");
+      dispatch(fetchUserProfile())
+        .unwrap()
+        .then((profile) => {
+          console.log("User profile loaded:", profile);
+        })
+        .catch((error) => {
+          console.error("Failed to load user profile:", error);
+        });
       dispatch(fetchUserFullProfile());
     }
   }, [session, isLoading, dispatch]);
