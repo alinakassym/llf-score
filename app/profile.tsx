@@ -8,12 +8,22 @@ import PlayerTabs from "@/features/PlayerTabs";
 import { app } from "@/firebaseConfig.js";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { useAppSelector } from "@/store/hooks";
-import { selectUserFullProfile, selectUserHasProfile } from "@/store/user.slice";
+import {
+  selectUserFullProfile,
+  selectUserHasProfile,
+  selectUserProfile,
+} from "@/store/user.slice";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { signOut as firebaseSignOut, getAuth } from "firebase/auth";
 import React, { useEffect, useState } from "react";
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 export default function ProfileScreen() {
@@ -24,6 +34,8 @@ export default function ProfileScreen() {
   const logo = require("@/assets/images/adaptive-icon.png");
   const hasProfile = useAppSelector(selectUserHasProfile);
   const fullProfile = useAppSelector(selectUserFullProfile);
+  const userProfile = useAppSelector(selectUserProfile);
+  const isAdmin = userProfile?.role === "admin";
 
   // Состояние для показа/скрытия блока предупреждения
   const [showWarning, setShowWarning] = useState(true);
@@ -74,11 +86,39 @@ export default function ProfileScreen() {
         end={{ x: 1, y: 1 }}
       >
         <ProfileHeader title={displayName} year={birthDate} logo={logo} />
-        <PlayerPosition
-          title={"Кайрат (Алматы)"}
-          subtitle={"30.12.2025"}
-          logo={logo}
-        />
+        {isAdmin ? (
+          <View style={{ paddingHorizontal: 8, marginBottom: 46 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 12,
+                paddingHorizontal: 8,
+                paddingVertical: 8,
+                backgroundColor: c.bgOpacity,
+                borderRadius: 8,
+              }}
+            >
+              <View style={{ padding: 4 }}>
+                <Text
+                  style={{
+                    color: c.text,
+                    opacity: 0.85,
+                    fontSize: 12,
+                  }}
+                >
+                  Администратор
+                </Text>
+              </View>
+            </View>
+          </View>
+        ) : (
+          <PlayerPosition
+            title={"Кайрат (Алматы)"}
+            subtitle={"30.12.2025"}
+            logo={logo}
+          />
+        )}
       </LinearGradient>
       <PlayerTabs />
       <View
