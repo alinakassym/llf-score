@@ -1,22 +1,40 @@
 // app/(tabs)/_layout.tsx
 import { TabIcon } from "@/components/icons";
+import { BottomSheetMenu, MenuOption } from "@/components/BottomSheetMenu";
 import { Colors } from "@/constants/theme";
 import SponsorsRow from "@/features/SponsorsRow";
 import { TopBar } from "@/features/TopBar";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { useAppSelector } from "@/store/hooks";
 import { selectUserProfile } from "@/store/user.slice";
-import { Tabs } from "expo-router";
-import React from "react";
+import { Tabs, useRouter } from "expo-router";
+import React, { useState } from "react";
 import { Platform, View } from "react-native";
 
 export default function TabLayout() {
   const scheme = useThemeMode();
   const c = Colors[scheme];
+  const router = useRouter();
   const userProfile = useAppSelector(selectUserProfile);
+  const [menuVisible, setMenuVisible] = useState(false);
   console.log("userProfile: ", userProfile);
   const isAdmin = userProfile?.role === "admin";
   console.log("isAdmin: ", isAdmin);
+
+  const menuOptions: MenuOption[] = [
+    {
+      id: "management",
+      label: "Управление",
+      icon: "docgear",
+      onPress: () => router.push("/(tabs)/management"),
+    },
+    {
+      id: "help",
+      label: "Отзыв",
+      icon: "comment",
+      onPress: () => router.push("/(tabs)/help"),
+    },
+  ];
 
   return (
     <View style={{ flex: 1 }}>
@@ -79,35 +97,40 @@ export default function TabLayout() {
             ),
           }}
         />
-        {isAdmin ? (
-          <Tabs.Screen
-            name="management"
-            options={{
-              title: "Управление",
-              tabBarIcon: ({ color, size }) => (
-                <TabIcon name="docgear" size={size} color={color} />
-              ),
-            }}
-          />
-        ) : (
-          <Tabs.Screen
-            name="help"
-            options={{
-              title: "Отзыв",
-              tabBarIcon: ({ color, size }) => (
-                <TabIcon name="comment" size={size} color={color} />
-              ),
-            }}
-          />
-        )}
-        {/* Скрываем противоположный таб */}
         <Tabs.Screen
-          name={isAdmin ? "help" : "management"}
+          name="more"
+          options={{
+            title: "Ещё",
+            tabBarIcon: ({ color, size }) => (
+              <TabIcon name="dots" size={size} color={color} />
+            ),
+          }}
+          listeners={() => ({
+            tabPress: (e: any) => {
+              e.preventDefault();
+              setMenuVisible(true);
+            },
+          })}
+        />
+        {/* Скрываем management и help из табов, но оставляем как экраны */}
+        <Tabs.Screen
+          name="management"
+          options={{
+            href: null,
+          }}
+        />
+        <Tabs.Screen
+          name="help"
           options={{
             href: null,
           }}
         />
       </Tabs>
+      <BottomSheetMenu
+        visible={menuVisible}
+        onClose={() => setMenuVisible(false)}
+        options={menuOptions}
+      />
     </View>
   );
 }
