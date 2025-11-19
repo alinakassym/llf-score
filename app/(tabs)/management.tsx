@@ -1,10 +1,16 @@
 // app/(tabs)/management.tsx
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { useRouter } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useRouter } from "expo-router";
 import React from "react";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function TabManagementScreen() {
   const scheme = useThemeMode();
@@ -14,15 +20,6 @@ export default function TabManagementScreen() {
   return (
     <View style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
-        <View style={styles.header}>
-          <Text style={[styles.title, { color: c.text }]}>
-            Панель управления
-          </Text>
-          <Text style={[styles.subtitle, { color: c.textMuted }]}>
-            Административные функции
-          </Text>
-        </View>
-
         <View style={[styles.section, { backgroundColor: c.card }]}>
           <Text style={[styles.sectionTitle, { color: c.text }]}>
             Управление пользователями
@@ -45,7 +42,7 @@ export default function TabManagementScreen() {
                 Просмотр, добавление и редактирование лиг
               </Text>
             </View>
-            <Ionicons name="chevron-forward" size={24} color={c.textMuted} />
+            <Ionicons name="chevron-forward" size={16} color={c.textMuted} />
           </View>
         </TouchableOpacity>
 
@@ -76,17 +73,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
   },
-  header: {
-    marginBottom: 24,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "700",
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-  },
   section: {
     padding: 16,
     borderRadius: 12,
@@ -98,12 +84,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-    marginBottom: 8,
+    fontSize: 12,
+    fontWeight: "500",
+    marginBottom: 4,
   },
   sectionText: {
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: 10,
+    lineHeight: 12,
   },
 });
