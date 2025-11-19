@@ -79,18 +79,33 @@ export default function LeagueEditScreen() {
         }),
       ).unwrap();
 
-      Alert.alert("Успех", "Лига успешно обновлена", [
-        {
-          text: "OK",
-          onPress: () => router.back(),
-        },
-      ]);
+      Alert.alert(
+        "Успех",
+        `Лига "${name.trim()}" успешно обновлена`,
+        [
+          {
+            text: "OK",
+            onPress: () => router.push("/leagues-management"),
+          },
+        ],
+      );
     } catch (error) {
       console.error("Failed to save league:", error);
-      Alert.alert(
-        "Ошибка",
-        error instanceof Error ? error.message : "Не удалось сохранить изменения",
-      );
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Не удалось сохранить изменения. Проверьте подключение к интернету и попробуйте снова.";
+
+      Alert.alert("Ошибка сохранения", errorMessage, [
+        {
+          text: "Попробовать снова",
+          onPress: handleSave,
+        },
+        {
+          text: "Отмена",
+          style: "cancel",
+        },
+      ]);
     } finally {
       setSaving(false);
     }
@@ -117,10 +132,24 @@ export default function LeagueEditScreen() {
       {/* Header */}
       <View style={[styles.header, { borderBottomColor: c.border }]}>
         <TouchableOpacity
-          onPress={() => router.back()}
+          onPress={() => {
+            if (saving) {
+              Alert.alert(
+                "Сохранение в процессе",
+                "Пожалуйста, дождитесь завершения сохранения",
+              );
+              return;
+            }
+            router.back();
+          }}
           style={styles.backButton}
+          disabled={saving}
         >
-          <Ionicons name="arrow-back" size={24} color={c.text} />
+          <Ionicons
+            name="arrow-back"
+            size={24}
+            color={saving ? c.textMuted : c.text}
+          />
         </TouchableOpacity>
         <Text style={[styles.headerTitle, { color: c.text }]}>
           Редактирование лиги
@@ -265,7 +294,10 @@ export default function LeagueEditScreen() {
           disabled={saving}
         >
           {saving ? (
-            <ActivityIndicator size="small" color="#fff" />
+            <>
+              <ActivityIndicator size="small" color="#fff" />
+              <Text style={styles.saveButtonText}>Сохранение...</Text>
+            </>
           ) : (
             <>
               <Ionicons name="checkmark" size={20} color="#fff" />
