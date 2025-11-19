@@ -101,7 +101,7 @@ export default function LeagueCreateScreen() {
               );
               return;
             }
-            router.back();
+            router.push("/leagues-management");
           }}
           style={styles.backButton}
           disabled={saving}
