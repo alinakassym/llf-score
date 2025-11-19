@@ -1,21 +1,21 @@
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
+import { selectCities } from "@/store/cities.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { selectLeagueGroups } from "@/store/league-groups.slice";
 import { selectLeagues, updateLeague } from "@/store/leagues.slice";
-import { selectCities } from "@/store/cities.slice";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  TextInput,
   ActivityIndicator,
   Alert,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 export default function LeagueEditScreen() {
@@ -39,8 +39,9 @@ export default function LeagueEditScreen() {
 
   useEffect(() => {
     if (league) {
+      console.log("league: ", league);
       setName(league.name);
-      setSelectedCityId(String(league.cityId));
+      setSelectedCityId(String(league?.cityId));
       setSelectedGroupId(league.leagueGroupId);
       setOrder(String(league.order));
     }
@@ -79,16 +80,12 @@ export default function LeagueEditScreen() {
         }),
       ).unwrap();
 
-      Alert.alert(
-        "Успех",
-        `Лига "${name.trim()}" успешно обновлена`,
-        [
-          {
-            text: "OK",
-            onPress: () => router.push("/leagues-management"),
-          },
-        ],
-      );
+      Alert.alert("Успех", `Лига "${name.trim()}" успешно обновлена`, [
+        {
+          text: "OK",
+          onPress: () => router.push("/leagues-management"),
+        },
+      ]);
     } catch (error) {
       console.error("Failed to save league:", error);
       const errorMessage =
@@ -276,9 +273,7 @@ export default function LeagueEditScreen() {
           ]}
         >
           <Text style={[styles.infoLabel, { color: c.textMuted }]}>ID:</Text>
-          <Text style={[styles.infoValue, { color: c.text }]}>
-            {league.id}
-          </Text>
+          <Text style={[styles.infoValue, { color: c.text }]}>{league.id}</Text>
         </View>
       </ScrollView>
 

@@ -123,5 +123,17 @@ export async function httpPut<T>(
     const text = await res.text().catch(() => "");
     throw new Error(`HTTP ${res.status}: ${text || res.statusText}`);
   }
-  return (await res.json()) as T;
+
+  // Проверяем есть ли содержимое в ответе
+  const contentLength = res.headers.get("content-length");
+  if (contentLength === "0" || res.status === 204) {
+    return {} as T;
+  }
+
+  const text = await res.text();
+  if (!text) {
+    return {} as T;
+  }
+
+  return JSON.parse(text) as T;
 }

@@ -59,10 +59,15 @@ export type UpdateLeagueParams = {
   order: number;
 };
 
-export const updateLeague = createAsyncThunk<League, UpdateLeagueParams>(
+export const updateLeague = createAsyncThunk<
+  League,
+  UpdateLeagueParams,
+  { state: { leagues: LeaguesState; cities: any; leagueGroups: any } }
+>(
   "leagues/updateLeague",
-  async (params: UpdateLeagueParams) => {
-    const { league } = await httpPut<{ league: League }>(
+  async (params: UpdateLeagueParams, { getState }) => {
+    // API возвращает пустой ответ, поэтому не ожидаем данных
+    await httpPut<{ league: League }>(
       `/api/leagues/${params.id}`,
       {
         name: params.name,
@@ -71,7 +76,31 @@ export const updateLeague = createAsyncThunk<League, UpdateLeagueParams>(
         leagueGroupId: params.leagueGroupId,
       },
     );
-    return league;
+
+    // Формируем обновленную лигу из существующих данных и параметров
+    const state = getState();
+    const existingLeague = selectLeagues(state as RootState).find(
+      (l) => l.id === params.id,
+    );
+    const cities = state.cities.items || [];
+    const leagueGroups = state.leagueGroups.items || [];
+    const city = cities.find((c: any) => c.id === String(params.cityId));
+    const leagueGroup = leagueGroups.find(
+      (g: any) => g.id === params.leagueGroupId,
+    );
+
+    return {
+      ...existingLeague,
+      id: params.id,
+      name: params.name,
+      cityId: String(params.cityId),
+      cityName: city?.name || existingLeague?.cityName || "",
+      leagueGroupId: params.leagueGroupId,
+      leagueGroupName:
+        leagueGroup?.name || existingLeague?.leagueGroupName || "",
+      order: params.order,
+      icon: existingLeague?.icon,
+    } as League;
   },
 );
 
