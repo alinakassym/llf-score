@@ -2,7 +2,7 @@ import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { TouchableOpacity, View } from "react-native";
-import { FlatIcon } from "./icons";
+import { FlatIcon } from "../icons";
 
 type Props = {
   icon: keyof typeof Ionicons.glyphMap;

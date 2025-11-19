@@ -1,5 +1,5 @@
 // app/profile.tsx
-import GradientButton from "@/components/GradientButton";
+import GradientButton from "@/components/buttons/GradientButton";
 import ProfileHeader from "@/components/ProfileHeader";
 import { Colors } from "@/constants/theme";
 import { useSession } from "@/contexts/auth-context";

@@ -1,6 +1,6 @@
 // app/create-profile.tsx
+import GradientButton from "@/components/buttons/GradientButton";
 import DatePickerField from "@/components/DatePickerField";
-import GradientButton from "@/components/GradientButton";
 import LoginHeader from "@/components/LoginHeader";
 import TextField from "@/components/TextField";
 import { Colors } from "@/constants/theme";

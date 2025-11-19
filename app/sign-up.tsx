@@ -1,5 +1,5 @@
 // app/signUp.tsx
-import GradientButton from "@/components/GradientButton";
+import GradientButton from "@/components/buttons/GradientButton";
 import LoginHeader from "@/components/LoginHeader";
 import TextField from "@/components/TextField";
 import { Colors } from "@/constants/theme";

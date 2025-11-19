@@ -1,5 +1,5 @@
 // features/MenuGrid.tsx
-import MenuButton from "@/components/MenuButton";
+import MenuButton from "@/components/buttons/MenuButton";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import Ionicons from "@expo/vector-icons/Ionicons";
