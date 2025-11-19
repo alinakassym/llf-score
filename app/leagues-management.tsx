@@ -271,8 +271,10 @@ export default function LeaguesManagementScreen() {
                         { backgroundColor: c.surface },
                       ]}
                       onPress={() => {
-                        // TODO: Implement edit
-                        console.log("Edit league:", league.id);
+                        router.push({
+                          pathname: "/league-edit",
+                          params: { leagueId: league.id },
+                        });
                       }}
                     >
                       <Ionicons name="pencil" size={18} color={c.primary} />

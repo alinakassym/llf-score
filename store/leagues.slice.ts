@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "@/config/env";
-import { httpGet } from "@/services/http";
+import { httpGet, httpPut } from "@/services/http";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type League = {
@@ -50,6 +50,31 @@ export const fetchLeaguesByCityId = createAsyncThunk<
   return { cityId, leagues: result };
 });
 
+// thunk для обновления лиги
+export type UpdateLeagueParams = {
+  id: string;
+  name: string;
+  cityId: number;
+  leagueGroupId: number;
+  order: number;
+};
+
+export const updateLeague = createAsyncThunk<League, UpdateLeagueParams>(
+  "leagues/updateLeague",
+  async (params: UpdateLeagueParams) => {
+    const { league } = await httpPut<{ league: League }>(
+      `/api/leagues/${params.id}`,
+      {
+        name: params.name,
+        order: params.order,
+        cityId: params.cityId,
+        leagueGroupId: params.leagueGroupId,
+      },
+    );
+    return league;
+  },
+);
+
 const leaguesSlice = createSlice({
   name: "leagues",
   initialState,
@@ -92,6 +117,19 @@ const leaguesSlice = createSlice({
         s.errorByCityId[cityId] =
           a.error.message ?? "Failed to load leagues";
         console.log("leaguesSlice error for city", cityId, s.errorByCityId[cityId]);
+      })
+      .addCase(updateLeague.fulfilled, (s, a) => {
+        const updatedLeague = a.payload;
+        const cityId = String(updatedLeague.cityId);
+
+        if (s.itemsByCityId[cityId]) {
+          const index = s.itemsByCityId[cityId].findIndex(
+            (l) => l.id === updatedLeague.id
+          );
+          if (index !== -1) {
+            s.itemsByCityId[cityId][index] = updatedLeague;
+          }
+        }
       });
   },
 });

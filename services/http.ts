@@ -85,3 +85,43 @@ export async function httpPost<T>(
   }
   return (await res.json()) as T;
 }
+
+export async function httpPut<T>(
+  path: string,
+  body?: any,
+  init?: RequestInit,
+): Promise<T> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), API_TIMEOUT);
+
+  const idToken = await getStoredIdToken();
+
+  console.log("http idToken", idToken);
+  console.log("httpPut", API_BASE_URL + path);
+  const res = await fetch(API_BASE_URL + path, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      ...(init?.headers ?? {}),
+      Authorization: `Bearer ${idToken || ""}`,
+    },
+    body: body ? JSON.stringify(body) : undefined,
+    signal: controller.signal,
+    ...init,
+  })
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      console.error("httpPut error", error?.message || error);
+      throw error;
+    })
+    .finally(() => clearTimeout(timeout));
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`HTTP ${res.status}: ${text || res.statusText}`);
+  }
+  return (await res.json()) as T;
+}
