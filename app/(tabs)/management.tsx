@@ -1,15 +1,18 @@
 // app/(tabs)/management.tsx
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
+import { useRouter } from "expo-router";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function TabManagementScreen() {
   const scheme = useThemeMode();
   const c = Colors[scheme];
+  const router = useRouter();
 
   return (
-    <View style={{ flex: 1, backgroundColor: c.background }}>
+    <View style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
         <View style={styles.header}>
           <Text style={[styles.title, { color: c.text }]}>
@@ -29,14 +32,22 @@ export default function TabManagementScreen() {
           </Text>
         </View>
 
-        <View style={[styles.section, { backgroundColor: c.card }]}>
-          <Text style={[styles.sectionTitle, { color: c.text }]}>
-            Управление лигами
-          </Text>
-          <Text style={[styles.sectionText, { color: c.textMuted }]}>
-            Здесь будут функции для управления лигами
-          </Text>
-        </View>
+        <TouchableOpacity
+          style={[styles.section, { backgroundColor: c.card }]}
+          onPress={() => router.push("/leagues-management")}
+        >
+          <View style={styles.sectionHeader}>
+            <View style={{ flex: 1 }}>
+              <Text style={[styles.sectionTitle, { color: c.text }]}>
+                Управление лигами
+              </Text>
+              <Text style={[styles.sectionText, { color: c.textMuted }]}>
+                Просмотр, добавление и редактирование лиг
+              </Text>
+            </View>
+            <Ionicons name="chevron-forward" size={24} color={c.textMuted} />
+          </View>
+        </TouchableOpacity>
 
         <View style={[styles.section, { backgroundColor: c.card }]}>
           <Text style={[styles.sectionTitle, { color: c.text }]}>
@@ -80,6 +91,11 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 12,
     marginBottom: 16,
+  },
+  sectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   sectionTitle: {
     fontSize: 18,
