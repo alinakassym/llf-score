@@ -3,6 +3,10 @@ import { useThemeMode } from "@/hooks/use-theme-mode";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchLeaguesByCityId, selectLeagues } from "@/store/leagues.slice";
 import { fetchCities, selectCities } from "@/store/cities.slice";
+import {
+  fetchLeagueGroups,
+  selectLeagueGroups,
+} from "@/store/league-groups.slice";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
@@ -24,18 +28,23 @@ export default function LeaguesManagementScreen() {
 
   const cities = useAppSelector(selectCities);
   const leagues = useAppSelector(selectLeagues);
+  const leagueGroups = useAppSelector(selectLeagueGroups);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCityId, setSelectedCityId] = useState<string | null>(null);
+  const [selectedGroupId, setSelectedGroupId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
       try {
-        await dispatch(fetchCities()).unwrap();
+        await Promise.all([
+          dispatch(fetchCities()).unwrap(),
+          dispatch(fetchLeagueGroups()).unwrap(),
+        ]);
       } catch (error) {
-        console.error("Failed to load cities:", error);
+        console.error("Failed to load data:", error);
       } finally {
         setLoading(false);
       }
@@ -58,7 +67,10 @@ export default function LeaguesManagementScreen() {
     const matchesCity = selectedCityId
       ? league.cityId === selectedCityId
       : true;
-    return matchesSearch && matchesCity;
+    const matchesGroup = selectedGroupId
+      ? league.leagueGroupId === selectedGroupId
+      : true;
+    return matchesSearch && matchesCity && matchesGroup;
   });
 
   const groupedLeagues = filteredLeagues.reduce(
@@ -118,6 +130,7 @@ export default function LeaguesManagementScreen() {
           />
         </View>
 
+        {/* City Filter */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -162,6 +175,56 @@ export default function LeaguesManagementScreen() {
                 ]}
               >
                 {city.name}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+
+        {/* League Group Filter */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.filterScroll}
+        >
+          <TouchableOpacity
+            style={[
+              styles.filterChip,
+              {
+                backgroundColor: !selectedGroupId ? c.primary : c.card,
+                borderColor: c.border,
+              },
+            ]}
+            onPress={() => setSelectedGroupId(null)}
+          >
+            <Text
+              style={[
+                styles.filterChipText,
+                { color: !selectedGroupId ? "#fff" : c.text },
+              ]}
+            >
+              Все группы
+            </Text>
+          </TouchableOpacity>
+          {leagueGroups.map((group) => (
+            <TouchableOpacity
+              key={group.id}
+              style={[
+                styles.filterChip,
+                {
+                  backgroundColor:
+                    selectedGroupId === group.id ? c.primary : c.card,
+                  borderColor: c.border,
+                },
+              ]}
+              onPress={() => setSelectedGroupId(group.id)}
+            >
+              <Text
+                style={[
+                  styles.filterChipText,
+                  { color: selectedGroupId === group.id ? "#fff" : c.text },
+                ]}
+              >
+                {group.name}
               </Text>
             </TouchableOpacity>
           ))}
