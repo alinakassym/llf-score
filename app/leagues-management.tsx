@@ -105,7 +105,7 @@ export default function LeaguesManagementScreen() {
           onPress={() => router.push("/management")}
           style={styles.backButton}
         >
-          <Ionicons name="arrow-back" size={24} color={c.text} />
+          <Ionicons name="arrow-back" size={16} color={c.text} />
         </TouchableOpacity>
         <Text style={[styles.headerTitle, { color: c.text }]}>
           Управление лигами
@@ -117,10 +117,13 @@ export default function LeaguesManagementScreen() {
         <View
           style={[
             styles.searchContainer,
-            { backgroundColor: c.card, borderColor: c.border },
+            {
+              borderColor: c.border,
+              backgroundColor: c.card,
+            },
           ]}
         >
-          <Ionicons name="search" size={20} color={c.textMuted} />
+          <Ionicons name="search" size={16} color={c.textMuted} />
           <TextInput
             style={[styles.searchInput, { color: c.text }]}
             placeholder="Поиск лиги..."
@@ -277,7 +280,7 @@ export default function LeaguesManagementScreen() {
                         });
                       }}
                     >
-                      <Ionicons name="pencil" size={18} color={c.primary} />
+                      <Ionicons name="pencil" size={16} color={c.primary} />
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={[
@@ -291,7 +294,7 @@ export default function LeaguesManagementScreen() {
                     >
                       <Ionicons
                         name="trash-outline"
-                        size={18}
+                        size={16}
                         color="#ef4444"
                       />
                     </TouchableOpacity>
@@ -330,29 +333,34 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   backButton: {
-    marginRight: 16,
+    marginRight: 8,
   },
   headerTitle: {
-    fontSize: 20,
-    fontWeight: "700",
+    fontSize: 16,
+    fontWeight: "500",
   },
   controls: {
     paddingHorizontal: 16,
     paddingTop: 16,
   },
   searchContainer: {
+    paddingLeft: 12,
+    marginBottom: 16,
+    display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    borderRadius: 8,
+    gap: 8,
     borderWidth: 1,
-    marginBottom: 12,
+    borderRadius: 8,
+    fontSize: 14,
   },
   searchInput: {
+    marginLeft: -36,
+    paddingLeft: 36,
+    paddingRight: 16,
+    height: 40,
     flex: 1,
-    marginLeft: 8,
-    fontSize: 16,
+    fontSize: 12,
   },
   filterScroll: {
     marginBottom: 12,
@@ -365,7 +373,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   filterChipText: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "500",
   },
   content: {
@@ -385,15 +393,17 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   cityGroupTitle: {
-    fontSize: 18,
-    fontWeight: "600",
+    fontSize: 16,
+    fontWeight: "500",
     marginBottom: 12,
   },
   leagueCard: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: 16,
+    paddingLeft: 14,
+    paddingRight: 12,
+    paddingVertical: 12,
     borderRadius: 12,
     borderWidth: 1,
     marginBottom: 8,
@@ -402,20 +412,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   leagueName: {
-    fontSize: 16,
-    fontWeight: "600",
+    fontSize: 12,
+    fontWeight: "500",
     marginBottom: 4,
   },
   leagueDetails: {
-    fontSize: 14,
+    fontSize: 12,
   },
   leagueActions: {
     flexDirection: "row",
     gap: 8,
   },
   actionButton: {
-    width: 40,
-    height: 40,
+    width: 32,
+    height: 32,
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
