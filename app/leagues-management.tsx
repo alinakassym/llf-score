@@ -1,24 +1,24 @@
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchLeaguesByCityId, selectLeagues } from "@/store/leagues.slice";
 import { fetchCities, selectCities } from "@/store/cities.slice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   fetchLeagueGroups,
   selectLeagueGroups,
 } from "@/store/league-groups.slice";
+import { fetchLeaguesByCityId, selectLeagues } from "@/store/leagues.slice";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
   ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
   TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function LeaguesManagementScreen() {
   const scheme = useThemeMode();
@@ -65,7 +65,7 @@ export default function LeaguesManagementScreen() {
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
     const matchesCity = selectedCityId
-      ? league.cityId === selectedCityId
+      ? String(league.cityId) === selectedCityId
       : true;
     const matchesGroup = selectedGroupId
       ? league.leagueGroupId === selectedGroupId
@@ -287,7 +287,11 @@ export default function LeaguesManagementScreen() {
                         console.log("Delete league:", league.id);
                       }}
                     >
-                      <Ionicons name="trash-outline" size={18} color="#ef4444" />
+                      <Ionicons
+                        name="trash-outline"
+                        size={18}
+                        color="#ef4444"
+                      />
                     </TouchableOpacity>
                   </View>
                 </View>
