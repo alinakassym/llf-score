@@ -6,12 +6,17 @@ import {
   fetchLeagueGroups,
   selectLeagueGroups,
 } from "@/store/league-groups.slice";
-import { fetchLeaguesByCityId, selectLeagues } from "@/store/leagues.slice";
+import {
+  deleteLeague,
+  fetchLeaguesByCityId,
+  selectLeagues,
+} from "@/store/leagues.slice";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -83,6 +88,36 @@ export default function LeaguesManagementScreen() {
     },
     {} as Record<string, typeof leagues>,
   );
+
+  const handleDeleteLeague = (leagueId: string, leagueName: string, cityId: string) => {
+    Alert.alert(
+      "Удаление лиги",
+      `Вы уверены, что хотите удалить лигу "${leagueName}"? Это действие нельзя отменить.`,
+      [
+        {
+          text: "Отмена",
+          style: "cancel",
+        },
+        {
+          text: "Удалить",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await dispatch(deleteLeague({ id: leagueId, cityId })).unwrap();
+              Alert.alert("Успех", `Лига "${leagueName}" успешно удалена`);
+            } catch (error) {
+              console.error("Failed to delete league:", error);
+              const errorMessage =
+                error instanceof Error
+                  ? error.message
+                  : "Не удалось удалить лигу. Проверьте подключение к интернету и попробуйте снова.";
+              Alert.alert("Ошибка удаления", errorMessage);
+            }
+          },
+        },
+      ],
+    );
+  };
 
   if (loading) {
     return (
@@ -287,10 +322,13 @@ export default function LeaguesManagementScreen() {
                         styles.actionButton,
                         { backgroundColor: c.surface },
                       ]}
-                      onPress={() => {
-                        // TODO: Implement delete
-                        console.log("Delete league:", league.id);
-                      }}
+                      onPress={() =>
+                        handleDeleteLeague(
+                          league.id,
+                          league.name,
+                          league.cityId,
+                        )
+                      }
                     >
                       <Ionicons
                         name="trash-outline"

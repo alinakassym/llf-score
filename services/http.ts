@@ -137,3 +137,52 @@ export async function httpPut<T>(
 
   return JSON.parse(text) as T;
 }
+
+export async function httpDelete<T>(
+  path: string,
+  init?: RequestInit,
+): Promise<T> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), API_TIMEOUT);
+
+  const idToken = await getStoredIdToken();
+
+  console.log("http idToken", idToken);
+  console.log("httpDelete", API_BASE_URL + path);
+  const res = await fetch(API_BASE_URL + path, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      ...(init?.headers ?? {}),
+      Authorization: `Bearer ${idToken || ""}`,
+    },
+    signal: controller.signal,
+    ...init,
+  })
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      console.error("httpDelete error", error?.message || error);
+      throw error;
+    })
+    .finally(() => clearTimeout(timeout));
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`HTTP ${res.status}: ${text || res.statusText}`);
+  }
+
+  // Проверяем есть ли содержимое в ответе
+  const contentLength = res.headers.get("content-length");
+  if (contentLength === "0" || res.status === 204) {
+    return {} as T;
+  }
+
+  const text = await res.text();
+  if (!text) {
+    return {} as T;
+  }
+
+  return JSON.parse(text) as T;
+}

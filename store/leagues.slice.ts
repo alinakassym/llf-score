@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "@/config/env";
-import { httpGet, httpPost, httpPut } from "@/services/http";
+import { httpDelete, httpGet, httpPost, httpPut } from "@/services/http";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type League = {
@@ -134,6 +134,21 @@ export const createLeague = createAsyncThunk<League, CreateLeagueParams>(
   },
 );
 
+// thunk для удаления лиги
+export type DeleteLeagueParams = {
+  id: string;
+  cityId: string;
+};
+
+export const deleteLeague = createAsyncThunk<
+  DeleteLeagueParams,
+  DeleteLeagueParams
+>("leagues/deleteLeague", async (params: DeleteLeagueParams) => {
+  await httpDelete(`/api/leagues/${params.id}`);
+  // Возвращаем id и cityId для удаления из state
+  return params;
+});
+
 const leaguesSlice = createSlice({
   name: "leagues",
   initialState,
@@ -199,6 +214,16 @@ const leaguesSlice = createSlice({
           s.itemsByCityId[cityId] = [];
         }
         s.itemsByCityId[cityId].push(newLeague);
+      })
+      .addCase(deleteLeague.fulfilled, (s, a) => {
+        const { id, cityId } = a.payload;
+
+        // Удаляем лигу из списка для соответствующего города
+        if (s.itemsByCityId[cityId]) {
+          s.itemsByCityId[cityId] = s.itemsByCityId[cityId].filter(
+            (l) => l.id !== id,
+          );
+        }
       });
   },
 });
