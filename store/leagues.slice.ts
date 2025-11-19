@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "@/config/env";
-import { httpGet, httpPut } from "@/services/http";
+import { httpGet, httpPost, httpPut } from "@/services/http";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type League = {
@@ -104,6 +104,36 @@ export const updateLeague = createAsyncThunk<
   },
 );
 
+// thunk для создания новой лиги
+export type CreateLeagueParams = {
+  name: string;
+  cityId: number;
+  leagueGroupId: number | null;
+  order: number;
+};
+
+export const createLeague = createAsyncThunk<League, CreateLeagueParams>(
+  "leagues/createLeague",
+  async (params: CreateLeagueParams) => {
+    const response = await httpPost<League>("/api/leagues", {
+      name: params.name,
+      order: params.order,
+      cityId: params.cityId,
+      leagueGroupId: params.leagueGroupId,
+    });
+
+    // API возвращает объект лиги напрямую, преобразуем id и cityId к строке
+    return {
+      ...response,
+      id: String(response.id),
+      cityId: String(response.cityId),
+      icon: {
+        uri: `${API_BASE_URL}/api/cities/${response.cityId}/icon?width=80&height=80`,
+      },
+    } as League;
+  },
+);
+
 const leaguesSlice = createSlice({
   name: "leagues",
   initialState,
@@ -159,6 +189,16 @@ const leaguesSlice = createSlice({
             s.itemsByCityId[cityId][index] = updatedLeague;
           }
         }
+      })
+      .addCase(createLeague.fulfilled, (s, a) => {
+        const newLeague = a.payload;
+        const cityId = String(newLeague.cityId);
+
+        // Добавляем новую лигу в список для соответствующего города
+        if (!s.itemsByCityId[cityId]) {
+          s.itemsByCityId[cityId] = [];
+        }
+        s.itemsByCityId[cityId].push(newLeague);
       });
   },
 });

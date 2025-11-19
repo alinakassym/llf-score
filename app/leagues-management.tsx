@@ -309,10 +309,7 @@ export default function LeaguesManagementScreen() {
       {/* Add Button */}
       <TouchableOpacity
         style={[styles.fab, { backgroundColor: c.primary }]}
-        onPress={() => {
-          // TODO: Implement add league
-          console.log("Add new league");
-        }}
+        onPress={() => router.push("/league-create")}
       >
         <Ionicons name="add" size={28} color="#fff" />
       </TouchableOpacity>
