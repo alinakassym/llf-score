@@ -144,7 +144,7 @@ export default function LeagueEditScreen() {
         >
           <Ionicons
             name="arrow-back"
-            size={24}
+            size={16}
             color={saving ? c.textMuted : c.text}
           />
         </TouchableOpacity>
@@ -295,7 +295,7 @@ export default function LeagueEditScreen() {
             </>
           ) : (
             <>
-              <Ionicons name="checkmark" size={20} color="#fff" />
+              <Ionicons name="checkmark" size={16} color="#fff" />
               <Text style={styles.saveButtonText}>Сохранить изменения</Text>
             </>
           )}
@@ -318,11 +318,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   backButton: {
-    marginRight: 16,
+    marginRight: 8,
   },
   headerTitle: {
-    fontSize: 20,
-    fontWeight: "700",
+    fontSize: 16,
+    fontWeight: "500",
   },
   content: {
     flex: 1,
@@ -330,14 +330,14 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     marginTop: 16,
-    fontSize: 16,
+    fontSize: 12,
     textAlign: "center",
   },
   formGroup: {
     marginBottom: 24,
   },
   label: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: "600",
     marginBottom: 8,
   },
@@ -346,10 +346,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 12,
-    fontSize: 16,
+    fontSize: 12,
   },
   hint: {
-    fontSize: 14,
+    fontSize: 12,
     marginTop: 4,
   },
   chipsContainer: {
@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   chipText: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "500",
   },
   infoCard: {
@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   infoValue: {
-    fontSize: 14,
+    fontSize: 12,
     fontFamily: "monospace",
   },
   footer: {
@@ -399,7 +399,7 @@ const styles = StyleSheet.create({
   },
   saveButtonText: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "600",
   },
 });
