@@ -137,7 +137,7 @@ export default function LeagueEditScreen() {
               );
               return;
             }
-            router.back();
+            router.push("/leagues-management");
           }}
           style={styles.backButton}
           disabled={saving}
@@ -381,7 +381,9 @@ const styles = StyleSheet.create({
     fontFamily: "monospace",
   },
   footer: {
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 32,
     borderTopWidth: 1,
   },
   saveButton: {

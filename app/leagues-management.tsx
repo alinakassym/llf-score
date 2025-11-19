@@ -102,7 +102,7 @@ export default function LeaguesManagementScreen() {
       {/* Header */}
       <View style={[styles.header, { borderBottomColor: c.border }]}>
         <TouchableOpacity
-          onPress={() => router.back()}
+          onPress={() => router.push("/management")}
           style={styles.backButton}
         >
           <Ionicons name="arrow-back" size={24} color={c.text} />
