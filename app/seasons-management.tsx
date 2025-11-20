@@ -1,6 +1,7 @@
 import TextField from "@/components/form/TextField";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
+import { fetchCities, selectCities } from "@/store/cities.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchSeasons, selectSeasons } from "@/store/seasons.slice";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -22,17 +23,22 @@ export default function SeasonsManagementScreen() {
   const dispatch = useAppDispatch();
 
   const seasons = useAppSelector(selectSeasons);
+  const cities = useAppSelector(selectCities);
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCityId, setSelectedCityId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
       try {
-        await dispatch(fetchSeasons()).unwrap();
+        await Promise.all([
+          dispatch(fetchSeasons()).unwrap(),
+          dispatch(fetchCities()).unwrap(),
+        ]);
       } catch (error) {
-        console.error("Failed to load seasons:", error);
+        console.error("Failed to load data:", error);
       } finally {
         setLoading(false);
       }
@@ -40,9 +46,13 @@ export default function SeasonsManagementScreen() {
     loadData();
   }, [dispatch]);
 
-  const filteredSeasons = seasons.filter((season) =>
-    season.name.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+  const filteredSeasons = seasons.filter((season) => {
+    const matchesSearch = season.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const matchesCity = selectedCityId ? season.cityId === selectedCityId : true;
+    return matchesSearch && matchesCity;
+  });
 
   const groupedSeasons = filteredSeasons.reduce(
     (acc, season) => {
@@ -84,7 +94,7 @@ export default function SeasonsManagementScreen() {
         </Text>
       </View>
 
-      {/* Search */}
+      {/* Search and Filter */}
       <View style={styles.controls}>
         <TextField
           placeholder="Поиск сезона..."
@@ -93,7 +103,61 @@ export default function SeasonsManagementScreen() {
           leftIcon="search"
           leftIconSize={16}
           leftIconColor={c.textMuted}
+          style={styles.searchField}
         />
+
+        {/* City Filter */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.filterScroll}
+        >
+          <TouchableOpacity
+            style={[
+              styles.filterChip,
+              {
+                backgroundColor: !selectedCityId ? c.primary : c.card,
+                borderColor: c.border,
+              },
+            ]}
+            onPress={() => setSelectedCityId(null)}
+          >
+            <Text
+              style={[
+                styles.filterChipText,
+                { color: !selectedCityId ? "#fff" : c.text },
+              ]}
+            >
+              Все города
+            </Text>
+          </TouchableOpacity>
+          {cities.map((city) => (
+            <TouchableOpacity
+              key={city.id}
+              style={[
+                styles.filterChip,
+                {
+                  backgroundColor:
+                    selectedCityId === parseInt(city.id) ? c.primary : c.card,
+                  borderColor: c.border,
+                },
+              ]}
+              onPress={() => setSelectedCityId(parseInt(city.id))}
+            >
+              <Text
+                style={[
+                  styles.filterChipText,
+                  {
+                    color:
+                      selectedCityId === parseInt(city.id) ? "#fff" : c.text,
+                  },
+                ]}
+              >
+                {city.name}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
       </View>
 
       {/* Seasons List */}
@@ -162,6 +226,23 @@ const styles = StyleSheet.create({
   controls: {
     paddingHorizontal: 16,
     paddingTop: 16,
+  },
+  searchField: {
+    marginBottom: 16,
+  },
+  filterScroll: {
+    marginBottom: 12,
+  },
+  filterChip: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    marginRight: 8,
+    borderWidth: 1,
+  },
+  filterChipText: {
+    fontSize: 12,
+    fontWeight: "500",
   },
   content: {
     flex: 1,
