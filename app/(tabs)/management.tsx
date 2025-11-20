@@ -24,6 +24,7 @@ export default function TabManagementScreen() {
         <ManagementCard
           title="Управление городами"
           description="Просмотр, добавление и редактирование городов"
+          onPress={() => router.push("/cities-management")}
         />
 
         <ManagementCard
