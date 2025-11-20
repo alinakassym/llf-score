@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "@/config/env";
-import { httpGet, httpPost } from "@/services/http";
+import { httpGet, httpPost, httpPut } from "@/services/http";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { ImageSourcePropType } from "react-native";
 
@@ -24,6 +24,12 @@ const initialState: CitiesState = {
 // Параметры для создания города
 type CreateCityParams = {
   id: number;
+  name: string;
+};
+
+// Параметры для обновления города
+type UpdateCityParams = {
+  id: string;
   name: string;
 };
 
@@ -66,6 +72,36 @@ export const createCity = createAsyncThunk<City, CreateCityParams>(
   },
 );
 
+// thunk для обновления города
+export const updateCity = createAsyncThunk<
+  City,
+  UpdateCityParams,
+  { state: { cities: CitiesState } }
+>(
+  "cities/updateCity",
+  async (params: UpdateCityParams, { getState }) => {
+    await httpPut(`/api/cities/${params.id}`, {
+      id: parseInt(params.id),
+      name: params.name,
+      icon: null,
+    });
+
+    // Формируем обновленный город из существующих данных и параметров
+    const state = getState();
+    const existingCity = selectCities(state as RootState).find(
+      (c) => c.id === params.id
+    );
+
+    return {
+      id: params.id,
+      name: params.name,
+      icon: existingCity?.icon || {
+        uri: `${API_BASE_URL}/api/cities/${params.id}/icon?width=80&height=80`,
+      },
+    };
+  },
+);
+
 const citiesSlice = createSlice({
   name: "cities",
   initialState,
@@ -95,6 +131,12 @@ const citiesSlice = createSlice({
       })
       .addCase(createCity.fulfilled, (s, a) => {
         s.items.push(a.payload);
+      })
+      .addCase(updateCity.fulfilled, (s, a) => {
+        const index = s.items.findIndex((c) => c.id === a.payload.id);
+        if (index !== -1) {
+          s.items[index] = a.payload;
+        }
       });
   },
 });

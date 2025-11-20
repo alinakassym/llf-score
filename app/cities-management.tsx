@@ -69,10 +69,10 @@ export default function CitiesManagementScreen() {
   };
 
   const handleEditCity = (cityId: string) => {
-    Alert.alert(
-      "В разработке",
-      "Функция редактирования городов еще не реализована",
-    );
+    router.push({
+      pathname: "/city-edit",
+      params: { cityId },
+    });
   };
 
   const handleAddCity = () => {
@@ -116,7 +116,6 @@ export default function CitiesManagementScreen() {
           leftIcon="search"
           leftIconSize={16}
           leftIconColor={c.textMuted}
-          style={styles.searchField}
         />
       </View>
 
@@ -145,19 +144,13 @@ export default function CitiesManagementScreen() {
               </View>
               <View style={styles.cityActions}>
                 <TouchableOpacity
-                  style={[
-                    styles.actionButton,
-                    { backgroundColor: c.surface },
-                  ]}
+                  style={[styles.actionButton, { backgroundColor: c.surface }]}
                   onPress={() => handleEditCity(city.id)}
                 >
                   <Ionicons name="pencil" size={16} color={c.primary} />
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={[
-                    styles.actionButton,
-                    { backgroundColor: c.surface },
-                  ]}
+                  style={[styles.actionButton, { backgroundColor: c.surface }]}
                   onPress={() => handleDeleteCity(city.id, city.name)}
                 >
                   <Ionicons name="trash-outline" size={16} color="#ef4444" />
@@ -166,6 +159,7 @@ export default function CitiesManagementScreen() {
             </View>
           ))
         )}
+        <View style={{ height: 78 }} />
       </ScrollView>
 
       {/* Add Button */}
@@ -202,11 +196,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 16,
   },
-  searchField: {
-    marginBottom: 16,
-  },
   content: {
     flex: 1,
+    paddingTop: 16,
     paddingHorizontal: 16,
   },
   emptyState: {
