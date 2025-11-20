@@ -28,6 +28,11 @@ export default function TabManagementScreen() {
         />
 
         <ManagementCard
+          title="Управление сезонами"
+          description="Просмотр, добавление и редактирование сезонов"
+        />
+
+        <ManagementCard
           title="Управление матчами"
           description="Здесь будут функции для управления матчами"
         />
