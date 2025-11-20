@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 12,
     fontSize: 14,
+    borderRadius: 8,
   },
   error: {
     marginTop: 4,

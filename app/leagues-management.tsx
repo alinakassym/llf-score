@@ -1,3 +1,4 @@
+import TextField from "@/components/form/TextField";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { fetchCities, selectCities } from "@/store/cities.slice";
@@ -20,7 +21,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -149,24 +149,15 @@ export default function LeaguesManagementScreen() {
 
       {/* Search and Filter */}
       <View style={styles.controls}>
-        <View
-          style={[
-            styles.searchContainer,
-            {
-              borderColor: c.border,
-              backgroundColor: c.card,
-            },
-          ]}
-        >
-          <Ionicons name="search" size={16} color={c.textMuted} />
-          <TextInput
-            style={[styles.searchInput, { color: c.text }]}
-            placeholder="Поиск лиги..."
-            placeholderTextColor={c.textMuted}
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-          />
-        </View>
+        <TextField
+          placeholder="Поиск лиги..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          leftIcon="search"
+          leftIconSize={16}
+          leftIconColor={c.textMuted}
+          style={styles.searchField}
+        />
 
         {/* City Filter */}
         <ScrollView
@@ -378,24 +369,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 16,
   },
-  searchContainer: {
-    paddingLeft: 12,
+  searchField: {
     marginBottom: 16,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-    borderWidth: 1,
-    borderRadius: 8,
-    fontSize: 14,
-  },
-  searchInput: {
-    marginLeft: -36,
-    paddingLeft: 36,
-    paddingRight: 16,
-    height: 40,
-    flex: 1,
-    fontSize: 12,
   },
   filterScroll: {
     marginBottom: 12,
