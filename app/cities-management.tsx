@@ -1,7 +1,11 @@
 import TextField from "@/components/form/TextField";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { fetchCities, selectCities } from "@/store/cities.slice";
+import {
+  deleteCity,
+  fetchCities,
+  selectCities,
+} from "@/store/cities.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
@@ -57,11 +61,18 @@ export default function CitiesManagementScreen() {
         {
           text: "Удалить",
           style: "destructive",
-          onPress: () => {
-            Alert.alert(
-              "В разработке",
-              "Функция удаления городов еще не реализована",
-            );
+          onPress: async () => {
+            try {
+              await dispatch(deleteCity({ id: cityId })).unwrap();
+              Alert.alert("Успех", `Город "${cityName}" успешно удален`);
+            } catch (error) {
+              console.error("Failed to delete city:", error);
+              const errorMessage =
+                error instanceof Error
+                  ? error.message
+                  : "Не удалось удалить город. Проверьте подключение к интернету и попробуйте снова.";
+              Alert.alert("Ошибка удаления", errorMessage);
+            }
           },
         },
       ],

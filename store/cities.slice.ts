@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "@/config/env";
-import { httpGet, httpPost, httpPut } from "@/services/http";
+import { httpDelete, httpGet, httpPost, httpPut } from "@/services/http";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { ImageSourcePropType } from "react-native";
 
@@ -31,6 +31,11 @@ type CreateCityParams = {
 type UpdateCityParams = {
   id: string;
   name: string;
+};
+
+// Параметры для удаления города
+type DeleteCityParams = {
+  id: string;
 };
 
 // thunk для загрузки
@@ -102,6 +107,15 @@ export const updateCity = createAsyncThunk<
   },
 );
 
+// thunk для удаления города
+export const deleteCity = createAsyncThunk<DeleteCityParams, DeleteCityParams>(
+  "cities/deleteCity",
+  async (params: DeleteCityParams) => {
+    await httpDelete(`/api/cities/${params.id}`);
+    return params;
+  },
+);
+
 const citiesSlice = createSlice({
   name: "cities",
   initialState,
@@ -137,6 +151,9 @@ const citiesSlice = createSlice({
         if (index !== -1) {
           s.items[index] = a.payload;
         }
+      })
+      .addCase(deleteCity.fulfilled, (s, a) => {
+        s.items = s.items.filter((c) => c.id !== a.payload.id);
       });
   },
 });
