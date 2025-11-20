@@ -22,6 +22,11 @@ export default function TabManagementScreen() {
         />
 
         <ManagementCard
+          title="Управление городами"
+          description="Просмотр, добавление и редактирование городов"
+        />
+
+        <ManagementCard
           title="Управление матчами"
           description="Здесь будут функции для управления матчами"
         />
