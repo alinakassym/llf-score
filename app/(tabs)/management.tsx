@@ -30,6 +30,7 @@ export default function TabManagementScreen() {
         <ManagementCard
           title="Управление сезонами"
           description="Просмотр, добавление и редактирование сезонов"
+          onPress={() => router.push("/seasons-management")}
         />
 
         <ManagementCard
