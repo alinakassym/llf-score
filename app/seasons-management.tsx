@@ -1,5 +1,6 @@
 import TextField from "@/components/form/TextField";
 import { Colors } from "@/constants/theme";
+import { ManagementItemCard } from "@/features/management/ManagementItemCard";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { fetchCities, selectCities } from "@/store/cities.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -10,6 +11,7 @@ import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -247,24 +249,23 @@ export default function SeasonsManagementScreen() {
                 {groupName}
               </Text>
               {groupSeasons.map((season) => (
-                <View
+                <ManagementItemCard
                   key={season.id}
-                  style={[
-                    styles.seasonCard,
-                    { backgroundColor: c.card, borderColor: c.border },
-                  ]}
-                >
-                  <View style={styles.seasonInfo}>
-                    <Text style={[styles.seasonName, { color: c.text }]}>
-                      {season.name}
-                    </Text>
-                    <Text
-                      style={[styles.seasonDetails, { color: c.textMuted }]}
-                    >
-                      {new Date(season.date).toLocaleDateString("ru-RU")}
-                    </Text>
-                  </View>
-                </View>
+                  title={season.name}
+                  subtitle={new Date(season.date).toLocaleDateString("ru-RU")}
+                  onEdit={() => {
+                    Alert.alert(
+                      "В разработке",
+                      "Функция редактирования сезонов еще не реализована",
+                    );
+                  }}
+                  onDelete={() => {
+                    Alert.alert(
+                      "В разработке",
+                      "Функция удаления сезонов еще не реализована",
+                    );
+                  }}
+                />
               ))}
             </View>
           ))
@@ -336,27 +337,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     marginBottom: 12,
-  },
-  seasonCard: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingLeft: 14,
-    paddingRight: 12,
-    paddingVertical: 12,
-    borderRadius: 12,
-    borderWidth: 1,
-    marginBottom: 8,
-  },
-  seasonInfo: {
-    flex: 1,
-  },
-  seasonName: {
-    fontSize: 12,
-    fontWeight: "500",
-    marginBottom: 4,
-  },
-  seasonDetails: {
-    fontSize: 12,
   },
 });

@@ -1,5 +1,6 @@
 import TextField from "@/components/form/TextField";
 import { Colors } from "@/constants/theme";
+import { ManagementItemCard } from "@/features/management/ManagementItemCard";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import {
   deleteCity,
@@ -141,33 +142,12 @@ export default function CitiesManagementScreen() {
           </View>
         ) : (
           filteredCities.map((city) => (
-            <View
+            <ManagementItemCard
               key={city.id}
-              style={[
-                styles.cityCard,
-                { backgroundColor: c.card, borderColor: c.border },
-              ]}
-            >
-              <View style={styles.cityInfo}>
-                <Text style={[styles.cityName, { color: c.text }]}>
-                  {city.name}
-                </Text>
-              </View>
-              <View style={styles.cityActions}>
-                <TouchableOpacity
-                  style={[styles.actionButton, { backgroundColor: c.surface }]}
-                  onPress={() => handleEditCity(city.id)}
-                >
-                  <Ionicons name="pencil" size={16} color={c.primary} />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.actionButton, { backgroundColor: c.surface }]}
-                  onPress={() => handleDeleteCity(city.id, city.name)}
-                >
-                  <Ionicons name="trash-outline" size={16} color="#ef4444" />
-                </TouchableOpacity>
-              </View>
-            </View>
+              title={city.name}
+              onEdit={() => handleEditCity(city.id)}
+              onDelete={() => handleDeleteCity(city.id, city.name)}
+            />
           ))
         )}
         <View style={{ height: 78 }} />
@@ -220,35 +200,6 @@ const styles = StyleSheet.create({
   emptyStateText: {
     fontSize: 16,
     marginTop: 16,
-  },
-  cityCard: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingLeft: 14,
-    paddingRight: 12,
-    paddingVertical: 12,
-    borderRadius: 12,
-    borderWidth: 1,
-    marginBottom: 8,
-  },
-  cityInfo: {
-    flex: 1,
-  },
-  cityName: {
-    fontSize: 12,
-    fontWeight: "500",
-  },
-  cityActions: {
-    flexDirection: "row",
-    gap: 8,
-  },
-  actionButton: {
-    width: 32,
-    height: 32,
-    borderRadius: 8,
-    alignItems: "center",
-    justifyContent: "center",
   },
   fab: {
     position: "absolute",

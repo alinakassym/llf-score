@@ -1,5 +1,6 @@
 import TextField from "@/components/form/TextField";
 import { Colors } from "@/constants/theme";
+import { ManagementItemCard } from "@/features/management/ManagementItemCard";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { fetchCities, selectCities } from "@/store/cities.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -276,59 +277,20 @@ export default function LeaguesManagementScreen() {
                 {cityName}
               </Text>
               {cityLeagues.map((league) => (
-                <View
+                <ManagementItemCard
                   key={league.id}
-                  style={[
-                    styles.leagueCard,
-                    { backgroundColor: c.card, borderColor: c.border },
-                  ]}
-                >
-                  <View style={styles.leagueInfo}>
-                    <Text style={[styles.leagueName, { color: c.text }]}>
-                      {league.name}
-                    </Text>
-                    <Text
-                      style={[styles.leagueDetails, { color: c.textMuted }]}
-                    >
-                      Группа: {league.leagueGroupName}
-                    </Text>
-                  </View>
-                  <View style={styles.leagueActions}>
-                    <TouchableOpacity
-                      style={[
-                        styles.actionButton,
-                        { backgroundColor: c.surface },
-                      ]}
-                      onPress={() => {
-                        router.push({
-                          pathname: "/league-edit",
-                          params: { leagueId: league.id },
-                        });
-                      }}
-                    >
-                      <Ionicons name="pencil" size={16} color={c.primary} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[
-                        styles.actionButton,
-                        { backgroundColor: c.surface },
-                      ]}
-                      onPress={() =>
-                        handleDeleteLeague(
-                          league.id,
-                          league.name,
-                          league.cityId,
-                        )
-                      }
-                    >
-                      <Ionicons
-                        name="trash-outline"
-                        size={16}
-                        color="#ef4444"
-                      />
-                    </TouchableOpacity>
-                  </View>
-                </View>
+                  title={league.name}
+                  subtitle={`Группа: ${league.leagueGroupName}`}
+                  onEdit={() => {
+                    router.push({
+                      pathname: "/league-edit",
+                      params: { leagueId: league.id },
+                    });
+                  }}
+                  onDelete={() =>
+                    handleDeleteLeague(league.id, league.name, league.cityId)
+                  }
+                />
               ))}
             </View>
           ))
@@ -406,39 +368,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     marginBottom: 12,
-  },
-  leagueCard: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingLeft: 14,
-    paddingRight: 12,
-    paddingVertical: 12,
-    borderRadius: 12,
-    borderWidth: 1,
-    marginBottom: 8,
-  },
-  leagueInfo: {
-    flex: 1,
-  },
-  leagueName: {
-    fontSize: 12,
-    fontWeight: "500",
-    marginBottom: 4,
-  },
-  leagueDetails: {
-    fontSize: 12,
-  },
-  leagueActions: {
-    flexDirection: "row",
-    gap: 8,
-  },
-  actionButton: {
-    width: 32,
-    height: 32,
-    borderRadius: 8,
-    alignItems: "center",
-    justifyContent: "center",
   },
   fab: {
     position: "absolute",
