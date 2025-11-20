@@ -11,7 +11,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
 } from "react-native";
 import Animated, {
@@ -111,11 +110,11 @@ export const Select: FC<Props> = ({
         animationType="none"
         onRequestClose={() => setOpen(false)}
       >
-        <TouchableWithoutFeedback onPress={() => setOpen(false)}>
+        <Pressable onPress={() => setOpen(false)}>
           <Animated.View
             style={[styles.backdrop, animatedBackdropStyle, { top: top - 49 }]}
           />
-        </TouchableWithoutFeedback>
+        </Pressable>
 
         <Animated.View
           style={[

@@ -1,15 +1,8 @@
+import { TabIcon } from "@/components/icons";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { TabIcon } from "@/components/icons";
 import React, { FC, useEffect } from "react";
-import {
-  Modal,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
+import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -61,9 +54,9 @@ export const BottomSheetMenu: FC<Props> = ({ visible, onClose, options }) => {
       animationType="none"
       onRequestClose={onClose}
     >
-      <TouchableWithoutFeedback onPress={onClose}>
+      <Pressable onPress={onClose}>
         <Animated.View style={[styles.backdrop, animatedBackdropStyle]} />
-      </TouchableWithoutFeedback>
+      </Pressable>
 
       <Animated.View
         style={[
