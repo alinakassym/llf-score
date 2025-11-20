@@ -63,7 +63,7 @@ export const TextField: FC<Props> = ({
             styles.input,
             {
               color: c.text,
-              paddingLeft: leftIcon ? leftIconSize + 16 : 16,
+              paddingLeft: leftIcon ? leftIconSize + 20 : 16,
             },
           ]}
           {...props}
@@ -78,6 +78,7 @@ export const TextField: FC<Props> = ({
 
 const styles = StyleSheet.create({
   textField: {
+    position: "relative",
     width: "100%",
   },
   label: {
@@ -93,7 +94,8 @@ const styles = StyleSheet.create({
     minHeight: 44,
   },
   leftIcon: {
-    paddingHorizontal: 8,
+    position: "absolute",
+    left: 12,
   },
   input: {
     flex: 1,

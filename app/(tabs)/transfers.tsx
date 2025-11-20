@@ -1,10 +1,11 @@
+import TextField from "@/components/form/TextField";
 import { Colors } from "@/constants/theme";
 import { transferRows } from "@/features/transfers/mocks";
 import TransfersLegend from "@/features/transfers/TransfersLegend";
 import TransfersTable from "@/features/transfers/TransfersTable";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { useMemo, useState } from "react";
-import { ScrollView, TextInput, View } from "react-native";
+import { ScrollView, View } from "react-native";
 
 export default function TabTransfersScreen() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -23,21 +24,13 @@ export default function TabTransfersScreen() {
     <View style={{ flex: 1 }}>
       <ScrollView>
         <View style={{ paddingHorizontal: 8, paddingVertical: 16 }}>
-          <TextInput
+          <TextField
             value={searchQuery}
             onChangeText={setSearchQuery}
             placeholder="Поиск по имени игрока..."
-            placeholderTextColor={c.muted}
-            style={{
-              height: 40,
-              borderWidth: 1,
-              borderColor: c.border,
-              borderRadius: 8,
-              paddingHorizontal: 12,
-              fontSize: 14,
-              color: c.text,
-              backgroundColor: c.card,
-            }}
+            leftIcon="search"
+            leftIconSize={16}
+            leftIconColor={c.textMuted}
           />
         </View>
         <TransfersLegend />
