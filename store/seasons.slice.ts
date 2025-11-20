@@ -1,4 +1,4 @@
-import { httpGet } from "@/services/http";
+import { httpGet, httpPost } from "@/services/http";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type Match = {
@@ -54,6 +54,26 @@ const initialState: SeasonsState = {
   status: "idle",
   error: null,
 };
+
+// Параметры для создания сезона
+type CreateSeasonParams = {
+  name: string;
+  date: string;
+  leagueId: number;
+};
+
+// thunk для создания сезона
+export const createSeason = createAsyncThunk<Season, CreateSeasonParams>(
+  "seasons/createSeason",
+  async (params: CreateSeasonParams) => {
+    const response = await httpPost<Season>("/api/seasons", {
+      name: params.name,
+      date: params.date,
+      leagueId: params.leagueId,
+    });
+    return response;
+  },
+);
 
 // thunk для загрузки всех сезонов
 export const fetchSeasons = createAsyncThunk<Season[]>(
@@ -112,6 +132,10 @@ const seasonsSlice = createSlice({
       .addCase(fetchSeasons.rejected, (s, a) => {
         s.status = "failed";
         s.error = a.error.message ?? "Failed to load seasons";
+      })
+      // createSeason
+      .addCase(createSeason.fulfilled, (s, a) => {
+        s.items.push(a.payload);
       })
       // fetchLastSeasonByLeagueId
       .addCase(fetchLastSeasonByLeagueId.pending, (s, a) => {

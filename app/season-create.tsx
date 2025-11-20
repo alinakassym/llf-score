@@ -1,9 +1,15 @@
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { useAppDispatch } from "@/store/hooks";
+import { fetchCities, selectCities } from "@/store/cities.slice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import {
+  fetchLeaguesByCityId,
+  selectLeagues,
+} from "@/store/leagues.slice";
+import { createSeason } from "@/store/seasons.slice";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -21,13 +27,109 @@ export default function SeasonCreateScreen() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
+  const cities = useAppSelector(selectCities);
+  const leagues = useAppSelector(selectLeagues);
+
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
+  const [cityId, setCityId] = useState<string>("");
+  const [leagueId, setLeagueId] = useState<string>("");
   const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      try {
+        await dispatch(fetchCities()).unwrap();
+      } catch (error) {
+        console.error("Failed to load cities:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
+  }, [dispatch]);
+
+  // Загружаем лиги когда выбран город
+  useEffect(() => {
+    if (cityId) {
+      dispatch(fetchLeaguesByCityId(cityId));
+      setLeagueId(""); // Сбрасываем выбранную лигу при смене города
+    }
+  }, [cityId, dispatch]);
 
   const handleCreate = async () => {
-    Alert.alert("В разработке", "Функция создания сезона в разработке");
+    if (!name.trim()) {
+      Alert.alert("Ошибка", "Название сезона обязательно");
+      return;
+    }
+
+    if (!date.trim()) {
+      Alert.alert("Ошибка", "Дата начала сезона обязательна");
+      return;
+    }
+
+    if (!cityId) {
+      Alert.alert("Ошибка", "Выберите город");
+      return;
+    }
+
+    if (!leagueId) {
+      Alert.alert("Ошибка", "Выберите лигу");
+      return;
+    }
+
+    setSaving(true);
+    try {
+      await dispatch(
+        createSeason({
+          name: name.trim(),
+          date: date.trim(),
+          leagueId: parseInt(leagueId),
+        }),
+      ).unwrap();
+
+      Alert.alert("Успех", `Сезон "${name.trim()}" успешно создан`, [
+        {
+          text: "OK",
+          onPress: () => router.push("/seasons-management"),
+        },
+      ]);
+    } catch (error) {
+      console.error("Failed to create season:", error);
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Не удалось создать сезон. Проверьте подключение к интернету и попробуйте снова.";
+
+      Alert.alert("Ошибка создания", errorMessage, [
+        {
+          text: "Попробовать снова",
+          onPress: handleCreate,
+        },
+        {
+          text: "Отмена",
+          style: "cancel",
+        },
+      ]);
+    } finally {
+      setSaving(false);
+    }
   };
+
+  if (loading) {
+    return (
+      <View
+        style={[
+          styles.container,
+          { backgroundColor: c.background, justifyContent: "center" },
+        ]}
+      >
+        <ActivityIndicator size="large" color={c.primary} />
+      </View>
+    );
+  }
 
   return (
     <View style={[styles.container, { backgroundColor: c.background }]}>
@@ -90,15 +192,88 @@ export default function SeasonCreateScreen() {
               styles.input,
               { backgroundColor: c.card, borderColor: c.border, color: c.text },
             ]}
-            placeholder="Например: 2025-08-09"
+            placeholder="Например: 2025-08-09T00:00:00Z"
             placeholderTextColor={c.textMuted}
             value={date}
             onChangeText={setDate}
           />
           <Text style={[styles.hint, { color: c.textMuted }]}>
-            Дата начала сезона в формате YYYY-MM-DD
+            Дата в формате RFC 3339 (например: 2025-08-09T00:00:00Z)
           </Text>
         </View>
+
+        {/* City Selection */}
+        <View style={styles.formGroup}>
+          <Text style={[styles.label, { color: c.text }]}>
+            Город <Text style={{ color: "#ef4444" }}>*</Text>
+          </Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.chipsContainer}
+          >
+            {cities.map((city) => (
+              <TouchableOpacity
+                key={city.id}
+                style={[
+                  styles.chip,
+                  {
+                    backgroundColor: cityId === city.id ? c.primary : c.card,
+                    borderColor: c.border,
+                  },
+                ]}
+                onPress={() => setCityId(city.id)}
+              >
+                <Text
+                  style={[
+                    styles.chipText,
+                    { color: cityId === city.id ? "#fff" : c.text },
+                  ]}
+                >
+                  {city.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+
+        {/* League Selection - показываем только когда выбран город */}
+        {cityId && (
+          <View style={styles.formGroup}>
+            <Text style={[styles.label, { color: c.text }]}>
+              Лига <Text style={{ color: "#ef4444" }}>*</Text>
+            </Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={styles.chipsContainer}
+            >
+              {leagues.map((league) => (
+                <TouchableOpacity
+                  key={league.id}
+                  style={[
+                    styles.chip,
+                    {
+                      backgroundColor:
+                        leagueId === league.id ? c.primary : c.card,
+                      borderColor: c.border,
+                    },
+                  ]}
+                  onPress={() => setLeagueId(league.id)}
+                >
+                  <Text
+                    style={[
+                      styles.chipText,
+                      { color: leagueId === league.id ? "#fff" : c.text },
+                    ]}
+                  >
+                    {league.name}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        )}
       </ScrollView>
 
       {/* Create Button */}
@@ -190,5 +365,19 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "600",
+  },
+  chipsContainer: {
+    marginBottom: 8,
+  },
+  chip: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    marginRight: 8,
+    borderWidth: 1,
+  },
+  chipText: {
+    fontSize: 12,
+    fontWeight: "500",
   },
 });
