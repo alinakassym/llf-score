@@ -1,5 +1,5 @@
 import GradientButton from "@/components/buttons/GradientButton";
-import Textarea from "@/components/Textarea";
+import Textarea from "@/components/form/Textarea";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import React, { FC, useState } from "react";

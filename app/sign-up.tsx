@@ -1,7 +1,7 @@
 // app/signUp.tsx
 import GradientButton from "@/components/buttons/GradientButton";
 import LoginHeader from "@/components/LoginHeader";
-import TextField from "@/components/TextField";
+import TextField from "@/components/form/TextField";
 import { Colors } from "@/constants/theme";
 import { useSession } from "@/contexts/auth-context";
 import { app } from "@/firebaseConfig.js";

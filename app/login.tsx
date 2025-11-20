@@ -2,7 +2,7 @@
 import GradientButton from "@/components/buttons/GradientButton";
 import LinkButton from "@/components/buttons/LinkButton";
 import LoginHeader from "@/components/LoginHeader";
-import TextField from "@/components/TextField";
+import TextField from "@/components/form/TextField";
 import { Colors } from "@/constants/theme";
 import { useSession } from "@/contexts/auth-context";
 import { useThemeMode } from "@/hooks/use-theme-mode";
