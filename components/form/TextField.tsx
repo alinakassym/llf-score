@@ -1,6 +1,7 @@
 // components/TextField.tsx
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { FC } from "react";
 import {
   StyleProp,
@@ -16,7 +17,10 @@ type Props = TextInputProps & {
   label?: string;
   numberOfLines?: number;
   error?: string;
-  style: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
+  leftIcon?: keyof typeof Ionicons.glyphMap;
+  leftIconSize?: number;
+  leftIconColor?: string;
 };
 
 export const TextField: FC<Props> = ({
@@ -24,26 +28,47 @@ export const TextField: FC<Props> = ({
   numberOfLines = 6,
   error,
   style,
+  leftIcon,
+  leftIconSize = 16,
+  leftIconColor,
   ...props
 }) => {
   const scheme = useThemeMode();
   const c = Colors[scheme];
+  const iconColor = leftIconColor || c.textMuted;
 
   return (
     <View style={[styles.textField, style]}>
       {label && <Text style={[styles.label, { color: c.text }]}>{label}</Text>}
-      <TextInput
-        placeholderTextColor={c.muted}
+      <View
         style={[
-          styles.input,
+          styles.inputContainer,
           {
-            color: c.text,
             backgroundColor: c.card,
             borderColor: error ? c.error : c.border,
           },
         ]}
-        {...props}
-      />
+      >
+        {leftIcon && (
+          <Ionicons
+            name={leftIcon}
+            size={leftIconSize}
+            color={iconColor}
+            style={styles.leftIcon}
+          />
+        )}
+        <TextInput
+          placeholderTextColor={c.muted}
+          style={[
+            styles.input,
+            {
+              color: c.text,
+              paddingLeft: leftIcon ? leftIconSize + 16 : 16,
+            },
+          ]}
+          {...props}
+        />
+      </View>
       {!!error && (
         <Text style={[styles.error, { color: c.error }]}>{error}</Text>
       )}
@@ -60,11 +85,18 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
   },
-  input: {
-    minHeight: 20,
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
     borderRadius: 8,
-    paddingHorizontal: 16,
+    minHeight: 44,
+  },
+  leftIcon: {
+    paddingHorizontal: 8,
+  },
+  input: {
+    flex: 1,
     paddingVertical: 12,
     fontSize: 14,
   },
