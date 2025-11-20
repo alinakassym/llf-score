@@ -3,6 +3,7 @@ import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { fetchCities, selectCities } from "@/store/cities.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchLeaguesByCityId, selectLeagues } from "@/store/leagues.slice";
 import { fetchSeasons, selectSeasons } from "@/store/seasons.slice";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
@@ -24,9 +25,11 @@ export default function SeasonsManagementScreen() {
 
   const seasons = useAppSelector(selectSeasons);
   const cities = useAppSelector(selectCities);
+  const leagues = useAppSelector(selectLeagues);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCityId, setSelectedCityId] = useState<number | null>(null);
+  const [selectedLeagueId, setSelectedLeagueId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -46,12 +49,26 @@ export default function SeasonsManagementScreen() {
     loadData();
   }, [dispatch]);
 
+  // Загружаем лиги когда выбран город
+  useEffect(() => {
+    if (selectedCityId) {
+      dispatch(fetchLeaguesByCityId(String(selectedCityId)));
+      setSelectedLeagueId(null); // Сбрасываем выбранную лигу при смене города
+    }
+  }, [selectedCityId, dispatch]);
+
   const filteredSeasons = seasons.filter((season) => {
     const matchesSearch = season.name
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
-    const matchesCity = selectedCityId ? season.cityId === selectedCityId : true;
-    return matchesSearch && matchesCity;
+    const matchesCity = selectedCityId
+      ? season.cityId === selectedCityId
+      : true;
+
+    const matchesLeague = selectedLeagueId
+      ? String(season.leagueId) === selectedLeagueId
+      : true;
+    return matchesSearch && matchesCity && matchesLeague;
   });
 
   const groupedSeasons = filteredSeasons.reduce(
@@ -158,6 +175,60 @@ export default function SeasonsManagementScreen() {
             </TouchableOpacity>
           ))}
         </ScrollView>
+
+        {/* League Filter - показываем только когда выбран город */}
+        {selectedCityId && (
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.filterScroll}
+          >
+            <TouchableOpacity
+              style={[
+                styles.filterChip,
+                {
+                  backgroundColor: !selectedLeagueId ? c.primary : c.card,
+                  borderColor: c.border,
+                },
+              ]}
+              onPress={() => setSelectedLeagueId(null)}
+            >
+              <Text
+                style={[
+                  styles.filterChipText,
+                  { color: !selectedLeagueId ? "#fff" : c.text },
+                ]}
+              >
+                Все лиги
+              </Text>
+            </TouchableOpacity>
+            {leagues.map((league) => (
+              <TouchableOpacity
+                key={league.id}
+                style={[
+                  styles.filterChip,
+                  {
+                    backgroundColor:
+                      selectedLeagueId === league.id ? c.primary : c.card,
+                    borderColor: c.border,
+                  },
+                ]}
+                onPress={() => setSelectedLeagueId(league.id)}
+              >
+                <Text
+                  style={[
+                    styles.filterChipText,
+                    {
+                      color: selectedLeagueId === league.id ? "#fff" : c.text,
+                    },
+                  ]}
+                >
+                  {league.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        )}
       </View>
 
       {/* Seasons List */}
