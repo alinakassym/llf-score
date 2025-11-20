@@ -1,4 +1,4 @@
-import { Select } from "@/components/Select";
+import { ModalSelect } from "@/components/ModalSelect";
 import {
   fetchCities,
   selectCities,
@@ -29,7 +29,7 @@ export const CityPicker: FC<Props> = ({
   }, [dispatch, status]);
 
   return (
-    <Select
+    <ModalSelect
       value={value}
       onChange={onChange || (() => {})}
       options={cities.map((c) => ({ id: c.id, label: c.name, icon: c.icon }))}

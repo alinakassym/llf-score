@@ -33,7 +33,7 @@ type Props = {
   color?: string;
 };
 
-export const Select: FC<Props> = ({
+export const ModalSelect: FC<Props> = ({
   value,
   onChange,
   options,
@@ -92,7 +92,7 @@ export const Select: FC<Props> = ({
     <>
       <TouchableOpacity
         activeOpacity={0.7}
-        onPress={() => setOpen(true)}
+        onPress={() => setOpen(!open)}
         style={[styles.button]}
       >
         {selected?.icon && (
@@ -110,9 +110,9 @@ export const Select: FC<Props> = ({
         animationType="none"
         onRequestClose={() => setOpen(false)}
       >
-        <Pressable onPress={() => setOpen(false)}>
+        <Pressable onPress={() => setOpen(false)} style={{ flex: 1 }}>
           <Animated.View
-            style={[styles.backdrop, animatedBackdropStyle, { top: top - 49 }]}
+            style={[styles.backdrop, animatedBackdropStyle]}
           />
         </Pressable>
 
@@ -193,6 +193,7 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     position: "absolute",
+    top: 0,
     right: 0,
     bottom: 0,
     left: 0,

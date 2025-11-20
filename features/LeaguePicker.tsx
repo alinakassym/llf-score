@@ -1,4 +1,4 @@
-import { Option, Select } from "@/components/Select";
+import { Option, ModalSelect } from "@/components/ModalSelect";
 import { selectCityId } from "@/store/general.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
@@ -48,7 +48,7 @@ export const LeaguePicker: FC<Props> = ({
   }, [leagues]);
 
   return (
-    <Select
+    <ModalSelect
       value={value}
       onChange={onChange || (() => {})}
       options={items}
