@@ -76,10 +76,7 @@ export default function CitiesManagementScreen() {
   };
 
   const handleAddCity = () => {
-    Alert.alert(
-      "В разработке",
-      "Функция добавления городов еще не реализована",
-    );
+    router.push("/city-create");
   };
 
   if (loading) {

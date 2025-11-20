@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "@/config/env";
-import { httpGet } from "@/services/http";
+import { httpGet, httpPost } from "@/services/http";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { ImageSourcePropType } from "react-native";
 
@@ -21,6 +21,12 @@ const initialState: CitiesState = {
   error: null,
 };
 
+// Параметры для создания города
+type CreateCityParams = {
+  id: number;
+  name: string;
+};
+
 // thunk для загрузки
 export const fetchCities = createAsyncThunk<City[]>(
   "cities/fetchCities",
@@ -37,6 +43,26 @@ export const fetchCities = createAsyncThunk<City[]>(
         }) as City,
     );
     return result;
+  },
+);
+
+// thunk для создания города
+export const createCity = createAsyncThunk<City, CreateCityParams>(
+  "cities/createCity",
+  async (params: CreateCityParams) => {
+    const response = await httpPost<City>("/api/cities", {
+      id: params.id,
+      name: params.name,
+      icon: null,
+    });
+
+    return {
+      ...response,
+      id: String(response.id),
+      icon: {
+        uri: `${API_BASE_URL}/api/cities/${response.id}/icon?width=80&height=80`,
+      },
+    };
   },
 );
 
@@ -66,6 +92,9 @@ const citiesSlice = createSlice({
       .addCase(fetchCities.rejected, (s, a) => {
         s.status = "failed";
         s.error = a.error.message ?? "Failed to load cities";
+      })
+      .addCase(createCity.fulfilled, (s, a) => {
+        s.items.push(a.payload);
       });
   },
 });
