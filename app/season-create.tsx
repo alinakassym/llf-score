@@ -1,3 +1,4 @@
+import DatePickerField from "@/components/DatePickerField";
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import { fetchCities, selectCities } from "@/store/cities.slice";
@@ -65,8 +66,8 @@ export default function SeasonCreateScreen() {
       return;
     }
 
-    if (!date.trim()) {
-      Alert.alert("Ошибка", "Дата начала сезона обязательна");
+    if (!date) {
+      Alert.alert("Ошибка", "Выберите дату начала сезона");
       return;
     }
 
@@ -82,11 +83,27 @@ export default function SeasonCreateScreen() {
 
     setSaving(true);
     try {
+      const leagueIdNum = parseInt(leagueId);
+      if (isNaN(leagueIdNum)) {
+        Alert.alert("Ошибка", "Неверный ID лиги");
+        setSaving(false);
+        return;
+      }
+
+      // Конвертируем дату из YYYY-MM-DD в RFC 3339 формат
+      const dateRFC3339 = `${date}T00:00:00Z`;
+
+      console.log("Creating season with:", {
+        name: name.trim(),
+        date: dateRFC3339,
+        leagueId: leagueIdNum,
+      });
+
       await dispatch(
         createSeason({
           name: name.trim(),
-          date: date.trim(),
-          leagueId: parseInt(leagueId),
+          date: dateRFC3339,
+          leagueId: leagueIdNum,
         }),
       ).unwrap();
 
@@ -184,21 +201,13 @@ export default function SeasonCreateScreen() {
 
         {/* Season Date */}
         <View style={styles.formGroup}>
-          <Text style={[styles.label, { color: c.text }]}>
-            Дата начала сезона <Text style={{ color: "#ef4444" }}>*</Text>
-          </Text>
-          <TextInput
-            style={[
-              styles.input,
-              { backgroundColor: c.card, borderColor: c.border, color: c.text },
-            ]}
-            placeholder="Например: 2025-08-09T00:00:00Z"
-            placeholderTextColor={c.textMuted}
+          <DatePickerField
+            label="Дата начала сезона *"
             value={date}
-            onChangeText={setDate}
+            onChangeDate={setDate}
           />
           <Text style={[styles.hint, { color: c.textMuted }]}>
-            Дата в формате RFC 3339 (например: 2025-08-09T00:00:00Z)
+            Выберите дату начала сезона
           </Text>
         </View>
 
