@@ -1,146 +1,63 @@
-import TextField from "@/components/form/TextField";
 import { Colors } from "@/constants/theme";
-import { ManagementItemCard } from "@/features/management/ManagementItemCard";
+import { WEB_MANAGEMENT_URL } from "@/config/env";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import { fetchCities, selectCities } from "@/store/cities.slice";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import {
-  fetchLeagueGroups,
-  selectLeagueGroups,
-} from "@/store/league-groups.slice";
-import {
-  deleteLeague,
-  fetchLeaguesByCityId,
-  selectLeagues,
-} from "@/store/leagues.slice";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   ActivityIndicator,
-  Alert,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import { WebView, WebViewNavigation } from "react-native-webview";
 
 export default function LeaguesManagementScreen() {
   const scheme = useThemeMode();
   const c = Colors[scheme];
   const router = useRouter();
-  const dispatch = useAppDispatch();
+  const webViewRef = useRef<WebView>(null);
 
-  const cities = useAppSelector(selectCities);
-  const leagues = useAppSelector(selectLeagues);
-  const leagueGroups = useAppSelector(selectLeagueGroups);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [canGoBack, setCanGoBack] = useState(false);
 
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCityId, setSelectedCityId] = useState<string | null>(null);
-  const [selectedGroupId, setSelectedGroupId] = useState<number | null>(null);
-  const [loading, setLoading] = useState(false);
+  const webManagementUrl = `${WEB_MANAGEMENT_URL}/league-management`;
 
-  useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      try {
-        await Promise.all([
-          dispatch(fetchCities()).unwrap(),
-          dispatch(fetchLeagueGroups()).unwrap(),
-        ]);
-      } catch (error) {
-        console.error("Failed to load data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadData();
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (cities.length > 0) {
-      cities.forEach((city) => {
-        dispatch(fetchLeaguesByCityId(city.id));
-      });
-    }
-  }, [cities, dispatch]);
-
-  const filteredLeagues = leagues.filter((league) => {
-    const matchesSearch = league.name
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-    const matchesCity = selectedCityId
-      ? String(league.cityId) === selectedCityId
-      : true;
-    const matchesGroup = selectedGroupId
-      ? league.leagueGroupId === selectedGroupId
-      : true;
-    return matchesSearch && matchesCity && matchesGroup;
-  });
-
-  const groupedLeagues = filteredLeagues.reduce(
-    (acc, league) => {
-      if (!acc[league.cityName]) {
-        acc[league.cityName] = [];
-      }
-      acc[league.cityName].push(league);
-      return acc;
-    },
-    {} as Record<string, typeof leagues>,
-  );
-
-  const handleDeleteLeague = (leagueId: string, leagueName: string, cityId: string) => {
-    Alert.alert(
-      "Удаление лиги",
-      `Вы уверены, что хотите удалить лигу "${leagueName}"? Это действие нельзя отменить.`,
-      [
-        {
-          text: "Отмена",
-          style: "cancel",
-        },
-        {
-          text: "Удалить",
-          style: "destructive",
-          onPress: async () => {
-            try {
-              await dispatch(deleteLeague({ id: leagueId, cityId })).unwrap();
-              Alert.alert("Успех", `Лига "${leagueName}" успешно удалена`);
-            } catch (error) {
-              console.error("Failed to delete league:", error);
-              const errorMessage =
-                error instanceof Error
-                  ? error.message
-                  : "Не удалось удалить лигу. Проверьте подключение к интернету и попробуйте снова.";
-              Alert.alert("Ошибка удаления", errorMessage);
-            }
-          },
-        },
-      ],
-    );
+  const handleNavigationStateChange = (navState: WebViewNavigation) => {
+    setCanGoBack(navState.canGoBack);
   };
 
-  if (loading) {
-    return (
-      <View
-        style={[
-          styles.container,
-          { backgroundColor: c.background, justifyContent: "center" },
-        ]}
-      >
-        <ActivityIndicator size="large" color={c.primary} />
-      </View>
-    );
-  }
+  const handleError = () => {
+    setError("Не удалось загрузить страницу");
+    setLoading(false);
+  };
+
+  const handleLoad = () => {
+    setLoading(false);
+    setError(null);
+  };
+
+  const handleRetry = () => {
+    setError(null);
+    setLoading(true);
+    webViewRef.current?.reload();
+  };
+
+  const handleGoBack = () => {
+    if (canGoBack && webViewRef.current) {
+      webViewRef.current.goBack();
+    } else {
+      router.push("/management");
+    }
+  };
 
   return (
     <View style={[styles.container, { backgroundColor: c.background }]}>
       {/* Header */}
       <View style={[styles.header, { borderBottomColor: c.border }]}>
-        <TouchableOpacity
-          onPress={() => router.push("/management")}
-          style={styles.backButton}
-        >
+        <TouchableOpacity onPress={handleGoBack} style={styles.backButton}>
           <Ionicons name="arrow-back" size={16} color={c.text} />
         </TouchableOpacity>
         <Text style={[styles.headerTitle, { color: c.text }]}>
@@ -148,162 +65,69 @@ export default function LeaguesManagementScreen() {
         </Text>
       </View>
 
-      {/* Search and Filter */}
-      <View style={styles.controls}>
-        <TextField
-          placeholder="Поиск лиги..."
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-          leftIcon="search"
-          leftIconSize={16}
-          leftIconColor={c.textMuted}
-          style={styles.searchField}
-        />
-
-        {/* City Filter */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.filterScroll}
-        >
+      {/* WebView */}
+      {error ? (
+        <View style={styles.errorContainer}>
+          <Ionicons name="alert-circle-outline" size={64} color={c.textMuted} />
+          <Text style={[styles.errorText, { color: c.text }]}>{error}</Text>
+          <Text style={[styles.errorSubtext, { color: c.textMuted }]}>
+            URL: {webManagementUrl}
+          </Text>
           <TouchableOpacity
-            style={[
-              styles.filterChip,
-              {
-                backgroundColor: !selectedCityId ? c.primary : c.card,
-                borderColor: c.border,
-              },
-            ]}
-            onPress={() => setSelectedCityId(null)}
+            style={[styles.retryButton, { backgroundColor: c.primary }]}
+            onPress={handleRetry}
           >
-            <Text
-              style={[
-                styles.filterChipText,
-                { color: !selectedCityId ? "#fff" : c.text },
-              ]}
-            >
-              Все города
-            </Text>
+            <Ionicons name="refresh" size={20} color="#fff" />
+            <Text style={styles.retryButtonText}>Попробовать снова</Text>
           </TouchableOpacity>
-          {cities.map((city) => (
-            <TouchableOpacity
-              key={city.id}
-              style={[
-                styles.filterChip,
-                {
-                  backgroundColor:
-                    selectedCityId === city.id ? c.primary : c.card,
-                  borderColor: c.border,
-                },
-              ]}
-              onPress={() => setSelectedCityId(city.id)}
-            >
-              <Text
-                style={[
-                  styles.filterChipText,
-                  { color: selectedCityId === city.id ? "#fff" : c.text },
-                ]}
-              >
-                {city.name}
+        </View>
+      ) : (
+        <>
+          {loading && (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color={c.primary} />
+              <Text style={[styles.loadingText, { color: c.textMuted }]}>
+                Загрузка...
               </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-
-        {/* League Group Filter */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.filterScroll}
-        >
-          <TouchableOpacity
-            style={[
-              styles.filterChip,
-              {
-                backgroundColor: !selectedGroupId ? c.primary : c.card,
-                borderColor: c.border,
-              },
-            ]}
-            onPress={() => setSelectedGroupId(null)}
-          >
-            <Text
-              style={[
-                styles.filterChipText,
-                { color: !selectedGroupId ? "#fff" : c.text },
-              ]}
-            >
-              Все группы
-            </Text>
-          </TouchableOpacity>
-          {leagueGroups.map((group) => (
-            <TouchableOpacity
-              key={group.id}
-              style={[
-                styles.filterChip,
-                {
-                  backgroundColor:
-                    selectedGroupId === group.id ? c.primary : c.card,
-                  borderColor: c.border,
-                },
-              ]}
-              onPress={() => setSelectedGroupId(group.id)}
-            >
-              <Text
-                style={[
-                  styles.filterChipText,
-                  { color: selectedGroupId === group.id ? "#fff" : c.text },
-                ]}
-              >
-                {group.name}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-      </View>
-
-      {/* Leagues List */}
-      <ScrollView style={styles.content}>
-        {Object.keys(groupedLeagues).length === 0 ? (
-          <View style={styles.emptyState}>
-            <Ionicons name="trophy-outline" size={64} color={c.textMuted} />
-            <Text style={[styles.emptyStateText, { color: c.textMuted }]}>
-              Лиги не найдены
-            </Text>
-          </View>
-        ) : (
-          Object.entries(groupedLeagues).map(([cityName, cityLeagues]) => (
-            <View key={cityName} style={styles.cityGroup}>
-              <Text style={[styles.cityGroupTitle, { color: c.text }]}>
-                {cityName}
-              </Text>
-              {cityLeagues.map((league) => (
-                <ManagementItemCard
-                  key={league.id}
-                  title={league.name}
-                  subtitle={`Группа: ${league.leagueGroupName}`}
-                  onEdit={() => {
-                    router.push({
-                      pathname: "/league-edit",
-                      params: { leagueId: league.id },
-                    });
-                  }}
-                  onDelete={() =>
-                    handleDeleteLeague(league.id, league.name, league.cityId)
-                  }
-                />
-              ))}
             </View>
-          ))
-        )}
-      </ScrollView>
-
-      {/* Add Button */}
-      <TouchableOpacity
-        style={[styles.fab, { backgroundColor: c.primary }]}
-        onPress={() => router.push("/league-create")}
-      >
-        <Ionicons name="add" size={28} color="#fff" />
-      </TouchableOpacity>
+          )}
+          <WebView
+            ref={webViewRef}
+            source={{ uri: webManagementUrl }}
+            style={styles.webview}
+            onLoadStart={() => setLoading(true)}
+            onLoadEnd={handleLoad}
+            onError={handleError}
+            onHttpError={handleError}
+            onNavigationStateChange={handleNavigationStateChange}
+            startInLoadingState={true}
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
+            allowsBackForwardNavigationGestures={true}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            // Security settings
+            allowsInlineMediaPlayback={true}
+            mediaPlaybackRequiresUserAction={false}
+            // Performance settings
+            cacheEnabled={true}
+            incognito={false}
+            // Error handling
+            renderError={() => (
+              <View style={styles.errorContainer}>
+                <Ionicons
+                  name="alert-circle-outline"
+                  size={64}
+                  color={c.textMuted}
+                />
+                <Text style={[styles.errorText, { color: c.text }]}>
+                  Ошибка загрузки
+                </Text>
+              </View>
+            )}
+          />
+        </>
+      )}
     </View>
   );
 }
@@ -327,64 +151,53 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
   },
-  controls: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
-  },
-  searchField: {
-    marginBottom: 16,
-  },
-  filterScroll: {
-    marginBottom: 12,
-  },
-  filterChip: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    marginRight: 8,
-    borderWidth: 1,
-  },
-  filterChipText: {
-    fontSize: 12,
-    fontWeight: "500",
-  },
-  content: {
+  webview: {
     flex: 1,
-    paddingHorizontal: 16,
   },
-  emptyState: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 60,
-  },
-  emptyStateText: {
-    fontSize: 16,
-    marginTop: 16,
-  },
-  cityGroup: {
-    marginBottom: 24,
-  },
-  cityGroupTitle: {
-    fontSize: 16,
-    fontWeight: "500",
-    marginBottom: 12,
-  },
-  fab: {
+  loadingContainer: {
     position: "absolute",
-    right: 16,
-    bottom: 16,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1,
+  },
+  loadingText: {
+    marginTop: 12,
+    fontSize: 14,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 32,
+  },
+  errorText: {
+    fontSize: 18,
+    fontWeight: "600",
+    marginTop: 16,
+    textAlign: "center",
+  },
+  errorSubtext: {
+    fontSize: 12,
+    marginTop: 8,
+    textAlign: "center",
+  },
+  retryButton: {
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 12,
+    marginTop: 24,
+    gap: 8,
+  },
+  retryButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
   },
 });
