@@ -31,8 +31,9 @@ export default function LeaguesManagementScreen() {
       const idToken = await getIdToken();
 
       if (idToken) {
-        // Передаем токен через URL параметр
-        const url = `${WEB_MANAGEMENT_URL}/league-management?token=${encodeURIComponent(idToken)}`;
+        // Передаем токен через hash (#), не query (?)
+        // Hash не отправляется на сервер и не попадает в логи
+        const url = `${WEB_MANAGEMENT_URL}/league-management#auth_token=${encodeURIComponent(idToken)}`;
         setWebViewUrl(url);
       } else {
         // Без токена
