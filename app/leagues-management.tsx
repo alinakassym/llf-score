@@ -1,9 +1,10 @@
-import { Colors } from "@/constants/theme";
 import { WEB_MANAGEMENT_URL } from "@/config/env";
+import { Colors } from "@/constants/theme";
+import { useSession } from "@/contexts/auth-context";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   StyleSheet,
@@ -18,12 +19,28 @@ export default function LeaguesManagementScreen() {
   const c = Colors[scheme];
   const router = useRouter();
   const webViewRef = useRef<WebView>(null);
+  const { getIdToken } = useSession();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [canGoBack, setCanGoBack] = useState(false);
+  const [webViewUrl, setWebViewUrl] = useState<string>("");
 
-  const webManagementUrl = `${WEB_MANAGEMENT_URL}/league-management`;
+  useEffect(() => {
+    const loadToken = async () => {
+      const idToken = await getIdToken();
+
+      if (idToken) {
+        // Передаем токен через URL параметр
+        const url = `${WEB_MANAGEMENT_URL}/league-management?token=${encodeURIComponent(idToken)}`;
+        setWebViewUrl(url);
+      } else {
+        // Без токена
+        setWebViewUrl(`${WEB_MANAGEMENT_URL}/league-management`);
+      }
+    };
+    loadToken();
+  }, [getIdToken]);
 
   const handleNavigationStateChange = (navState: WebViewNavigation) => {
     setCanGoBack(navState.canGoBack);
@@ -70,9 +87,6 @@ export default function LeaguesManagementScreen() {
         <View style={styles.errorContainer}>
           <Ionicons name="alert-circle-outline" size={64} color={c.textMuted} />
           <Text style={[styles.errorText, { color: c.text }]}>{error}</Text>
-          <Text style={[styles.errorSubtext, { color: c.textMuted }]}>
-            URL: {webManagementUrl}
-          </Text>
           <TouchableOpacity
             style={[styles.retryButton, { backgroundColor: c.primary }]}
             onPress={handleRetry}
@@ -91,41 +105,43 @@ export default function LeaguesManagementScreen() {
               </Text>
             </View>
           )}
-          <WebView
-            ref={webViewRef}
-            source={{ uri: webManagementUrl }}
-            style={styles.webview}
-            onLoadStart={() => setLoading(true)}
-            onLoadEnd={handleLoad}
-            onError={handleError}
-            onHttpError={handleError}
-            onNavigationStateChange={handleNavigationStateChange}
-            startInLoadingState={true}
-            javaScriptEnabled={true}
-            domStorageEnabled={true}
-            allowsBackForwardNavigationGestures={true}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            // Security settings
-            allowsInlineMediaPlayback={true}
-            mediaPlaybackRequiresUserAction={false}
-            // Performance settings
-            cacheEnabled={true}
-            incognito={false}
-            // Error handling
-            renderError={() => (
-              <View style={styles.errorContainer}>
-                <Ionicons
-                  name="alert-circle-outline"
-                  size={64}
-                  color={c.textMuted}
-                />
-                <Text style={[styles.errorText, { color: c.text }]}>
-                  Ошибка загрузки
-                </Text>
-              </View>
-            )}
-          />
+          {webViewUrl && (
+            <WebView
+              ref={webViewRef}
+              source={{ uri: webViewUrl }}
+              style={styles.webview}
+              onLoadStart={() => setLoading(true)}
+              onLoadEnd={handleLoad}
+              onError={handleError}
+              onHttpError={handleError}
+              onNavigationStateChange={handleNavigationStateChange}
+              startInLoadingState={true}
+              javaScriptEnabled={true}
+              domStorageEnabled={true}
+              allowsBackForwardNavigationGestures={true}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              // Security settings
+              allowsInlineMediaPlayback={true}
+              mediaPlaybackRequiresUserAction={false}
+              // Performance settings
+              cacheEnabled={true}
+              incognito={false}
+              // Error handling
+              renderError={() => (
+                <View style={styles.errorContainer}>
+                  <Ionicons
+                    name="alert-circle-outline"
+                    size={64}
+                    color={c.textMuted}
+                  />
+                  <Text style={[styles.errorText, { color: c.text }]}>
+                    Ошибка загрузки
+                  </Text>
+                </View>
+              )}
+            />
+          )}
         </>
       )}
     </View>
