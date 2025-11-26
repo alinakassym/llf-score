@@ -130,6 +130,16 @@ function RootLayoutNav() {
           gestureEnabled: false,
         }}
       />
+      <Stack.Screen
+        name="leagues-management"
+        options={{
+          headerShown: false,
+          presentation:
+            Platform.OS === "android" ? "transparentModal" : "modal",
+          animation: Platform.OS === "android" ? "fade" : "default",
+          gestureEnabled: true,
+        }}
+      />
     </Stack>
   );
 }
