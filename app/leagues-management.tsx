@@ -1,17 +1,21 @@
+import ModalHeader from "@/components/ModalHeader";
 import { WEB_MANAGEMENT_URL } from "@/config/env";
 import { Colors } from "@/constants/theme";
 import { useSession } from "@/contexts/auth-context";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { WebView, WebViewNavigation } from "react-native-webview";
 
 export default function LeaguesManagementScreen() {
@@ -67,85 +71,97 @@ export default function LeaguesManagementScreen() {
     if (canGoBack && webViewRef.current) {
       webViewRef.current.goBack();
     } else {
-      router.push("/management");
+      router.back();
     }
   };
 
+  // Выбираем правильный контейнер для Android анимации
+  const Container: any = Platform.OS === "android" ? Animated.View : View;
+  const containerProps =
+    Platform.OS === "android"
+      ? { entering: FadeIn.duration(60), exiting: FadeOut.duration(60) }
+      : {};
+
   return (
-    <View style={[styles.container, { backgroundColor: c.background }]}>
-      {/* Header */}
-      <View style={[styles.header, { borderBottomColor: c.border }]}>
-        <TouchableOpacity onPress={handleGoBack} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={16} color={c.text} />
-        </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: c.text }]}>
-          Управление лигами
-        </Text>
-      </View>
+    <Container style={styles.container} {...containerProps}>
+      {/* Header с градиентом */}
+      <LinearGradient
+        colors={c.gradient}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
+        <ModalHeader title="Управление лигами" onClose={handleGoBack} />
+      </LinearGradient>
 
       {/* WebView */}
-      {error ? (
-        <View style={styles.errorContainer}>
-          <Ionicons name="alert-circle-outline" size={64} color={c.textMuted} />
-          <Text style={[styles.errorText, { color: c.text }]}>{error}</Text>
-          <TouchableOpacity
-            style={[styles.retryButton, { backgroundColor: c.primary }]}
-            onPress={handleRetry}
-          >
-            <Ionicons name="refresh" size={20} color="#fff" />
-            <Text style={styles.retryButtonText}>Попробовать снова</Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <>
-          {loading && (
-            <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color={c.primary} />
-              <Text style={[styles.loadingText, { color: c.textMuted }]}>
-                Загрузка...
-              </Text>
-            </View>
-          )}
-          {webViewUrl && (
-            <WebView
-              ref={webViewRef}
-              source={{ uri: webViewUrl }}
-              style={styles.webview}
-              onLoadStart={() => setLoading(true)}
-              onLoadEnd={handleLoad}
-              onError={handleError}
-              onHttpError={handleError}
-              onNavigationStateChange={handleNavigationStateChange}
-              startInLoadingState={true}
-              javaScriptEnabled={true}
-              domStorageEnabled={true}
-              allowsBackForwardNavigationGestures={true}
-              showsVerticalScrollIndicator={false}
-              showsHorizontalScrollIndicator={false}
-              // Security settings
-              allowsInlineMediaPlayback={true}
-              mediaPlaybackRequiresUserAction={false}
-              // Performance settings
-              cacheEnabled={true}
-              incognito={false}
-              // Error handling
-              renderError={() => (
-                <View style={styles.errorContainer}>
-                  <Ionicons
-                    name="alert-circle-outline"
-                    size={64}
-                    color={c.textMuted}
-                  />
-                  <Text style={[styles.errorText, { color: c.text }]}>
-                    Ошибка загрузки
-                  </Text>
-                </View>
-              )}
+      <View style={[styles.content, { backgroundColor: c.background }]}>
+        {error ? (
+          <View style={styles.errorContainer}>
+            <Ionicons
+              name="alert-circle-outline"
+              size={64}
+              color={c.textMuted}
             />
-          )}
-        </>
-      )}
-    </View>
+            <Text style={[styles.errorText, { color: c.text }]}>{error}</Text>
+            <TouchableOpacity
+              style={[styles.retryButton, { backgroundColor: c.primary }]}
+              onPress={handleRetry}
+            >
+              <Ionicons name="refresh" size={20} color="#fff" />
+              <Text style={styles.retryButtonText}>Попробовать снова</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <>
+            {loading && (
+              <View style={styles.loadingContainer}>
+                <ActivityIndicator size="large" color={c.primary} />
+                <Text style={[styles.loadingText, { color: c.textMuted }]}>
+                  Загрузка...
+                </Text>
+              </View>
+            )}
+            {webViewUrl && (
+              <WebView
+                ref={webViewRef}
+                source={{ uri: webViewUrl }}
+                style={styles.webview}
+                onLoadStart={() => setLoading(true)}
+                onLoadEnd={handleLoad}
+                onError={handleError}
+                onHttpError={handleError}
+                onNavigationStateChange={handleNavigationStateChange}
+                startInLoadingState={true}
+                javaScriptEnabled={true}
+                domStorageEnabled={true}
+                allowsBackForwardNavigationGestures={true}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                // Security settings
+                allowsInlineMediaPlayback={true}
+                mediaPlaybackRequiresUserAction={false}
+                // Performance settings
+                cacheEnabled={true}
+                incognito={false}
+                // Error handling
+                renderError={() => (
+                  <View style={styles.errorContainer}>
+                    <Ionicons
+                      name="alert-circle-outline"
+                      size={64}
+                      color={c.textMuted}
+                    />
+                    <Text style={[styles.errorText, { color: c.text }]}>
+                      Ошибка загрузки
+                    </Text>
+                  </View>
+                )}
+              />
+            )}
+          </>
+        )}
+      </View>
+    </Container>
   );
 }
 
@@ -153,20 +169,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    paddingTop: 60,
-    paddingBottom: 16,
-    borderBottomWidth: 1,
-  },
-  backButton: {
-    marginRight: 8,
-  },
-  headerTitle: {
-    fontSize: 16,
-    fontWeight: "500",
+  content: {
+    flex: 1,
   },
   webview: {
     flex: 1,

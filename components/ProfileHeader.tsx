@@ -1,4 +1,4 @@
-// features/ProfileHeader.tsx
+// components/ProfileHeader.tsx
 import { Colors } from "@/constants/theme";
 import { useThemeMode } from "@/hooks/use-theme-mode";
 import Ionicons from "@expo/vector-icons/Ionicons";
