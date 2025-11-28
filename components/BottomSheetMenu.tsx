@@ -54,7 +54,7 @@ export const BottomSheetMenu: FC<Props> = ({ visible, onClose, options }) => {
       animationType="none"
       onRequestClose={onClose}
     >
-      <Pressable onPress={onClose}>
+      <Pressable onPress={onClose} style={{ flex: 1 }}>
         <Animated.View style={[styles.backdrop, animatedBackdropStyle]} />
       </Pressable>
 
