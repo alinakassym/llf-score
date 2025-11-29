@@ -13,6 +13,7 @@ export default function TabManagementScreen() {
         <ManagementCard
           title="Управление пользователями"
           description="Здесь будут функции для управления пользователями"
+          onPress={() => router.push("/users-management")}
         />
 
         <ManagementCard

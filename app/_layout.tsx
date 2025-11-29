@@ -150,6 +150,26 @@ function RootLayoutNav() {
           gestureEnabled: true,
         }}
       />
+      <Stack.Screen
+        name="cities-management"
+        options={{
+          headerShown: false,
+          presentation:
+            Platform.OS === "android" ? "transparentModal" : "modal",
+          animation: Platform.OS === "android" ? "fade" : "default",
+          gestureEnabled: true,
+        }}
+      />
+      <Stack.Screen
+        name="users-management"
+        options={{
+          headerShown: false,
+          presentation:
+            Platform.OS === "android" ? "transparentModal" : "modal",
+          animation: Platform.OS === "android" ? "fade" : "default",
+          gestureEnabled: true,
+        }}
+      />
     </Stack>
   );
 }
