@@ -1,166 +1,169 @@
-import TextField from "@/components/form/TextField";
+// llf-score/app/cities-management.tsx
+
+import ModalHeader from "@/components/ModalHeader";
+import { WEB_MANAGEMENT_URL } from "@/config/env";
 import { Colors } from "@/constants/theme";
-import { ManagementItemCard } from "@/features/management/ManagementItemCard";
+import { useSession } from "@/contexts/auth-context";
 import { useThemeMode } from "@/hooks/use-theme-mode";
-import {
-  deleteCity,
-  fetchCities,
-  selectCities,
-} from "@/store/cities.slice";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
-  Alert,
-  ScrollView,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import { WebView, WebViewNavigation } from "react-native-webview";
 
 export default function CitiesManagementScreen() {
   const scheme = useThemeMode();
   const c = Colors[scheme];
   const router = useRouter();
-  const dispatch = useAppDispatch();
+  const webViewRef = useRef<WebView>(null);
+  const { getIdToken } = useSession();
 
-  const cities = useAppSelector(selectCities);
-
-  const [searchQuery, setSearchQuery] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [canGoBack, setCanGoBack] = useState(false);
+  const [webViewUrl, setWebViewUrl] = useState<string>("");
 
   useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      try {
-        await dispatch(fetchCities()).unwrap();
-      } catch (error) {
-        console.error("Failed to load cities:", error);
-      } finally {
-        setLoading(false);
+    const loadToken = async () => {
+      const idToken = await getIdToken();
+
+      if (idToken) {
+        // Передаем токен через hash (#), не query (?)
+        // Hash не отправляется на сервер и не попадает в логи
+        const url = `${WEB_MANAGEMENT_URL}/cities-management#auth_token=${encodeURIComponent(idToken)}`;
+        setWebViewUrl(url);
+      } else {
+        // Без токена
+        setWebViewUrl(`${WEB_MANAGEMENT_URL}/cities-management`);
       }
     };
-    loadData();
-  }, [dispatch]);
+    loadToken();
+  }, [getIdToken]);
 
-  const filteredCities = cities.filter((city) =>
-    city.name.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
-
-  const handleDeleteCity = (cityId: string, cityName: string) => {
-    Alert.alert(
-      "Удаление города",
-      `Вы уверены, что хотите удалить город "${cityName}"? Это действие нельзя отменить.`,
-      [
-        {
-          text: "Отмена",
-          style: "cancel",
-        },
-        {
-          text: "Удалить",
-          style: "destructive",
-          onPress: async () => {
-            try {
-              await dispatch(deleteCity({ id: cityId })).unwrap();
-              Alert.alert("Успех", `Город "${cityName}" успешно удален`);
-            } catch (error) {
-              console.error("Failed to delete city:", error);
-              const errorMessage =
-                error instanceof Error
-                  ? error.message
-                  : "Не удалось удалить город. Проверьте подключение к интернету и попробуйте снова.";
-              Alert.alert("Ошибка удаления", errorMessage);
-            }
-          },
-        },
-      ],
-    );
+  const handleNavigationStateChange = (navState: WebViewNavigation) => {
+    setCanGoBack(navState.canGoBack);
   };
 
-  const handleEditCity = (cityId: string) => {
-    router.push({
-      pathname: "/city-edit",
-      params: { cityId },
-    });
+  const handleError = () => {
+    setError("Не удалось загрузить страницу");
+    setLoading(false);
   };
 
-  const handleAddCity = () => {
-    router.push("/city-create");
+  const handleLoad = () => {
+    setLoading(false);
+    setError(null);
   };
 
-  if (loading) {
-    return (
-      <View
-        style={[
-          styles.container,
-          { backgroundColor: c.background, justifyContent: "center" },
-        ]}
-      >
-        <ActivityIndicator size="large" color={c.primary} />
-      </View>
-    );
-  }
+  const handleRetry = () => {
+    setError(null);
+    setLoading(true);
+    webViewRef.current?.reload();
+  };
+
+  const handleGoBack = () => {
+    if (canGoBack && webViewRef.current) {
+      webViewRef.current.goBack();
+    } else {
+      router.back();
+    }
+  };
+
+  // Выбираем правильный контейнер для Android анимации
+  const Container: any = Platform.OS === "android" ? Animated.View : View;
+  const containerProps =
+    Platform.OS === "android"
+      ? { entering: FadeIn.duration(60), exiting: FadeOut.duration(60) }
+      : {};
 
   return (
-    <View style={[styles.container, { backgroundColor: c.background }]}>
-      {/* Header */}
-      <View style={[styles.header, { borderBottomColor: c.border }]}>
-        <TouchableOpacity
-          onPress={() => router.push("/management")}
-          style={styles.backButton}
-        >
-          <Ionicons name="arrow-back" size={16} color={c.text} />
-        </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: c.text }]}>
-          Управление городами
-        </Text>
-      </View>
+    <Container style={styles.container} {...containerProps}>
+      {/* Header с градиентом */}
+      <LinearGradient
+        colors={c.gradient}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
+        <ModalHeader title="Управление городами" onClose={handleGoBack} />
+      </LinearGradient>
 
-      {/* Search */}
-      <View style={styles.controls}>
-        <TextField
-          placeholder="Поиск города..."
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-          leftIcon="search"
-          leftIconSize={16}
-          leftIconColor={c.textMuted}
-        />
-      </View>
-
-      {/* Cities List */}
-      <ScrollView style={styles.content}>
-        {filteredCities.length === 0 ? (
-          <View style={styles.emptyState}>
-            <Ionicons name="location-outline" size={64} color={c.textMuted} />
-            <Text style={[styles.emptyStateText, { color: c.textMuted }]}>
-              Города не найдены
-            </Text>
+      {/* WebView */}
+      <View style={[styles.content, { backgroundColor: c.background }]}>
+        {error ? (
+          <View style={styles.errorContainer}>
+            <Ionicons
+              name="alert-circle-outline"
+              size={64}
+              color={c.textMuted}
+            />
+            <Text style={[styles.errorText, { color: c.text }]}>{error}</Text>
+            <TouchableOpacity
+              style={[styles.retryButton, { backgroundColor: c.primary }]}
+              onPress={handleRetry}
+            >
+              <Ionicons name="refresh" size={20} color="#fff" />
+              <Text style={styles.retryButtonText}>Попробовать снова</Text>
+            </TouchableOpacity>
           </View>
         ) : (
-          filteredCities.map((city) => (
-            <ManagementItemCard
-              key={city.id}
-              title={city.name}
-              onEdit={() => handleEditCity(city.id)}
-              onDelete={() => handleDeleteCity(city.id, city.name)}
-            />
-          ))
+          <>
+            {loading && (
+              <View style={styles.loadingContainer}>
+                <ActivityIndicator size="large" color={c.primary} />
+                <Text style={[styles.loadingText, { color: c.textMuted }]}>
+                  Загрузка...
+                </Text>
+              </View>
+            )}
+            {webViewUrl && (
+              <WebView
+                ref={webViewRef}
+                source={{ uri: webViewUrl }}
+                style={styles.webview}
+                onLoadStart={() => setLoading(true)}
+                onLoadEnd={handleLoad}
+                onError={handleError}
+                onHttpError={handleError}
+                onNavigationStateChange={handleNavigationStateChange}
+                startInLoadingState={true}
+                javaScriptEnabled={true}
+                domStorageEnabled={true}
+                allowsBackForwardNavigationGestures={true}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                // Security settings
+                allowsInlineMediaPlayback={true}
+                mediaPlaybackRequiresUserAction={false}
+                // Performance settings
+                cacheEnabled={true}
+                incognito={false}
+                // Error handling
+                renderError={() => (
+                  <View style={styles.errorContainer}>
+                    <Ionicons
+                      name="alert-circle-outline"
+                      size={64}
+                      color={c.textMuted}
+                    />
+                    <Text style={[styles.errorText, { color: c.text }]}>
+                      Ошибка загрузки
+                    </Text>
+                  </View>
+                )}
+              />
+            )}
+          </>
         )}
-        <View style={{ height: 78 }} />
-      </ScrollView>
-
-      {/* Add Button */}
-      <TouchableOpacity
-        style={[styles.fab, { backgroundColor: c.primary }]}
-        onPress={handleAddCity}
-      >
-        <Ionicons name="add" size={28} color="#fff" />
-      </TouchableOpacity>
-    </View>
+      </View>
+    </Container>
   );
 }
 
@@ -168,55 +171,56 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    paddingTop: 60,
-    paddingBottom: 16,
-    borderBottomWidth: 1,
-  },
-  backButton: {
-    marginRight: 8,
-  },
-  headerTitle: {
-    fontSize: 16,
-    fontWeight: "500",
-  },
-  controls: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
-  },
   content: {
     flex: 1,
-    paddingTop: 16,
-    paddingHorizontal: 16,
   },
-  emptyState: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 60,
+  webview: {
+    flex: 1,
   },
-  emptyStateText: {
-    fontSize: 16,
-    marginTop: 16,
-  },
-  fab: {
+  loadingContainer: {
     position: "absolute",
-    right: 16,
-    bottom: 16,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1,
+  },
+  loadingText: {
+    marginTop: 12,
+    fontSize: 14,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 32,
+  },
+  errorText: {
+    fontSize: 18,
+    fontWeight: "600",
+    marginTop: 16,
+    textAlign: "center",
+  },
+  errorSubtext: {
+    fontSize: 12,
+    marginTop: 8,
+    textAlign: "center",
+  },
+  retryButton: {
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 12,
+    marginTop: 24,
+    gap: 8,
+  },
+  retryButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
   },
 });
