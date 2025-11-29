@@ -1,4 +1,4 @@
-// app/(tabs)/management.tsx
+// llf-score/app/(tabs)/management.tsx
 
 import { ManagementCard } from "@/features/management/ManagementCard";
 import { useRouter } from "expo-router";
@@ -13,7 +13,7 @@ export default function TabManagementScreen() {
       <ScrollView style={styles.container}>
         <ManagementCard
           title="Управление пользователями"
-          description="Здесь будут функции для управления пользователями"
+          description="Просмотр, добавление и редактирование пользователей"
           onPress={() => router.push("/users-management")}
         />
 
@@ -39,11 +39,6 @@ export default function TabManagementScreen() {
           title="Управление командами и игроками"
           description="Создание и редактирование команд и игроков"
           onPress={() => router.push("/teams-management")}
-        />
-
-        <ManagementCard
-          title="Настройки системы"
-          description="Здесь будут настройки системы"
         />
       </ScrollView>
     </View>
