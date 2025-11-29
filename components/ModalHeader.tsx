@@ -1,4 +1,5 @@
 // components/ModalHeader.tsx
+
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import React from "react";
@@ -31,8 +32,8 @@ export default function ModalHeader({ title, onClose }: Props) {
       <Text
         style={{
           color: "#FFFFFF",
-          fontSize: 20,
-          fontWeight: "700",
+          fontSize: 16,
+          fontWeight: "600",
           flex: 1,
         }}
         numberOfLines={1}

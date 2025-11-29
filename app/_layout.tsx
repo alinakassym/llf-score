@@ -1,4 +1,5 @@
 // app/_layout.tsx
+
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { SessionProvider, useSession } from "@/contexts/auth-context";
 import { useAppDispatch } from "@/store/hooks";
@@ -162,6 +163,16 @@ function RootLayoutNav() {
       />
       <Stack.Screen
         name="users-management"
+        options={{
+          headerShown: false,
+          presentation:
+            Platform.OS === "android" ? "transparentModal" : "modal",
+          animation: Platform.OS === "android" ? "fade" : "default",
+          gestureEnabled: true,
+        }}
+      />
+      <Stack.Screen
+        name="teams-management"
         options={{
           headerShown: false,
           presentation:
